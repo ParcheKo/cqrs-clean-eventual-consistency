@@ -91,13 +91,11 @@ namespace Ametista.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            if (env.EnvironmentName == "Docker")
+            if (env.EnvironmentName == "Docker" || env.EnvironmentName == Environments.Development)
             {
-                using (var serviceScope = app.ApplicationServices.CreateScope())
-                {
-                    var context = serviceScope.ServiceProvider.GetService<WriteDbContext>();
-                    context.Database.Migrate();
-                }
+                using var serviceScope = app.ApplicationServices.CreateScope();
+                var context = serviceScope.ServiceProvider.GetService<WriteDbContext>();
+                context.Database.Migrate();
             }
 
             app.UseStaticFiles();
