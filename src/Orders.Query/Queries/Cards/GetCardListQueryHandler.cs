@@ -8,44 +8,56 @@ using Orders.Core.Shared;
 using Orders.Query.Abstractions;
 using Orders.Query.QueryModel;
 
-namespace Orders.Query.Queries.Cards
+namespace Orders.Query.Queries.Cards;
+
+public class GetCardListQueryHandler : IQueryHandler<GetCardListQuery, IEnumerable<CardListQueryModel>>
 {
-    public class GetCardListQueryHandler : IQueryHandler<GetCardListQuery, IEnumerable<CardListQueryModel>>
+    private readonly ICache _cache;
+    private readonly ReadDbContext _readDbContext;
+
+    public GetCardListQueryHandler(
+        ReadDbContext readDbContext,
+        ICache cache
+    )
     {
-        private readonly ReadDbContext _readDbContext;
-        private readonly ICache _cache;
+        _readDbContext = readDbContext ?? throw new ArgumentNullException(nameof(readDbContext));
+        _cache = cache ?? throw new ArgumentNullException(nameof(cache));
+    }
 
-        public GetCardListQueryHandler(ReadDbContext readDbContext, ICache cache)
-        {
-            _readDbContext = readDbContext ?? throw new ArgumentNullException(nameof(readDbContext));
-            _cache = cache ?? throw new ArgumentNullException(nameof(cache));
-        }
+    public async Task<IEnumerable<CardListQueryModel>> HandleAsync(GetCardListQuery query)
+    {
+        var cached = await _cache.Get<IEnumerable<CardListQueryModel>>(nameof(CardListQueryModel));
 
-        public async Task<IEnumerable<CardListQueryModel>> HandleAsync(GetCardListQuery query)
-        {
-            var cached = await _cache.Get<IEnumerable<CardListQueryModel>>(nameof(CardListQueryModel));
+        var cachedCardLists = cached.ToList();
+        if (cachedCardLists.Any()) return cachedCardLists;
 
-            var cachedCardLists = cached.ToList();
-            if (cachedCardLists.Any())
-            {
-                return cachedCardLists;
-            }
+        var result = _readDbContext
+            .CardListMaterializedView
+            .AsQueryable()
+            .WhereIf(
+                !string.IsNullOrEmpty(query.Number),
+                x => x.Number.Contains(query.Number)
+            )
+            .WhereIf(
+                !string.IsNullOrEmpty(query.CardHolder),
+                x => x.CardHolder.Contains(query.CardHolder)
+            )
+            .WhereIf(
+                query.ChargeDate.HasValue,
+                x => x.ExpirationDate == query.ChargeDate
+            );
 
-            var result = _readDbContext
-                .CardListMaterializedView
-                .AsQueryable()
-                .WhereIf(!string.IsNullOrEmpty(query.Number), x => x.Number.Contains(query.Number))
-                .WhereIf(!string.IsNullOrEmpty(query.CardHolder), x => x.CardHolder.Contains(query.CardHolder))
-                .WhereIf(query.ChargeDate.HasValue, x => x.ExpirationDate == query.ChargeDate);
+        var itemsTask = await result
+            .Skip(query.Offset)
+            .Take(query.Limit)
+            .ToListAsync();
 
-            var itemsTask = await result
-                .Skip(query.Offset)
-                .Take(query.Limit)
-                .ToListAsync();
+        await _cache.Store<IEnumerable<CardListQueryModel>>(
+            nameof(GetCardListQuery),
+            itemsTask,
+            null
+        );
 
-            await _cache.Store<IEnumerable<CardListQueryModel>>(nameof(GetCardListQuery), itemsTask, null);
-
-            return itemsTask;
-        }
+        return itemsTask;
     }
 }

@@ -1,18 +1,23 @@
-﻿using MongoDB.Driver.Linq;
-using System;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using MongoDB.Driver.Linq;
 
-namespace Orders.Query
+namespace Orders.Query;
+
+public static class LinqExtensions
 {
-    public static class LinqExtensions
+    public static IMongoQueryable<TSource> WhereIf<TSource>(
+        this IMongoQueryable<TSource> source,
+        bool condition,
+        Expression<Func<TSource, bool>> predicate
+    )
     {
-        public static IMongoQueryable<TSource> WhereIf<TSource>(this IMongoQueryable<TSource> source, bool condition, Expression<Func<TSource, bool>> predicate)
-        {
-            if (condition)
-                return (IMongoQueryable<TSource>)Queryable.Where(source, predicate);
-            else
-                return source;
-        }
+        if (condition)
+            return (IMongoQueryable<TSource>)Queryable.Where(
+                source,
+                predicate
+            );
+        return source;
     }
 }

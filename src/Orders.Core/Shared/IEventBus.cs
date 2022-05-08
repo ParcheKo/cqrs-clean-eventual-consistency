@@ -1,9 +1,8 @@
-﻿namespace Orders.Core.Shared
-{
-    public interface IEventBus
-    {
-        void Publish(IEvent @event);
+﻿namespace Orders.Core.Shared;
 
-        void Subscribe<T>() where T : IEvent;
-    }
+public interface IEventBus
+{
+    void Publish(IEvent @event);
+
+    void Subscribe<T>() where T : IEvent;
 }

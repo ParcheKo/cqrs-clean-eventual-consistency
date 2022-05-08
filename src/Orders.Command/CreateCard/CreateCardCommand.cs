@@ -1,19 +1,22 @@
 ﻿using System;
 using Orders.Command.Abstractions;
 
-namespace Orders.Command.CreateCard
-{
-    public class CreateCardCommand : ICommand<CreateCardCommandResult>
-    {
-        public CreateCardCommand(string number, string cardHolder, DateTime expirationDate)
-        {
-            Number = number ?? throw new ArgumentNullException(nameof(number));
-            CardHolder = cardHolder ?? throw new ArgumentNullException(nameof(cardHolder));
-            ExpirationDate = expirationDate;
-        }
+namespace Orders.Command.CreateCard;
 
-        public string Number { get; set; }
-        public string CardHolder { get; set; }
-        public DateTime ExpirationDate { get; set; }
+public class CreateCardCommand : ICommand<CreateCardCommandResult>
+{
+    public CreateCardCommand(
+        string number,
+        string cardHolder,
+        DateTime expirationDate
+    )
+    {
+        Number = number ?? throw new ArgumentNullException(nameof(number));
+        CardHolder = cardHolder ?? throw new ArgumentNullException(nameof(cardHolder));
+        ExpirationDate = expirationDate;
     }
+
+    public string Number { get; set; }
+    public string CardHolder { get; set; }
+    public DateTime ExpirationDate { get; set; }
 }

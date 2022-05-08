@@ -1,45 +1,56 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Orders.Command.Abstractions;
-using Orders.Core;
 using Orders.Core.Shared;
 using Orders.Core.Transactions;
 
-namespace Orders.Command.CreateTransaction
+namespace Orders.Command.CreateTransaction;
+
+public class CreateTransactionCommandHandler : ICommandHandler<CreateTransactionCommand, CreateTransactionCommandResult>
 {
-    public class CreateTransactionCommandHandler : ICommandHandler<CreateTransactionCommand, CreateTransactionCommandResult>
+    private readonly IEventBus _eventBus;
+    private readonly ITransactionWriteOnlyRepository _transactionRepository;
+
+    public CreateTransactionCommandHandler(
+        IEventBus eventBus,
+        ITransactionWriteOnlyRepository transactionRepository
+    )
     {
-        private readonly IEventBus _eventBus;
-        private readonly ITransactionWriteOnlyRepository _transactionRepository;
+        _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+        _transactionRepository =
+            transactionRepository ?? throw new ArgumentNullException(nameof(transactionRepository));
+    }
 
-        public CreateTransactionCommandHandler(IEventBus eventBus, ITransactionWriteOnlyRepository transactionRepository)
+    public async Task<CreateTransactionCommandResult> Handle(CreateTransactionCommand command)
+    {
+        var charge = new Money(
+            command.Amount,
+            command.CurrencyCode
+        );
+        var newTransaction = Transaction.CreateTransactionForCard(
+            command.CardId,
+            command.UniqueId,
+            command.ChargeDate,
+            charge
+        );
+
+        var success = await _transactionRepository.Add(newTransaction);
+
+        if (success)
         {
-            _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-            _transactionRepository = transactionRepository ?? throw new ArgumentNullException(nameof(transactionRepository));
+            var transactionCreatedEvent = new TransactionCreatedEvent(newTransaction);
+
+            _eventBus.Publish(transactionCreatedEvent);
         }
 
-        public async Task<CreateTransactionCommandResult> Handle(CreateTransactionCommand command)
-        {
-            var charge = new Money(command.Amount, command.CurrencyCode);
-            var newTransaction = Transaction.CreateTransactionForCard(command.CardId, command.UniqueId, command.ChargeDate, charge);
-
-            var success = await _transactionRepository.Add(newTransaction);
-
-            if (success)
-            {
-                var transactionCreatedEvent = new TransactionCreatedEvent(newTransaction);
-
-                _eventBus.Publish(transactionCreatedEvent);
-            }
-
-            return new CreateTransactionCommandResult(
-                newTransaction.Id,
-                newTransaction.CardId,
-                newTransaction.ChargeDate,
-                newTransaction.UniqueId,
-                newTransaction.Charge.Amount,
-                newTransaction.Charge.CurrencyCode,
-                success);
-        }
+        return new CreateTransactionCommandResult(
+            newTransaction.Id,
+            newTransaction.CardId,
+            newTransaction.ChargeDate,
+            newTransaction.UniqueId,
+            newTransaction.Charge.Amount,
+            newTransaction.Charge.CurrencyCode,
+            success
+        );
     }
 }

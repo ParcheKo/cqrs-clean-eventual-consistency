@@ -1,13 +1,12 @@
 ﻿using System;
 
-namespace Orders.Core.Shared
+namespace Orders.Core.Shared;
+
+public interface IPersistentConnection<T> : IDisposable
 {
-    public interface IPersistentConnection<T> : IDisposable
-    {
-        bool IsConnected { get; }
+    bool IsConnected { get; }
 
-        bool TryConnect();
+    bool TryConnect();
 
-        T CreateModel();
-    }
+    T CreateModel();
 }

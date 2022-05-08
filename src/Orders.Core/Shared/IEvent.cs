@@ -1,11 +1,10 @@
 ﻿using System;
 
-namespace Orders.Core.Shared
+namespace Orders.Core.Shared;
+
+public interface IEvent
 {
-    public interface IEvent
-    {
-        Guid Id { get; set; }
-        string Name { get; set; }
-        DateTime OccurredOn { get; set; }
-    }
+    Guid Id { get; set; }
+    string Name { get; set; }
+    DateTime OccurredOn { get; set; }
 }

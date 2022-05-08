@@ -1,8 +1,9 @@
-﻿namespace Orders.Query.Abstractions
-{
-    public interface IQuery
-    { }
+﻿namespace Orders.Query.Abstractions;
 
-    public interface IQuery<TModel> : IQuery
-    { }
+public interface IQuery
+{
+}
+
+public interface IQuery<TModel> : IQuery
+{
 }

@@ -1,44 +1,39 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Orders.Query.Abstractions;
-using Orders.Query.Queries;
 using Orders.Query.Queries.Cards;
 
-namespace Orders.Api.Endpoints.GetCardView
+namespace Orders.Api.Endpoints.GetCardView;
+
+[Route("api/cards")]
+[Produces("application/json")]
+public class GetCardViewEndpoint : Controller
 {
-    [Route("api/cards")]
-    [Produces("application/json")]
-    public class GetCardViewEndpoint : Controller
+    private readonly IQueryDispatcher _queryDispatcher;
+
+    public GetCardViewEndpoint(IQueryDispatcher queryDispatcher)
     {
-        private readonly IQueryDispatcher _queryDispatcher;
+        _queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
+    }
 
-        public GetCardViewEndpoint(IQueryDispatcher queryDispatcher)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var query = new GetCardByIdQuery(id);
+
+        var queryResult = await _queryDispatcher.ExecuteAsync(query);
+
+        if (queryResult == null) return BadRequest(id);
+
+        var response = new GetCardViewResponse
         {
-            _queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
-        }
+            CardHolder = queryResult.CardHolder,
+            ExpirationDate = queryResult.ExpirationDate,
+            Id = queryResult.Id,
+            Number = queryResult.Number
+        };
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
-        {
-            var query = new GetCardByIdQuery(id);
-
-            var queryResult = await _queryDispatcher.ExecuteAsync(query);
-
-            if (queryResult == null)
-            {
-                return BadRequest(id);
-            }
-
-            var response = new GetCardViewResponse()
-            {
-                CardHolder = queryResult.CardHolder,
-                ExpirationDate = queryResult.ExpirationDate,
-                Id = queryResult.Id,
-                Number = queryResult.Number
-            };
-
-            return Ok(response);
-        }
+        return Ok(response);
     }
 }

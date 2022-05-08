@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace Orders.Core.Shared
+namespace Orders.Core.Shared;
+
+public interface IEventDispatcher
 {
-    public interface IEventDispatcher
-    {
-        Task Dispatch<TEvent>(TEvent @event) where TEvent : IEvent;
-    }
+    Task Dispatch<TEvent>(TEvent @event) where TEvent : IEvent;
 }

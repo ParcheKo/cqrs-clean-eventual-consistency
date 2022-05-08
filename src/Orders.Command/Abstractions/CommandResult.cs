@@ -1,27 +1,27 @@
 ﻿using System;
 
-namespace Orders.Command.Abstractions
+namespace Orders.Command.Abstractions;
+
+public abstract class CommandResult : ICommandResult
 {
-    public abstract class CommandResult : ICommandResult
+    protected CommandResult()
     {
-        protected CommandResult()
-        {
-            Success = false;
-            Executed = DateTime.Now;
-        }
-        protected CommandResult(bool success)
-        {
-            Success = success;
-            Executed = DateTime.Now;
-        }
+        Success = false;
+        Executed = DateTime.Now;
+    }
 
-        public bool Success { get; set; }
+    protected CommandResult(bool success)
+    {
+        Success = success;
+        Executed = DateTime.Now;
+    }
 
-        public DateTime Executed { get; set; }
+    public bool Success { get; set; }
 
-        public static TCommandResul CreateFailResult<TCommandResul>() where TCommandResul : CommandResult, new()
-        {
-            return new TCommandResul();
-        }
+    public DateTime Executed { get; set; }
+
+    public static TCommandResul CreateFailResult<TCommandResul>() where TCommandResul : CommandResult, new()
+    {
+        return new TCommandResul();
     }
 }

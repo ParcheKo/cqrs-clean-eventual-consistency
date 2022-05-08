@@ -5,74 +5,67 @@ using MongoDB.Driver;
 using Orders.Core;
 using Orders.Query.QueryModel;
 
-namespace Orders.Query
+namespace Orders.Query;
+
+public class ReadDbContext
 {
-    public class ReadDbContext
+    private readonly IMongoDatabase _database;
+    private readonly MongoClient _mongoClient;
+
+    public ReadDbContext(AppConfiguration appConfiguration)
     {
-        private readonly MongoClient _mongoClient;
-        private readonly IMongoDatabase _database;
+        _mongoClient = new MongoClient(appConfiguration.ConnectionStrings.MongoConnectionString);
+        _database = _mongoClient.GetDatabase(appConfiguration.ConnectionStrings.MongoDatabase);
+        ConfigureDatabaseNamingConvention(appConfiguration.DatabaseNamingConvention);
+        Map();
+    }
 
-        public ReadDbContext(AppConfiguration appConfiguration)
+    internal IMongoCollection<CardViewQueryModel> CardViewMaterializedView =>
+        _database.GetCollection<CardViewQueryModel>("CardViewMaterializedView");
+
+    internal IMongoCollection<CardListQueryModel> CardListMaterializedView =>
+        _database.GetCollection<CardListQueryModel>("CardListMaterializedView");
+
+    internal IMongoCollection<TransactionListQueryModel> TransactionListMaterializedView =>
+        _database.GetCollection<TransactionListQueryModel>("TransactionListMaterializedView");
+
+    private static void ConfigureDatabaseNamingConvention(DatabaseNamingConvention namingConvention)
+    {
+        IConvention elementNameConvention = null;
+        switch (namingConvention)
         {
-            _mongoClient = new MongoClient(appConfiguration.ConnectionStrings.MongoConnectionString);
-            _database = _mongoClient.GetDatabase(appConfiguration.ConnectionStrings.MongoDatabase);
-            ConfigureDatabaseNamingConvention(appConfiguration.DatabaseNamingConvention);
-            Map();
+            case DatabaseNamingConvention.AsIs:
+                break;
+            case DatabaseNamingConvention.CamelCase:
+                elementNameConvention = new CamelCaseElementNameConvention();
+                break;
+            case DatabaseNamingConvention.SnakeCase:
+                elementNameConvention = new SnakeCaseElementNameConvention();
+                break;
+            default:
+                throw new InvalidOperationException("Database naming convention not specified.");
         }
 
-        private static void ConfigureDatabaseNamingConvention(DatabaseNamingConvention namingConvention)
+        if (elementNameConvention is not null)
         {
-            IConvention elementNameConvention = null;
-            switch (namingConvention)
+            var elementNamingConventionPack = new ConventionPack
             {
-                case DatabaseNamingConvention.AsIs:
-                    break;
-                case DatabaseNamingConvention.CamelCase:
-                    elementNameConvention = new CamelCaseElementNameConvention();
-                    break;
-                case DatabaseNamingConvention.SnakeCase:
-                    elementNameConvention = new SnakeCaseElementNameConvention();
-                    break;
-                default:
-                    throw new InvalidOperationException("Database naming convention not specified.");
-            }
-
-            if (elementNameConvention is not null)
-            {
-                var elementNamingConventionPack = new ConventionPack
-                {
-                    elementNameConvention
-                };
-                ConventionRegistry.Register(
-                    elementNameConvention.GetType().Name,
-                    elementNamingConventionPack,
-                    _ => true
-                );
-            }
+                elementNameConvention
+            };
+            ConventionRegistry.Register(
+                elementNameConvention.GetType().Name,
+                elementNamingConventionPack,
+                _ => true
+            );
         }
+    }
 
-        internal IMongoCollection<CardViewQueryModel> CardViewMaterializedView
-        {
-            get { return _database.GetCollection<CardViewQueryModel>("CardViewMaterializedView"); }
-        }
+    private void Map()
+    {
+        BsonClassMap.RegisterClassMap<CardViewQueryModel>(cm => { cm.AutoMap(); });
 
-        internal IMongoCollection<CardListQueryModel> CardListMaterializedView
-        {
-            get { return _database.GetCollection<CardListQueryModel>("CardListMaterializedView"); }
-        }
+        BsonClassMap.RegisterClassMap<CardListQueryModel>(cm => { cm.AutoMap(); });
 
-        internal IMongoCollection<TransactionListQueryModel> TransactionListMaterializedView
-        {
-            get { return _database.GetCollection<TransactionListQueryModel>("TransactionListMaterializedView"); }
-        }
-
-        private void Map()
-        {
-            BsonClassMap.RegisterClassMap<CardViewQueryModel>(cm => { cm.AutoMap(); });
-
-            BsonClassMap.RegisterClassMap<CardListQueryModel>(cm => { cm.AutoMap(); });
-
-            BsonClassMap.RegisterClassMap<TransactionListQueryModel>(cm => { cm.AutoMap(); });
-        }
+        BsonClassMap.RegisterClassMap<TransactionListQueryModel>(cm => { cm.AutoMap(); });
     }
 }

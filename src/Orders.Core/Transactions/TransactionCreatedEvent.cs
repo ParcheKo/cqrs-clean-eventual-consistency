@@ -1,15 +1,14 @@
 ﻿using Orders.Core.Shared;
 
-namespace Orders.Core.Transactions
+namespace Orders.Core.Transactions;
+
+public class TransactionCreatedEvent : Event
 {
-    public class TransactionCreatedEvent : Event
+    public TransactionCreatedEvent(Transaction transaction)
     {
-        public Transaction Data { get; set; }
-    
-        public TransactionCreatedEvent(Transaction transaction)
-        {
-            Data = transaction;
-            Name = (nameof(TransactionCreatedEvent));
-        }
+        Data = transaction;
+        Name = nameof(TransactionCreatedEvent);
     }
+
+    public Transaction Data { get; set; }
 }

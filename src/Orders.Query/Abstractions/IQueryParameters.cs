@@ -1,7 +1,6 @@
-﻿namespace Orders.Query.Abstractions
+﻿namespace Orders.Query.Abstractions;
+
+public interface IQueryParameters<TQuery> where TQuery : IQuery
 {
-    public interface IQueryParameters<TQuery> where TQuery : IQuery
-    {
-        T GetParameters<T>(TQuery model);
-    }
+    T GetParameters<T>(TQuery model);
 }

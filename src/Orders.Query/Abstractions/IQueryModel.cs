@@ -1,6 +1,5 @@
-﻿namespace Orders.Query.Abstractions
+﻿namespace Orders.Query.Abstractions;
+
+public interface IQueryModel
 {
-    public interface IQueryModel
-    {
-    }
 }

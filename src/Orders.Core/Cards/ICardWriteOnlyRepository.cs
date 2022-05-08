@@ -1,9 +1,8 @@
 ﻿using Orders.Core.Shared;
 
-namespace Orders.Core.Cards
+namespace Orders.Core.Cards;
+
+public interface ICardWriteOnlyRepository : IWriteOnlyRepository<Card>
 {
-    public interface ICardWriteOnlyRepository : IWriteOnlyRepository<Card>
-    {
-        bool IsDuplicatedCardNumber(string cardNamber);
-    }
+    bool IsDuplicatedCardNumber(string cardNamber);
 }

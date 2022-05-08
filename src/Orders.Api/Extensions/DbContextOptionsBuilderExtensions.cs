@@ -6,7 +6,10 @@ namespace Orders.Api.Extensions;
 
 public static class DbContextOptionsBuilderExtensions
 {
-    public static void ConfigureDatabaseNamingConvention(this DbContextOptionsBuilder builder, DatabaseNamingConvention namingConvention)
+    public static void ConfigureDatabaseNamingConvention(
+        this DbContextOptionsBuilder builder,
+        DatabaseNamingConvention namingConvention
+    )
     {
         switch (namingConvention)
         {
@@ -22,5 +25,4 @@ public static class DbContextOptionsBuilderExtensions
                 throw new InvalidOperationException("Database naming convention not specified.");
         }
     }
-
 }

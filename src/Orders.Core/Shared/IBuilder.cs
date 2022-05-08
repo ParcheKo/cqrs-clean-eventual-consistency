@@ -1,7 +1,6 @@
-﻿namespace Orders.Core.Shared
+﻿namespace Orders.Core.Shared;
+
+public interface IBuilder<T>
 {
-    public interface IBuilder<T>
-    {
-        T Build();
-    }
+    T Build();
 }

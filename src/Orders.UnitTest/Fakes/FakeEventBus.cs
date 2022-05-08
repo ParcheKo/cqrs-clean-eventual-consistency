@@ -1,18 +1,14 @@
-﻿using Orders.Core;
-using Orders.Core.Shared;
+﻿using Orders.Core.Shared;
 
-namespace Orders.UnitTest.Fakes
+namespace Orders.UnitTest.Fakes;
+
+internal class FakeEventBus : IEventBus
 {
-    internal class FakeEventBus : IEventBus
+    public void Publish(IEvent @event)
     {
-        public void Publish(IEvent @event)
-        {
+    }
 
-        }
-
-        public void Subscribe<T>() where T : IEvent
-        {
-
-        }
+    public void Subscribe<T>() where T : IEvent
+    {
     }
 }

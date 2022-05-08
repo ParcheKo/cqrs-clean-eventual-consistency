@@ -14,3 +14,4 @@
 //        IQueryable<TEntity> Query<TEntity>() where TEntity : IEntity;
 //    }
 //}
+

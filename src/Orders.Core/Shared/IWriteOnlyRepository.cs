@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Orders.Core.Shared
+namespace Orders.Core.Shared;
+
+public interface IWriteOnlyRepository<TEntity> where TEntity : IAggregateRoot
 {
-    public interface IWriteOnlyRepository<TEntity> where TEntity : IAggregateRoot
-    {
-        Task<TEntity> FindAsync(Guid id); // only allowed find the entity for update or delete
+    Task<TEntity> FindAsync(Guid id); // only allowed find the entity for update or delete
 
-        Task<bool> Add(TEntity entity);
+    Task<bool> Add(TEntity entity);
 
-        Task<bool> Update(TEntity entity);
+    Task<bool> Update(TEntity entity);
 
-        Task<bool> Delete(TEntity entity);
-    }
+    Task<bool> Delete(TEntity entity);
 }

@@ -1,45 +1,42 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Orders.Query.Abstractions;
-using Orders.Query.Queries;
 using Orders.Query.Queries.Transactions;
 
-namespace Orders.Api.Endpoints.GetTransactions
+namespace Orders.Api.Endpoints.GetTransactions;
+
+[Route("api/transactions")]
+[ApiController]
+public class TransactionController : ControllerBase
 {
-    [Route("api/transactions")]
-    [ApiController]
-    public class TransactionController : ControllerBase
+    private readonly IQueryDispatcher _queryDispatcher;
+
+    public TransactionController(IQueryDispatcher queryDispatcher)
     {
-        private readonly IQueryDispatcher _queryDispatcher;
+        _queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
+    }
 
-        public TransactionController(IQueryDispatcher queryDispatcher)
+    [HttpGet]
+    public async Task<IActionResult> Get([FromQuery] GetTransactionsRequest request)
+    {
+        var query = new GetTransactionListQuery
         {
-            _queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
-        }
+            BetweenAmount = request.BetweenAmount,
+            CardHolder = request.CardHolder,
+            CardNumber = request.CardNumber,
+            ChargeDate = request.ChargeDate,
+            Limit = request.Limit,
+            Offset = request.Offset
+        };
 
-        [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetTransactionsRequest request)
-        {
-            var query = new GetTransactionListQuery()
-            {
-                BetweenAmount = request.BetweenAmount,
-                CardHolder = request.CardHolder,
-                CardNumber = request.CardNumber,
-                ChargeDate = request.ChargeDate,
-                Limit = request.Limit,
-                Offset = request.Offset
-            };
+        var result = await _queryDispatcher.ExecuteAsync(query);
 
-            var result = await _queryDispatcher.ExecuteAsync(query);
+        if (!result.Any()) return NotFound(query);
 
-            if (!result.Any())
-            {
-                return NotFound(query);
-            }
-
-            var response = result.Select(x => new GetTransactionsResponse()
+        var response = result.Select(
+            x => new GetTransactionsResponse
             {
                 Amount = x.Amount,
                 CardHolder = x.CardHolder,
@@ -47,9 +44,9 @@ namespace Orders.Api.Endpoints.GetTransactions
                 ChargeDate = x.ChargeDate,
                 CurrencyCode = x.CurrencyCode,
                 UniqueId = x.UniqueId
-            });
+            }
+        );
 
-            return Ok(response);
-        }
+        return Ok(response);
     }
 }

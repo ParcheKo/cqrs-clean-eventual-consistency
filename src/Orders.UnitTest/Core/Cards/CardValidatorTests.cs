@@ -1,6 +1,5 @@
-﻿namespace Orders.UnitTest.Core.Cards
+﻿namespace Orders.UnitTest.Core.Cards;
+
+public class CardValidatorTests
 {
-    public class CardValidatorTests
-    {
-    }
 }

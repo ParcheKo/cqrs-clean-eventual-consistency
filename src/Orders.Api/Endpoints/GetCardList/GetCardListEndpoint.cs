@@ -1,44 +1,41 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Orders.Query.Abstractions;
-using Orders.Query.Queries;
 using Orders.Query.Queries.Cards;
 
-namespace Orders.Api.Endpoints.GetCardList
+namespace Orders.Api.Endpoints.GetCardList;
+
+[Route("api/cards")]
+[Produces("application/json")]
+public class GetCardListEndpoint : Controller
 {
-    [Route("api/cards")]
-    [Produces("application/json")]
-    public class GetCardListEndpoint : Controller
+    private readonly IQueryDispatcher _queryDispatcher;
+
+    public GetCardListEndpoint(IQueryDispatcher queryDispatcher)
     {
-        private readonly IQueryDispatcher _queryDispatcher;
+        _queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
+    }
 
-        public GetCardListEndpoint(IQueryDispatcher queryDispatcher)
+    [HttpGet]
+    public async Task<IActionResult> Get([FromQuery] GetCardListRequest request)
+    {
+        var query = new GetCardListQuery
         {
-            _queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
-        }
+            CardHolder = request.CardHolder,
+            ChargeDate = request.ChargeDate,
+            Number = request.Number,
+            Limit = request.Limit,
+            Offset = request.Offset
+        };
 
-        [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetCardListRequest request)
-        {
-            var query = new GetCardListQuery()
-            {
-                CardHolder = request.CardHolder,
-                ChargeDate = request.ChargeDate,
-                Number = request.Number,
-                Limit = request.Limit,
-                Offset = request.Offset
-            };
+        var result = await _queryDispatcher.ExecuteAsync(query);
 
-            var result = await _queryDispatcher.ExecuteAsync(query);
+        if (!result.Any()) return NotFound(query);
 
-            if (!result.Any())
-            {
-                return NotFound(query);
-            }
-
-            var respose = result.Select(x => new GetCardListResponse()
+        var respose = result.Select(
+            x => new GetCardListResponse
             {
                 Id = x.Id,
                 Number = x.Number,
@@ -46,9 +43,9 @@ namespace Orders.Api.Endpoints.GetCardList
                 ExpirationDate = x.ExpirationDate,
                 HighestTransactionAmount = x.HighestTransactionAmount,
                 HighestTransactionId = x.HighestTransactionId
-            });
+            }
+        );
 
-            return Ok(respose);
-        }
+        return Ok(respose);
     }
 }

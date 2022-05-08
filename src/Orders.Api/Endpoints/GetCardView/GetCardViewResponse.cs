@@ -1,15 +1,14 @@
 ﻿using System;
 
-namespace Orders.Api.Endpoints.GetCardView
+namespace Orders.Api.Endpoints.GetCardView;
+
+public class GetCardViewResponse
 {
-    public class GetCardViewResponse
-    {
-        public string CardHolder { get; set; }
+    public string CardHolder { get; set; }
 
-        public DateTime ExpirationDate { get; set; }
+    public DateTime ExpirationDate { get; set; }
 
-        public Guid Id { get; set; }
+    public Guid Id { get; set; }
 
-        public string Number { get; set; }
-    }
+    public string Number { get; set; }
 }

@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace Orders.Core.Shared
+namespace Orders.Core.Shared;
+
+public interface IEventHandler<TEvent> where TEvent : IEvent
 {
-    public interface IEventHandler<TEvent> where TEvent : IEvent
-    {
-        Task Handle(TEvent e);
-    }
+    Task Handle(TEvent e);
 }

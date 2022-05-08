@@ -1,51 +1,54 @@
 ﻿using System;
-using Orders.Core;
 using Orders.Core.Shared;
 using Orders.Core.Transactions;
 
-namespace Orders.UnitTest.Builders
+namespace Orders.UnitTest.Builders;
+
+public class TransactionBuilder : IBuilder<Transaction>
 {
-    public class TransactionBuilder : IBuilder<Transaction>
+    private Guid _cardId;
+
+    private Money _charge;
+
+    private DateTimeOffset _chargeDate;
+
+    private string _uniqueId;
+
+    public Transaction Build()
     {
-        private Guid _cardId;
+        return Transaction.CreateTransactionForCard(
+            _cardId,
+            _uniqueId,
+            _chargeDate,
+            _charge
+        );
+    }
 
-        private Money _charge;
+    public TransactionBuilder ForCard(Guid id)
+    {
+        _cardId = id;
 
-        private DateTimeOffset _chargeDate;
+        return this;
+    }
 
-        private string _uniqueId;
+    public TransactionBuilder ContainingChargeAmount(Money charge)
+    {
+        _charge = charge;
 
-        public TransactionBuilder ForCard(Guid id)
-        {
-            _cardId = id;
+        return this;
+    }
 
-            return this;
-        }
+    public TransactionBuilder ChargedAt(DateTimeOffset date)
+    {
+        _chargeDate = date;
 
-        public TransactionBuilder ContainingChargeAmount(Money charge)
-        {
-            _charge = charge;
+        return this;
+    }
 
-            return this;
-        }
+    public TransactionBuilder HavingUniqueId(string uniqueId)
+    {
+        _uniqueId = uniqueId;
 
-        public TransactionBuilder ChargedAt(DateTimeOffset date)
-        {
-            _chargeDate = date;
-
-            return this;
-        }
-
-        public TransactionBuilder HavingUniqueId(string uniqueId)
-        {
-            _uniqueId = uniqueId;
-
-            return this;
-        }
-
-        public Transaction Build()
-        {
-            return Transaction.CreateTransactionForCard(_cardId, _uniqueId, _chargeDate, _charge);
-        }
+        return this;
     }
 }

@@ -1,14 +1,13 @@
 ﻿using System;
 
-namespace Orders.Api.Endpoints.CreateTransaction
+namespace Orders.Api.Endpoints.CreateTransaction;
+
+public class CreateTransactionResponse
 {
-    public class CreateTransactionResponse
-    {
-        public Guid Id { get; set; }
-        public Guid CardId { get; set; }
-        public DateTimeOffset ChargeDate { get; set; }
-        public string UniqueId { get; set; }
-        public decimal Amount { get; set; }
-        public string CurrencyCode { get; set; }
-    }
+    public Guid Id { get; set; }
+    public Guid CardId { get; set; }
+    public DateTimeOffset ChargeDate { get; set; }
+    public string UniqueId { get; set; }
+    public decimal Amount { get; set; }
+    public string CurrencyCode { get; set; }
 }

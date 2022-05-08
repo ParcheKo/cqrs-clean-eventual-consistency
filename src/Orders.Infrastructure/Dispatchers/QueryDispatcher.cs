@@ -2,26 +2,31 @@
 using Autofac;
 using Orders.Query.Abstractions;
 
-namespace Orders.Infrastructure.Dispatchers
+namespace Orders.Infrastructure.Dispatchers;
+
+public class QueryDispatcher : IQueryDispatcher
 {
-    public class QueryDispatcher : IQueryDispatcher
+    private readonly IComponentContext _componentContext;
+
+    public QueryDispatcher(IComponentContext componentContext)
     {
-        private readonly IComponentContext _componentContext;
+        _componentContext = componentContext;
+    }
 
-        public QueryDispatcher(IComponentContext componentContext)
-        {
-            _componentContext = componentContext;
-        }
+    public Task<TModel> ExecuteAsync<TModel>(IQuery<TModel> query)
+    {
+        var queryHandlerType = typeof(IQueryHandler<,>).MakeGenericType(
+            query.GetType(),
+            typeof(TModel)
+        );
 
-        public Task<TModel> ExecuteAsync<TModel>(IQuery<TModel> query)
-        {
-            var queryHandlerType = typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TModel));
+        var handler = _componentContext.Resolve(queryHandlerType);
 
-            var handler = _componentContext.Resolve(queryHandlerType);
-
-            return (Task<TModel>)queryHandlerType
-                .GetMethod("HandleAsync")
-                .Invoke(handler, new object[] { query });
-        }
+        return (Task<TModel>)queryHandlerType
+            .GetMethod("HandleAsync")
+            .Invoke(
+                handler,
+                new object[] { query }
+            );
     }
 }

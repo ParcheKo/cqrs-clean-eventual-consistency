@@ -1,63 +1,88 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Moq;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
 using Orders.Api.Endpoints.CreateCard;
 using Orders.Command.Abstractions;
 using Orders.Command.CreateCard;
 using Xunit;
 
-namespace Orders.UnitTest.Api.Endpoints.CreateCard
+namespace Orders.UnitTest.Api.Endpoints.CreateCard;
+
+public class CreateCardEndpointTests
 {
-    public class CreateCardEndpointTests
+    private readonly Mock<ICommandDispatcher> _commandDispatcherMock;
+    private readonly CreateCardEndpoint _sut;
+
+    public CreateCardEndpointTests()
     {
-        private readonly CreateCardEndpoint _sut;
-        private readonly Mock<ICommandDispatcher> _commandDispatcherMock;
+        _commandDispatcherMock = new Mock<ICommandDispatcher>();
+        _sut = new CreateCardEndpoint(_commandDispatcherMock.Object);
+    }
 
-        public CreateCardEndpointTests()
+    [Fact]
+    public async Task Should_Return_CreatedResult_With_Correct_Data()
+    {
+        // Arrange
+        var request = new CreateCardRequest
         {
-            _commandDispatcherMock = new Mock<ICommandDispatcher>();
-            _sut = new CreateCardEndpoint(_commandDispatcherMock.Object);
-        }
+            Number = "xxxx-xxxx-xxxx-xxx",
+            CardHolder = "Filipe A. L. Souza",
+            ExpirationDate = new DateTime(
+                2022,
+                1,
+                12
+            )
+        };
 
-        [Fact]
-        public async Task Should_Return_CreatedResult_With_Correct_Data()
-        {
-            // Arrange
-            var request = new CreateCardRequest
-            {
-                Number = "xxxx-xxxx-xxxx-xxx",
-                CardHolder = "Filipe A. L. Souza",
-                ExpirationDate = new DateTime(2022, 1, 12),
-            };
+        var commandResult = new CreateCardCommandResult(
+            Guid.NewGuid(),
+            "xxxx-xxxx-xxxx-xxx",
+            "Filipe A. L. Souza",
+            new DateTime(
+                2022,
+                1,
+                12
+            ),
+            true
+        );
 
-            var commandResult = new CreateCardCommandResult(
-                id: Guid.NewGuid(),
-                number: "xxxx-xxxx-xxxx-xxx",
-                cardHolder: "Filipe A. L. Souza",
-                expirationDate: new DateTime(2022, 1, 12),
-                success: true
-                );
+        _commandDispatcherMock
+            .Setup(x => x.Dispatch(It.IsAny<CreateCardCommand>()))
+            .ReturnsAsync(commandResult);
 
-            _commandDispatcherMock
-                .Setup(x => x.Dispatch(It.IsAny<CreateCardCommand>()))
-                .ReturnsAsync(commandResult);
+        // Act
+        var actionResult = await _sut.Post(request);
 
-            // Act
-            var actionResult = await _sut.Post(request);
+        // Assert
+        var createdResult = Assert.IsType<CreatedAtActionResult>(actionResult);
+        var response = Assert.IsAssignableFrom<CreateCardResponse>(createdResult.Value);
+        AssertResponse(
+            commandResult,
+            response
+        );
+    }
 
-            // Assert
-            var createdResult = Assert.IsType<CreatedAtActionResult>(actionResult);
-            var response = Assert.IsAssignableFrom<CreateCardResponse>(createdResult.Value);
-            AssertResponse(commandResult, response);
-        }
-
-        private void AssertResponse(CreateCardCommandResult commandResult, CreateCardResponse response)
-        {
-            Assert.Equal(commandResult.Id, response.Id);
-            Assert.Equal(commandResult.Number, response.Number);
-            Assert.Equal(commandResult.CardHolder, response.CardHolder);
-            Assert.Equal(commandResult.ExpirationDate, response.ExpirationDate);
-        }
+    private void AssertResponse(
+        CreateCardCommandResult commandResult,
+        CreateCardResponse response
+    )
+    {
+        Assert.Equal(
+            commandResult.Id,
+            response.Id
+        );
+        Assert.Equal(
+            commandResult.Number,
+            response.Number
+        );
+        Assert.Equal(
+            commandResult.CardHolder,
+            response.CardHolder
+        );
+        Assert.Equal(
+            commandResult.ExpirationDate,
+            response.ExpirationDate
+        );
     }
 }

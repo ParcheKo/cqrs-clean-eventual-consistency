@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace Orders.Query.Abstractions
+namespace Orders.Query.Abstractions;
+
+public interface IQueryDispatcher
 {
-    public interface IQueryDispatcher
-    {
-        Task<TModel> ExecuteAsync<TModel>(IQuery<TModel> query);
-    }
+    Task<TModel> ExecuteAsync<TModel>(IQuery<TModel> query);
 }

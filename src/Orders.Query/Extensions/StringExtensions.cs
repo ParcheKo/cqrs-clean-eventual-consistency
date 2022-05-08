@@ -11,7 +11,12 @@ public static class StringExtensions
         if (string.IsNullOrEmpty(name))
             return name;
 
-        var builder = new StringBuilder(name.Length + Math.Min(2, name.Length / 5));
+        var builder = new StringBuilder(
+            name.Length + Math.Min(
+                2,
+                name.Length / 5
+            )
+        );
         var previousCategory = default(UnicodeCategory?);
 
         for (var currentIndex = 0; currentIndex < name.Length; currentIndex++)
@@ -36,9 +41,7 @@ public static class StringExtensions
                         currentIndex > 0 &&
                         currentIndex + 1 < name.Length &&
                         char.IsLower(name[currentIndex + 1]))
-                    {
                         builder.Append('_');
-                    }
 
                     currentChar = char.ToLower(currentChar);
                     break;

@@ -1,42 +1,42 @@
-﻿using Autofac;
-using System.Reflection;
+﻿using System.Reflection;
+using Autofac;
 using Orders.Core.Cards;
 using Orders.Core.Shared;
 using Orders.Core.Transactions;
 using Orders.Infrastructure.Dispatchers;
 using Orders.Query;
 using Orders.Query.EventHandlers;
+using Module = Autofac.Module;
 
-namespace Orders.Infrastructure.IoC
+namespace Orders.Infrastructure.IoC;
+
+public class EventModule : Module
 {
-    public class EventModule : Autofac.Module
+    protected override void Load(ContainerBuilder builder)
     {
-        protected override void Load(ContainerBuilder builder)
-        {
-            builder
-                .RegisterAssemblyTypes(typeof(IEventHandler<>).GetTypeInfo().Assembly)
-                .AsClosedTypesOf(typeof(IEventHandler<>))
-                .InstancePerLifetimeScope();
+        builder
+            .RegisterAssemblyTypes(typeof(IEventHandler<>).GetTypeInfo().Assembly)
+            .AsClosedTypesOf(typeof(IEventHandler<>))
+            .InstancePerLifetimeScope();
 
-            builder
-                .RegisterType<MaterializeCardEventHandler>()
-                .As<IEventHandler<CardCreatedEvent>>()
-                .InstancePerLifetimeScope();
+        builder
+            .RegisterType<MaterializeCardEventHandler>()
+            .As<IEventHandler<CardCreatedEvent>>()
+            .InstancePerLifetimeScope();
 
-            builder
-                .RegisterType<TransactionCreatedEventHandler>()
-                .As<IEventHandler<TransactionCreatedEvent>>()
-                .InstancePerLifetimeScope();
+        builder
+            .RegisterType<TransactionCreatedEventHandler>()
+            .As<IEventHandler<TransactionCreatedEvent>>()
+            .InstancePerLifetimeScope();
 
-            builder
-               .RegisterType<ReadDbContext>()
-               .AsSelf()
-               .InstancePerLifetimeScope();
+        builder
+            .RegisterType<ReadDbContext>()
+            .AsSelf()
+            .InstancePerLifetimeScope();
 
-            builder
-                .RegisterType<EventDispatcher>()
-                .As<IEventDispatcher>()
-                .SingleInstance();
-        }
+        builder
+            .RegisterType<EventDispatcher>()
+            .As<IEventDispatcher>()
+            .SingleInstance();
     }
 }

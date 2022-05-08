@@ -1,8 +1,7 @@
 ﻿using Orders.Core.Shared;
 
-namespace Orders.Core.Transactions
+namespace Orders.Core.Transactions;
+
+public interface ITransactionWriteOnlyRepository : IWriteOnlyRepository<Transaction>
 {
-    public interface ITransactionWriteOnlyRepository : IWriteOnlyRepository<Transaction>
-    {
-    }
 }

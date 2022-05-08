@@ -1,11 +1,10 @@
 ﻿using System.Threading.Tasks;
 
-namespace Orders.Command.Abstractions
-{
-    public interface ICommandDispatcher
-    {
-        Task<TResult> Dispatch<TResult>(ICommand<TResult> command) where TResult : ICommandResult;
+namespace Orders.Command.Abstractions;
 
-        Task DispatchNonResult(ICommand command);
-    }
+public interface ICommandDispatcher
+{
+    Task<TResult> Dispatch<TResult>(ICommand<TResult> command) where TResult : ICommandResult;
+
+    Task DispatchNonResult(ICommand command);
 }

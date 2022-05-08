@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace Orders.Api.Endpoints.CreateCard
+namespace Orders.Api.Endpoints.CreateCard;
+
+public class CreateCardResponse
 {
-    public class CreateCardResponse
-    {
-        public Guid Id { get; set; }
-        public string Number { get; set; }
-        public string CardHolder { get; set; }
-        public DateTime ExpirationDate { get; set; }
-    }
+    public Guid Id { get; set; }
+    public string Number { get; set; }
+    public string CardHolder { get; set; }
+    public DateTime ExpirationDate { get; set; }
 }

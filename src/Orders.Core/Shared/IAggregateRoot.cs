@@ -1,6 +1,5 @@
-﻿namespace Orders.Core.Shared
+﻿namespace Orders.Core.Shared;
+
+public interface IAggregateRoot : IEntity
 {
-    public interface IAggregateRoot : IEntity
-    {
-    }
 }
