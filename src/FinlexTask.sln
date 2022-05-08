@@ -18,6 +18,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Orders", "Orders", "{0CC840D5-A7E4-45CC-8A8D-77FAD3F0C02F}"
 	ProjectSection(SolutionItems) = preProject
 		C:\Users\Amir\home\source\0\job-tasks\cqrs-clean-eventual-consistency\src\infra.yaml = C:\Users\Amir\home\source\0\job-tasks\cqrs-clean-eventual-consistency\src\infra.yaml
+		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
 Global
