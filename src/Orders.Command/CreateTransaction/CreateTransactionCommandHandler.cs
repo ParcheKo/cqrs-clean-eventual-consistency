@@ -9,11 +9,11 @@ namespace Orders.Command.CreateTransaction;
 public class CreateTransactionCommandHandler : ICommandHandler<CreateTransactionCommand, CreateTransactionCommandResult>
 {
     private readonly IEventBus _eventBus;
-    private readonly ITransactionWriteOnlyRepository _transactionRepository;
+    private readonly ITransactionRepository _transactionRepository;
 
     public CreateTransactionCommandHandler(
         IEventBus eventBus,
-        ITransactionWriteOnlyRepository transactionRepository
+        ITransactionRepository transactionRepository
     )
     {
         _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));

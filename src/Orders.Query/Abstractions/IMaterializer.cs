@@ -1,11 +1,11 @@
 ﻿namespace Orders.Query.Abstractions;
 
-public interface IMaterializer<TQueryModel, TSource> where TQueryModel : IQueryModel
+public interface IMaterializer<out TQueryModel, in TSource> where TQueryModel : IQueryModel
 {
     TQueryModel Materialize(TSource source);
 }
 
-public interface IMaterializer<TQueryModel, TSource1, TSource2> where TQueryModel : IQueryModel
+public interface IMaterializer<out TQueryModel, in TSource1, in TSource2> where TQueryModel : IQueryModel
 {
     TQueryModel Materialize(
         TSource1 source1,

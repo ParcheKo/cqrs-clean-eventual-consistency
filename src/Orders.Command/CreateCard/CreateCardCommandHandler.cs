@@ -8,13 +8,13 @@ namespace Orders.Command.CreateCard;
 
 public class CreateCardCommandHandler : ICommandHandler<CreateCardCommand, CreateCardCommandResult>
 {
-    private readonly ICardWriteOnlyRepository _cardRepository;
+    private readonly ICardRepository _cardRepository;
     private readonly IEventBus _eventBus;
     private readonly ValidationNotificationHandler _notificationHandler;
 
     public CreateCardCommandHandler(
         IEventBus eventBus,
-        ICardWriteOnlyRepository cardRepository,
+        ICardRepository cardRepository,
         ValidationNotificationHandler notificationHandler
     )
     {

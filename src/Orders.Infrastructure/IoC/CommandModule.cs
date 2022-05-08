@@ -14,13 +14,13 @@ public class CommandModule : Module
     protected override void Load(ContainerBuilder builder)
     {
         builder
-            .RegisterType<CardWriteOnlyRepository>()
-            .As<ICardWriteOnlyRepository>()
+            .RegisterType<CardRepository>()
+            .As<ICardRepository>()
             .InstancePerLifetimeScope();
 
         builder
-            .RegisterType<TransactionWriteOnlyRepository>()
-            .As<ITransactionWriteOnlyRepository>()
+            .RegisterType<TransactionRepository>()
+            .As<ITransactionRepository>()
             .InstancePerLifetimeScope();
 
         builder

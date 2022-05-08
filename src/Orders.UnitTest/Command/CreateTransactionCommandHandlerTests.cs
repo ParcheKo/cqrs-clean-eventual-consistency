@@ -12,12 +12,12 @@ public class CreateTransactionCommandHandlerTests
 {
     private readonly Mock<IEventBus> _eventBusMock;
     private readonly CreateTransactionCommandHandler _sut;
-    private readonly Mock<ITransactionWriteOnlyRepository> _transactionRepositoryMock;
+    private readonly Mock<ITransactionRepository> _transactionRepositoryMock;
 
     public CreateTransactionCommandHandlerTests()
     {
         _eventBusMock = new Mock<IEventBus>();
-        _transactionRepositoryMock = new Mock<ITransactionWriteOnlyRepository>();
+        _transactionRepositoryMock = new Mock<ITransactionRepository>();
         _transactionRepositoryMock.Setup(x => x.Add(It.IsAny<Transaction>()))
             .ReturnsAsync(true);
 

@@ -10,14 +10,14 @@ namespace Orders.UnitTest.Command;
 
 public class CreateCardCommandHandlerTests
 {
-    private readonly Mock<ICardWriteOnlyRepository> _cardRepositoryMock;
+    private readonly Mock<ICardRepository> _cardRepositoryMock;
     private readonly Mock<IEventBus> _eventBusMock;
     private readonly CreateCardCommandHandler _sut;
 
     public CreateCardCommandHandlerTests()
     {
         _eventBusMock = new Mock<IEventBus>();
-        _cardRepositoryMock = new Mock<ICardWriteOnlyRepository>();
+        _cardRepositoryMock = new Mock<ICardRepository>();
         _cardRepositoryMock.Setup(x => x.Add(It.IsAny<Card>()))
             .ReturnsAsync(true);
 
