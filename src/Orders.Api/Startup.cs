@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Linq;
+using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -48,7 +49,9 @@ namespace Orders.Api
             services
                 .AddDbContext<WriteDbContext>(options =>
                 options.UseSqlServer(sqlConnString,
-                b => b.MigrationsAssembly("Orders.Infrastructure")));
+                b => b.MigrationsAssembly(typeof(WriteDbContext).Assembly.GetName().Name))
+                    .UseSnakeCaseNamingConvention()
+                );
 
             var redisConnString = Configuration.GetConnectionString("RedisCache");
 
@@ -94,7 +97,8 @@ namespace Orders.Api
             if (env.EnvironmentName == "Docker" || env.EnvironmentName == Environments.Development)
             {
                 using var serviceScope = app.ApplicationServices.CreateScope();
-                var context = serviceScope.ServiceProvider.GetService<WriteDbContext>();
+                var context = serviceScope.ServiceProvider.GetService<WriteDbContext>()!;
+                // var hasPendingMigrations = context.Database.GetPendingMigrations().Any();
                 context.Database.Migrate();
             }
 
