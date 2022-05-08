@@ -37,7 +37,7 @@ namespace Orders.Query.EventHandlers
 
             await _cache.Delete(nameof(CardListQueryModel));
             await _readDbContext.TransactionListMaterializedView.InsertOneAsync(transactionList);
-            await _readDbContext.CardListMaterializedView.ReplaceOneAsync(filter, cardList, new UpdateOptions { IsUpsert = true });
+            await _readDbContext.CardListMaterializedView.ReplaceOneAsync(filter, cardList, new ReplaceOptions() { IsUpsert = true });
         }
     }
 }
