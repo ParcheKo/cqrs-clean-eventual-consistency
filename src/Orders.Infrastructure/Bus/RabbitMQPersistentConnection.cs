@@ -21,9 +21,9 @@ namespace Orders.Infrastructure.Bus
         private IConnection _connection;
         private bool _disposed;
 
-        public RabbitMqPersistentConnection(AmetistaConfiguration configuration, ILogger<RabbitMqPersistentConnection> logger)
+        public RabbitMqPersistentConnection(AppConfiguration configuration, ILogger<RabbitMqPersistentConnection> logger)
         {
-            _connectionFactory = CreateFactory(configuration);
+            _connectionFactory = CreateConnectionFactory(configuration);
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _retryCount = configuration.RetryCount ?? 5;
         }
@@ -101,7 +101,7 @@ namespace Orders.Infrastructure.Bus
             }
         }
 
-        private IConnectionFactory CreateFactory(AmetistaConfiguration configuration)
+        private IConnectionFactory CreateConnectionFactory(AppConfiguration configuration)
         {
             var factory = new ConnectionFactory()
             {

@@ -15,7 +15,7 @@ namespace Orders.Infrastructure.Cache
         private readonly IDatabase _db;
         private readonly ILogger<RedisCache> _logger;
 
-        public RedisCache(AmetistaConfiguration configuration, ILogger<RedisCache> logger)
+        public RedisCache(AppConfiguration configuration, ILogger<RedisCache> logger)
         {
             _redis = ConnectionMultiplexer.Connect(configuration.ConnectionStrings.RedisCache);
             _db = _redis.GetDatabase();

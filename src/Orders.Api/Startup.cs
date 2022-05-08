@@ -35,7 +35,7 @@ namespace Orders.Api
                     .AllowAnyHeader());
             });
             services.AddScoped<ValidationNotificationHandler>();
-            services.AddSingleton(Configuration.Get<AmetistaConfiguration>());
+            services.AddSingleton(Configuration.Get<AppConfiguration>());
 
             services.AddControllers();
 

@@ -19,8 +19,8 @@ namespace Orders.Infrastructure.Bus
 {
     public class RabbitMqEventBus : IEventBus, IDisposable
     {
-        private readonly string _queueName = "ametista_events";
-        private readonly string _brokerName = "ametista_events";
+        private readonly string _queueName = "orders_events";
+        private readonly string _brokerName = "orders_events";
 
         private readonly IEventDispatcher _eventDispatcher;
         private readonly IPersistentConnection<IModel> _persistentConnection;

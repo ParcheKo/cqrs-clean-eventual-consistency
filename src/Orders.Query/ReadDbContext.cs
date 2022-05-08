@@ -10,10 +10,10 @@ namespace Orders.Query
         private readonly MongoClient _mongoClient;
         private readonly IMongoDatabase _database;
 
-        public ReadDbContext(AmetistaConfiguration ametistaConfiguration)
+        public ReadDbContext(AppConfiguration appConfiguration)
         {
-            _mongoClient = new MongoClient(ametistaConfiguration.ConnectionStrings.MongoConnectionString);
-            _database = _mongoClient.GetDatabase(ametistaConfiguration.ConnectionStrings.MongoDatabase);
+            _mongoClient = new MongoClient(appConfiguration.ConnectionStrings.MongoConnectionString);
+            _database = _mongoClient.GetDatabase(appConfiguration.ConnectionStrings.MongoDatabase);
             Map();
         }
 

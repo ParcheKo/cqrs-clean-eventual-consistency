@@ -1,6 +1,6 @@
 ﻿namespace Orders.Core
 {
-    public class AmetistaConfiguration
+    public class AppConfiguration
     {
         public ConnectionStrings ConnectionStrings { get; set; }
         public int? RetryCount { get; set; }
