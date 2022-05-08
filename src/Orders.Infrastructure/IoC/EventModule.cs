@@ -23,6 +23,11 @@ public class EventModule : Module
             .RegisterType<MaterializeCardEventHandler>()
             .As<IEventHandler<CardCreatedEvent>>()
             .InstancePerLifetimeScope();
+        
+        builder
+            .RegisterType<SampleEventHandler>()
+            .As<IEventHandler<CardCreatedEvent>>()
+            .InstancePerLifetimeScope();
 
         builder
             .RegisterType<TransactionCreatedEventHandler>()
