@@ -17,18 +17,10 @@ namespace Orders.Query.Queries.Cards
 
         public async Task<CardViewQueryModel> HandleAsync(GetCardByIdQuery query)
         {
-            try
-            {
-                FilterDefinition<CardViewQueryModel> filter = Builders<CardViewQueryModel>.Filter.Eq("Id", query.Id);
-                var result = await _readDbContext.CardViewMaterializedView.FindAsync(filter);
+            var result = await _readDbContext.CardViewMaterializedView.Find(p => p.Id == query.Id)
+                .FirstOrDefaultAsync();
 
-                return await result.FirstOrDefaultAsync();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
+            return result;
         }
     }
 }

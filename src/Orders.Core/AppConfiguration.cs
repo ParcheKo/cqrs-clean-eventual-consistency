@@ -4,6 +4,14 @@
     {
         public ConnectionStrings ConnectionStrings { get; set; }
         public int? RetryCount { get; set; }
+        public DatabaseNamingConvention DatabaseNamingConvention { get; set; }
+    }
+
+    public enum DatabaseNamingConvention
+    {
+        AsIs = 1,
+        CamelCase,
+        SnakeCase
     }
 
     public class ConnectionStrings

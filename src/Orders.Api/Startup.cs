@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Orders.Api.Extensions;
 using Orders.Core;
 using Orders.Core.Cards;
 using Orders.Core.Shared;
@@ -31,11 +33,12 @@ namespace Orders.Api
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
             });
             services.AddScoped<ValidationNotificationHandler>();
-            services.AddSingleton(Configuration.Get<AppConfiguration>());
+            var appConfiguration = Configuration.Get<AppConfiguration>();
+            services.AddSingleton(appConfiguration);
 
             services.AddControllers();
 
@@ -47,10 +50,10 @@ namespace Orders.Api
             var sqlConnString = Configuration.GetConnectionString("SqlServerConnectionString");
 
             services
-                .AddDbContext<WriteDbContext>(options =>
-                options.UseSqlServer(sqlConnString,
-                b => b.MigrationsAssembly(typeof(WriteDbContext).Assembly.GetName().Name))
-                    .UseSnakeCaseNamingConvention()
+                .AddDbContext<WriteDbContext>(options => options.UseSqlServer(
+                        sqlConnString,
+                        b => b.MigrationsAssembly(typeof(WriteDbContext).Assembly.GetName().Name)
+                    ).ConfigureDatabaseNamingConvention(appConfiguration.DatabaseNamingConvention)
                 );
 
             var redisConnString = Configuration.GetConnectionString("RedisCache");
@@ -60,7 +63,7 @@ namespace Orders.Api
                 .AddSqlServer(sqlConnString)
                 .AddRedis(redisConnString);
         }
-
+        
         public virtual void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule(new CommandModule());
@@ -84,10 +87,7 @@ namespace Orders.Api
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 
             if (env.IsDevelopment())
             {

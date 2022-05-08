@@ -23,35 +23,29 @@ namespace Orders.Query.Queries.Cards
 
         public async Task<IEnumerable<CardListQueryModel>> HandleAsync(GetCardListQuery query)
         {
-            try
+            var cached = await _cache.Get<IEnumerable<CardListQueryModel>>(nameof(CardListQueryModel));
+
+            var cachedCardLists = cached.ToList();
+            if (cachedCardLists.Any())
             {
-                var cached = await _cache.Get<IEnumerable<CardListQueryModel>>(nameof(CardListQueryModel));
-
-                if (cached != null && cached.Any())
-                {
-                    return cached;
-                }
-
-                var result = _readDbContext
-                   .CardListMaterializedView
-                   .AsQueryable()
-                   .WhereIf(!string.IsNullOrEmpty(query.Number), x => x.Number.Contains(query.Number))
-                   .WhereIf(!string.IsNullOrEmpty(query.CardHolder), x => x.CardHolder.Contains(query.CardHolder))
-                   .WhereIf(query.ChargeDate.HasValue, x => x.ExpirationDate == query.ChargeDate);
-
-                var itemsTask = await result
-                    .Skip(query.Offset)
-                    .Take(query.Limit)
-                    .ToListAsync();
-
-                await _cache.Store<IEnumerable<CardListQueryModel>>(nameof(GetCardListQuery), itemsTask, null);
-
-                return itemsTask;
+                return cachedCardLists;
             }
-            catch (Exception)
-            {
-                throw;
-            }
+
+            var result = _readDbContext
+                .CardListMaterializedView
+                .AsQueryable()
+                .WhereIf(!string.IsNullOrEmpty(query.Number), x => x.Number.Contains(query.Number))
+                .WhereIf(!string.IsNullOrEmpty(query.CardHolder), x => x.CardHolder.Contains(query.CardHolder))
+                .WhereIf(query.ChargeDate.HasValue, x => x.ExpirationDate == query.ChargeDate);
+
+            var itemsTask = await result
+                .Skip(query.Offset)
+                .Take(query.Limit)
+                .ToListAsync();
+
+            await _cache.Store<IEnumerable<CardListQueryModel>>(nameof(GetCardListQuery), itemsTask, null);
+
+            return itemsTask;
         }
     }
 }
