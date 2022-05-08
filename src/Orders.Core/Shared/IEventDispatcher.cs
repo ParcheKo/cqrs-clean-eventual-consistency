@@ -4,6 +4,6 @@ namespace Orders.Core.Shared
 {
     public interface IEventDispatcher
     {
-        Task Dispatch<TEvent>(TEvent e) where TEvent : IEvent;
+        Task Dispatch<TEvent>(TEvent @event) where TEvent : IEvent;
     }
 }

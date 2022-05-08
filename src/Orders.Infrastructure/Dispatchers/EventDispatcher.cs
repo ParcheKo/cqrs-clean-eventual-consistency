@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Autofac;
 using Orders.Core.Shared;
 
@@ -13,20 +14,27 @@ namespace Orders.Infrastructure.Dispatchers
             _componentContext = componentContext;
         }
 
-        public Task Dispatch<TEvent>(TEvent e) where TEvent : IEvent
+        public async Task Dispatch<TEvent>(TEvent @event) where TEvent : IEvent
         {
-            if (e == null)
+            if (@event == null)
             {
-                throw new System.ArgumentNullException(nameof(e));
+                throw new System.ArgumentNullException(nameof(@event));
             }
 
-            var eventType = typeof(IEventHandler<>).MakeGenericType(e.GetType());
+            var eventType = @event.GetType();
+            var eventHandlerType = typeof(IEventHandler<>).MakeGenericType(eventType);
 
-            dynamic handler = _componentContext.Resolve(eventType);
+            dynamic handlers = _componentContext.Resolve(
+                typeof(IEnumerable<>).MakeGenericType(eventHandlerType));
 
-            return (Task)eventType
-                .GetMethod("Handle")
-                .Invoke(handler, new object[] { e });
+            var tasks = new List<Task>(handlers.Length);
+
+            foreach (var handler in handlers)
+            {
+                tasks.Add(handler.Handle((dynamic)@event));
+            }
+
+            await Task.WhenAll(tasks).ConfigureAwait(false);
         }
     }
 }
