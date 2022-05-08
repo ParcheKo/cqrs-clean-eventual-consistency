@@ -77,7 +77,8 @@ public class RedisCache : ICache
 
         await _db.StringSetAsync(
             complexKey,
-            cache
+            cache,
+            TimeSpan.FromSeconds(30)
         );
     }
 
