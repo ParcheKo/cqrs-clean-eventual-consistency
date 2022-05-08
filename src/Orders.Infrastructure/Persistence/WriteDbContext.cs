@@ -17,13 +17,13 @@ namespace Orders.Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Card>()
-            .ToTable("Cards");
+            .ToTable("cards");
 
             modelBuilder.Entity<Card>()
                 .Ignore(x => x.Valid);
 
             modelBuilder.Entity<Transaction>()
-            .ToTable("Transactions");
+            .ToTable("transactions");
 
             modelBuilder.Entity<Transaction>()
                 .Ignore(x => x.Valid);
@@ -31,12 +31,12 @@ namespace Orders.Infrastructure.Persistence
             modelBuilder
                 .Entity<Transaction>()
                 .OwnsOne(p => p.Charge)
-                .Property(p => p.CurrencyCode).HasColumnName("CurrencyCode");
+                .Property(p => p.CurrencyCode).HasColumnName("currency_code");
 
             modelBuilder
                 .Entity<Transaction>()
                 .OwnsOne(p => p.Charge)
-                .Property(p => p.Amount).HasColumnName("Amount");
+                .Property(p => p.Amount).HasColumnName("amount");
         }
     }
 }
