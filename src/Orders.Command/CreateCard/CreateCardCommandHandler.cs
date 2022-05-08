@@ -30,7 +30,8 @@ namespace Orders.Command.CreateCard
             var newCard = Card.CreateNewCard(command.Number, command.CardHolder, command.ExpirationDate);
             newCard.Validate(_notificationHandler);
 
-            if (newCard.Valid)
+            // todo : temporary
+            if (true) //newCard.Valid)
             {
                 var success = await _cardRepository.Add(newCard);
 
