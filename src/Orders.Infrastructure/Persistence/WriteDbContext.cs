@@ -6,9 +6,6 @@ namespace Orders.Infrastructure.Persistence
 {
     public class WriteDbContext : DbContext
     {
-        public DbSet<Card> Cards { get; set; }
-        public DbSet<Transaction> Transactions { get; set; }
-
         public WriteDbContext(DbContextOptions<WriteDbContext> options)
             : base(options)
         {
@@ -36,7 +33,8 @@ namespace Orders.Infrastructure.Persistence
             modelBuilder
                 .Entity<Transaction>()
                 .OwnsOne(p => p.Charge)
-                .Property(p => p.Amount).HasColumnName("amount");
+                .Property(p => p.Amount).HasColumnName("amount")
+                .HasPrecision(24, 2);
         }
     }
 }

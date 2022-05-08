@@ -16,31 +16,31 @@ namespace Orders.Infrastructure.Persistence.Repository
 
         public async Task<bool> Add(Card entity)
         {
-            _writeDbContext.Cards.Add(entity);
+            _writeDbContext.Set<Card>().Add(entity);
             return await _writeDbContext.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> Delete(Card entity)
         {
-            _writeDbContext.Cards.Remove(entity);
+            _writeDbContext.Set<Card>().Remove(entity);
             return await _writeDbContext.SaveChangesAsync() > 0;
         }
 
         public IQueryable<Card> FindAll()
         {
-            return _writeDbContext.Cards;
+            return _writeDbContext.Set<Card>();
         }
 
         public async Task<Card> FindAsync(Guid id)
         {
-            return await _writeDbContext.Cards.FindAsync(id);
+            return await _writeDbContext.Set<Card>().FindAsync(id);
         }
 
         public bool IsDuplicatedCardNumber(string cardNamber)
         {
             try
             {
-                return _writeDbContext.Cards.Any(x => x.Number == cardNamber);
+                return _writeDbContext.Set<Card>().Any(x => x.Number == cardNamber);
             }
             catch (Exception ex)
             {
@@ -51,7 +51,7 @@ namespace Orders.Infrastructure.Persistence.Repository
 
         public async Task<bool> Update(Card entity)
         {
-            _writeDbContext.Cards.Update(entity);
+            _writeDbContext.Set<Card>().Update(entity);
             return await _writeDbContext.SaveChangesAsync() > 0;
         }
     }
