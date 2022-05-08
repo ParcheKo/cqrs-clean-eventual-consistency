@@ -23,13 +23,13 @@ public class Card : IAggregateRoot
         ExpirationDate = expirationDate;
     }
 
-    public string CardHolder { get; }
+    public string CardHolder { get; private set; }
 
-    public DateTime ExpirationDate { get; }
+    public DateTime ExpirationDate { get; private set; }
 
-    public Guid Id { get; }
+    public Guid Id { get; private set; }
 
-    public string Number { get; }
+    public string Number { get; private set; }
 
     public bool Valid { get; private set; }
 

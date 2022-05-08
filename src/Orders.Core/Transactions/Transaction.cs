@@ -24,15 +24,15 @@ public class Transaction : IAggregateRoot
         Charge = charge ?? throw new ArgumentNullException(nameof(charge));
     }
 
-    public Guid CardId { get; }
+    public Guid CardId { get; private set; }
 
-    public Money Charge { get; }
+    public Money Charge { get; private set; }
 
-    public DateTimeOffset ChargeDate { get; }
+    public DateTimeOffset ChargeDate { get; private set; }
 
-    public Guid Id { get; }
+    public Guid Id { get; private set; }
 
-    public string UniqueId { get; }
+    public string UniqueId { get; private set; }
 
     public bool Valid { get; private set; }
 
