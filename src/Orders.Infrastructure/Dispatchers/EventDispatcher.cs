@@ -6,11 +6,11 @@ namespace Orders.Infrastructure.Dispatchers
 {
     public class EventDispatcher : IEventDispatcher
     {
-        private readonly IComponentContext componentContext;
+        private readonly IComponentContext _componentContext;
 
         public EventDispatcher(IComponentContext componentContext)
         {
-            this.componentContext = componentContext;
+            this._componentContext = componentContext;
         }
 
         public Task Dispatch<TEvent>(TEvent e) where TEvent : IEvent
@@ -22,7 +22,7 @@ namespace Orders.Infrastructure.Dispatchers
 
             var eventType = typeof(IEventHandler<>).MakeGenericType(e.GetType());
 
-            dynamic handler = componentContext.Resolve(eventType);
+            dynamic handler = _componentContext.Resolve(eventType);
 
             return (Task)eventType
                 .GetMethod("Handle")

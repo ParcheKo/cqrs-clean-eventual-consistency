@@ -10,18 +10,18 @@ namespace Orders.Api.Endpoints.CreateCard
     [Produces("application/json")]
     public class CreateCardEndpoint : Controller
     {
-        private readonly ICommandDispatcher commandDispatcher;
+        private readonly ICommandDispatcher _commandDispatcher;
 
         public CreateCardEndpoint(ICommandDispatcher commandDispatcher)
         {
-            this.commandDispatcher = commandDispatcher ?? throw new ArgumentNullException(nameof(commandDispatcher));
+            this._commandDispatcher = commandDispatcher ?? throw new ArgumentNullException(nameof(commandDispatcher));
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateCardRequest request)
         {
             var command = new CreateCardCommand(request.Number, request.CardHolder, request.ExpirationDate);
-            var result = await commandDispatcher.Dispatch(command);
+            var result = await _commandDispatcher.Dispatch(command);
 
             if (result.Success)
             {

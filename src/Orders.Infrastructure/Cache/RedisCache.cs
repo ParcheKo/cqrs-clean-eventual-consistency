@@ -11,14 +11,14 @@ namespace Orders.Infrastructure.Cache
 {
     public class RedisCache : ICache
     {
-        private readonly ConnectionMultiplexer redis;
-        private readonly IDatabase db;
+        private readonly ConnectionMultiplexer _redis;
+        private readonly IDatabase _db;
         private readonly ILogger<RedisCache> _logger;
 
         public RedisCache(AmetistaConfiguration configuration, ILogger<RedisCache> logger)
         {
-            redis = ConnectionMultiplexer.Connect(configuration.ConnectionStrings.RedisCache);
-            db = redis.GetDatabase();
+            _redis = ConnectionMultiplexer.Connect(configuration.ConnectionStrings.RedisCache);
+            _db = _redis.GetDatabase();
             _logger = logger;
         }
 
@@ -26,11 +26,11 @@ namespace Orders.Infrastructure.Cache
         {
             try
             {
-                foreach (var ep in redis.GetEndPoints())
+                foreach (var ep in _redis.GetEndPoints())
                 {
-                    var server = redis.GetServer(ep);
+                    var server = _redis.GetServer(ep);
                     var keys = server.Keys(database: 0, pattern: key + "*").ToArray();
-                    await db.KeyDeleteAsync(keys);
+                    await _db.KeyDeleteAsync(keys);
                 }
                 
                 return await Task.FromResult(true);
@@ -45,7 +45,7 @@ namespace Orders.Infrastructure.Cache
 
         public async Task<T> Get<T>(string key)
         {
-            var value = await db.StringGetAsync(key);
+            var value = await _db.StringGetAsync(key);
 
             if (!value.HasValue)
             {
@@ -62,7 +62,7 @@ namespace Orders.Infrastructure.Cache
             var complexKey = GenerateKeyWithParams(key, @params);
             var cache = JsonConvert.SerializeObject(value);
 
-            await db.StringSetAsync(complexKey, cache);
+            await _db.StringSetAsync(complexKey, cache);
         }
 
         private string GenerateKeyWithParams(string key, string[] @params)

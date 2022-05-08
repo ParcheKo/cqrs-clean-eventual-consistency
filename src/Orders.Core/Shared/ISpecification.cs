@@ -31,63 +31,63 @@ namespace Orders.Core.Shared
 
     public class AndSpecification<T> : CompositeSpecification<T>
     {
-        private readonly ISpecification<T> left;
-        private readonly ISpecification<T> right;
+        private readonly ISpecification<T> _left;
+        private readonly ISpecification<T> _right;
 
         public AndSpecification(ISpecification<T> left, ISpecification<T> right)
         {
-            this.left = left;
-            this.right = right;
+            this._left = left;
+            this._right = right;
         }
 
-        public override bool IsSatisfiedBy(T candidate) => left.IsSatisfiedBy(candidate) && right.IsSatisfiedBy(candidate);
+        public override bool IsSatisfiedBy(T candidate) => _left.IsSatisfiedBy(candidate) && _right.IsSatisfiedBy(candidate);
     }
 
     public class AndNotSpecification<T> : CompositeSpecification<T>
     {
-        private readonly ISpecification<T> left;
-        private readonly ISpecification<T> right;
+        private readonly ISpecification<T> _left;
+        private readonly ISpecification<T> _right;
 
         public AndNotSpecification(ISpecification<T> left, ISpecification<T> right)
         {
-            this.left = left;
-            this.right = right;
+            this._left = left;
+            this._right = right;
         }
 
-        public override bool IsSatisfiedBy(T candidate) => left.IsSatisfiedBy(candidate) && right.IsSatisfiedBy(candidate) != true;
+        public override bool IsSatisfiedBy(T candidate) => _left.IsSatisfiedBy(candidate) && _right.IsSatisfiedBy(candidate) != true;
     }
 
     public class OrSpecification<T> : CompositeSpecification<T>
     {
-        private readonly ISpecification<T> left;
-        private readonly ISpecification<T> right;
+        private readonly ISpecification<T> _left;
+        private readonly ISpecification<T> _right;
 
         public OrSpecification(ISpecification<T> left, ISpecification<T> right)
         {
-            this.left = left;
-            this.right = right;
+            this._left = left;
+            this._right = right;
         }
 
-        public override bool IsSatisfiedBy(T candidate) => left.IsSatisfiedBy(candidate) || right.IsSatisfiedBy(candidate);
+        public override bool IsSatisfiedBy(T candidate) => _left.IsSatisfiedBy(candidate) || _right.IsSatisfiedBy(candidate);
     }
     public class OrNotSpecification<T> : CompositeSpecification<T>
     {
-        private readonly ISpecification<T> left;
-        private readonly ISpecification<T> right;
+        private readonly ISpecification<T> _left;
+        private readonly ISpecification<T> _right;
 
         public OrNotSpecification(ISpecification<T> left, ISpecification<T> right)
         {
-            this.left = left;
-            this.right = right;
+            this._left = left;
+            this._right = right;
         }
 
-        public override bool IsSatisfiedBy(T candidate) => left.IsSatisfiedBy(candidate) || !right.IsSatisfiedBy(candidate);
+        public override bool IsSatisfiedBy(T candidate) => _left.IsSatisfiedBy(candidate) || !_right.IsSatisfiedBy(candidate);
     }
 
     public class NotSpecification<T> : CompositeSpecification<T>
     {
-        private readonly ISpecification<T> other;
-        public NotSpecification(ISpecification<T> other) => this.other = other;
-        public override bool IsSatisfiedBy(T candidate) => !other.IsSatisfiedBy(candidate);
+        private readonly ISpecification<T> _other;
+        public NotSpecification(ISpecification<T> other) => this._other = other;
+        public override bool IsSatisfiedBy(T candidate) => !_other.IsSatisfiedBy(candidate);
     }
 }

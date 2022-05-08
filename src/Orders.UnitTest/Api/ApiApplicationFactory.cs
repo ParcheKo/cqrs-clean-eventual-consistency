@@ -25,12 +25,12 @@ namespace Orders.UnitTest.Api
 
                 services.Remove(descriptor);
 
-                var _connection = new SqliteConnection("datasource=:memory:");
-                _connection.Open();
+                var connection = new SqliteConnection("datasource=:memory:");
+                connection.Open();
 
                 services.AddDbContext<WriteDbContext>(options =>
                 {
-                    options.UseSqlite(_connection);
+                    options.UseSqlite(connection);
                 });
 
                 var sp = services.BuildServiceProvider();

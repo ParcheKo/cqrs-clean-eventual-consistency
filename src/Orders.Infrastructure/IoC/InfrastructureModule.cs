@@ -11,7 +11,7 @@ namespace Orders.Infrastructure.IoC
         protected override void Load(ContainerBuilder builder)
         {
             builder
-                .RegisterType<RabbitMQPersistentConnection>()
+                .RegisterType<RabbitMqPersistentConnection>()
                 .As<IPersistentConnection<IModel>>()
                 .SingleInstance();
 
@@ -21,7 +21,7 @@ namespace Orders.Infrastructure.IoC
                 .SingleInstance();
 
             builder
-                .RegisterType<RabbitMQEventBus>()
+                .RegisterType<RabbitMqEventBus>()
                 .As<IEventBus>()
                 .SingleInstance();
         }

@@ -17,22 +17,22 @@ using Orders.Core.Shared;
 
 namespace Orders.Infrastructure.Bus
 {
-    public class RabbitMQEventBus : IEventBus, IDisposable
+    public class RabbitMqEventBus : IEventBus, IDisposable
     {
-        private readonly string QUEUE_NAME = "ametista_events";
-        private readonly string BROKER_NAME = "ametista_events";
+        private readonly string _queueName = "ametista_events";
+        private readonly string _brokerName = "ametista_events";
 
         private readonly IEventDispatcher _eventDispatcher;
         private readonly IPersistentConnection<IModel> _persistentConnection;
-        private readonly ILogger<RabbitMQEventBus> _logger;
-        private readonly static Dictionary<string, Type> _subsManager = new();
+        private readonly ILogger<RabbitMqEventBus> _logger;
+        private readonly static Dictionary<string, Type> SubsManager = new();
         private readonly int _retryCount;
 
         private IModel _consumerChannel;
 
-        public RabbitMQEventBus(IEventDispatcher eventDispatcher,
+        public RabbitMqEventBus(IEventDispatcher eventDispatcher,
             IPersistentConnection<IModel> persistentConnection,
-            ILogger<RabbitMQEventBus> logger,
+            ILogger<RabbitMqEventBus> logger,
             int retryCount = 5)
         {
             _eventDispatcher = eventDispatcher ?? throw new ArgumentNullException(nameof(eventDispatcher));
@@ -64,7 +64,7 @@ namespace Orders.Infrastructure.Bus
             using var channel = _persistentConnection.CreateModel();
             var eventName = @event.GetType().Name;
 
-            channel.ExchangeDeclare(exchange: BROKER_NAME,
+            channel.ExchangeDeclare(exchange: _brokerName,
                                 type: "direct");
 
             var message = JsonConvert.SerializeObject(@event);
@@ -75,7 +75,7 @@ namespace Orders.Infrastructure.Bus
                 var properties = channel.CreateBasicProperties();
                 properties.DeliveryMode = 2; // persistent
 
-                    channel.BasicPublish(exchange: BROKER_NAME,
+                    channel.BasicPublish(exchange: _brokerName,
                                  routingKey: eventName,
                                  mandatory: true,
                                  basicProperties: properties,
@@ -100,10 +100,10 @@ namespace Orders.Infrastructure.Bus
         public void Subscribe<T>() where T : IEvent
         {
             var eventName = typeof(T).Name;
-            var containsKey = _subsManager.ContainsKey(eventName);
+            var containsKey = SubsManager.ContainsKey(eventName);
             if (!containsKey)
             {
-                _subsManager.Add(eventName, typeof(T));
+                SubsManager.Add(eventName, typeof(T));
             }
 
             if (!_persistentConnection.IsConnected)
@@ -112,8 +112,8 @@ namespace Orders.Infrastructure.Bus
             }
 
             using var channel = _persistentConnection.CreateModel();
-            channel.QueueBind(queue: QUEUE_NAME,
-                              exchange: BROKER_NAME,
+            channel.QueueBind(queue: _queueName,
+                              exchange: _brokerName,
                               routingKey: eventName);
         }
 
@@ -126,10 +126,10 @@ namespace Orders.Infrastructure.Bus
 
             var channel = _persistentConnection.CreateModel();
 
-            channel.ExchangeDeclare(exchange: BROKER_NAME,
+            channel.ExchangeDeclare(exchange: _brokerName,
                                  type: "direct");
 
-            channel.QueueDeclare(queue: QUEUE_NAME,
+            channel.QueueDeclare(queue: _queueName,
                                  durable: true,
                                  exclusive: false,
                                  autoDelete: false,
@@ -146,7 +146,7 @@ namespace Orders.Infrastructure.Bus
                 channel.BasicAck(ea.DeliveryTag, multiple: false);
             };
 
-            channel.BasicConsume(queue: QUEUE_NAME,
+            channel.BasicConsume(queue: _queueName,
                                  autoAck: false,
                                  consumer: consumer);
 
@@ -161,20 +161,20 @@ namespace Orders.Infrastructure.Bus
 
         private async Task ProcessEvent(string eventName, string message)
         {
-            if (_subsManager.ContainsKey(eventName))
+            if (SubsManager.ContainsKey(eventName))
             {
-                var @type = _subsManager[eventName];
+                var @type = SubsManager[eventName];
                 var @event = JsonConvert.DeserializeObject(message, @type) as IEvent;
 
                 await _eventDispatcher.Dispatch(@event);
             }
         }
 
-        private bool disposedValue = false; // To detect redundant calls
+        private bool _disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
@@ -183,9 +183,9 @@ namespace Orders.Infrastructure.Bus
                         _consumerChannel.Dispose();
                     }
 
-                    _subsManager.Clear();
+                    SubsManager.Clear();
                 }
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 

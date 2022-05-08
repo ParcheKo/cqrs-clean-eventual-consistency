@@ -12,16 +12,16 @@ using Orders.Core.Shared;
 
 namespace Orders.Infrastructure.Bus
 {
-    public class RabbitMQPersistentConnection : IPersistentConnection<IModel>
+    public class RabbitMqPersistentConnection : IPersistentConnection<IModel>
     {
         private readonly IConnectionFactory _connectionFactory;
-        private readonly ILogger<RabbitMQPersistentConnection> _logger;
+        private readonly ILogger<RabbitMqPersistentConnection> _logger;
         private readonly int _retryCount;
-        private readonly object sync_root = new object();
+        private readonly object _syncRoot = new object();
         private IConnection _connection;
         private bool _disposed;
 
-        public RabbitMQPersistentConnection(AmetistaConfiguration configuration, ILogger<RabbitMQPersistentConnection> logger)
+        public RabbitMqPersistentConnection(AmetistaConfiguration configuration, ILogger<RabbitMqPersistentConnection> logger)
         {
             _connectionFactory = CreateFactory(configuration);
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -66,7 +66,7 @@ namespace Orders.Infrastructure.Bus
         {
             _logger.LogInformation("RabbitMQ Client is trying to connect");
 
-            lock (sync_root)
+            lock (_syncRoot)
             {
                 var policy = Policy.Handle<SocketException>()
                     .Or<BrokerUnreachableException>()

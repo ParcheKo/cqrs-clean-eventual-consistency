@@ -8,13 +8,13 @@ namespace Orders.Query.EventHandlers
 {
     public class MaterializeCardEventHandler : IEventHandler<CardCreatedEvent>
     {
-        private readonly ReadDbContext readDbContext;
-        private readonly ICache cache;
+        private readonly ReadDbContext _readDbContext;
+        private readonly ICache _cache;
 
         public MaterializeCardEventHandler(ReadDbContext readDbContext, ICache cache)
         {
-            this.readDbContext = readDbContext ?? throw new ArgumentNullException(nameof(readDbContext));
-            this.cache = cache ?? throw new ArgumentNullException(nameof(cache));
+            this._readDbContext = readDbContext ?? throw new ArgumentNullException(nameof(readDbContext));
+            this._cache = cache ?? throw new ArgumentNullException(nameof(cache));
         }
 
         public async Task Handle(CardCreatedEvent e)
@@ -39,8 +39,8 @@ namespace Orders.Query.EventHandlers
                 TransactionCount = 0
             };
 
-            await readDbContext.CardViewMaterializedView.InsertOneAsync(cardView);
-            await readDbContext.CardListMaterializedView.InsertOneAsync(cardList);
+            await _readDbContext.CardViewMaterializedView.InsertOneAsync(cardView);
+            await _readDbContext.CardListMaterializedView.InsertOneAsync(cardList);
         }
     }
 }

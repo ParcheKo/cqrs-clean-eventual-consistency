@@ -7,40 +7,40 @@ namespace Orders.Infrastructure.Persistence.Repository
 {
     public class CardWriteOnlyRepository : ICardWriteOnlyRepository
     {
-        private readonly WriteDbContext writeDbContext;
+        private readonly WriteDbContext _writeDbContext;
 
         public CardWriteOnlyRepository(WriteDbContext writeDbContext)
         {
-            this.writeDbContext = writeDbContext ?? throw new ArgumentNullException(nameof(writeDbContext));
+            this._writeDbContext = writeDbContext ?? throw new ArgumentNullException(nameof(writeDbContext));
         }
 
         public async Task<bool> Add(Card entity)
         {
-            writeDbContext.Cards.Add(entity);
-            return await writeDbContext.SaveChangesAsync() > 0;
+            _writeDbContext.Cards.Add(entity);
+            return await _writeDbContext.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> Delete(Card entity)
         {
-            writeDbContext.Cards.Remove(entity);
-            return await writeDbContext.SaveChangesAsync() > 0;
+            _writeDbContext.Cards.Remove(entity);
+            return await _writeDbContext.SaveChangesAsync() > 0;
         }
 
         public IQueryable<Card> FindAll()
         {
-            return writeDbContext.Cards;
+            return _writeDbContext.Cards;
         }
 
         public async Task<Card> FindAsync(Guid id)
         {
-            return await writeDbContext.Cards.FindAsync(id);
+            return await _writeDbContext.Cards.FindAsync(id);
         }
 
         public bool IsDuplicatedCardNumber(string cardNamber)
         {
             try
             {
-                return writeDbContext.Cards.Any(x => x.Number == cardNamber);
+                return _writeDbContext.Cards.Any(x => x.Number == cardNamber);
             }
             catch (Exception ex)
             {
@@ -51,8 +51,8 @@ namespace Orders.Infrastructure.Persistence.Repository
 
         public async Task<bool> Update(Card entity)
         {
-            writeDbContext.Cards.Update(entity);
-            return await writeDbContext.SaveChangesAsync() > 0;
+            _writeDbContext.Cards.Update(entity);
+            return await _writeDbContext.SaveChangesAsync() > 0;
         }
     }
 }

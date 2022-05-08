@@ -9,36 +9,36 @@ namespace Orders.Command.CreateCard
 {
     public class CreateCardCommandHandler : ICommandHandler<CreateCardCommand, CreateCardCommandResult>
     {
-        private readonly IEventBus eventBus;
-        private readonly ICardWriteOnlyRepository cardRepository;
-        private readonly ValidationNotificationHandler notificationHandler;
+        private readonly IEventBus _eventBus;
+        private readonly ICardWriteOnlyRepository _cardRepository;
+        private readonly ValidationNotificationHandler _notificationHandler;
 
         public CreateCardCommandHandler(IEventBus eventBus, ICardWriteOnlyRepository cardRepository, ValidationNotificationHandler notificationHandler)
         {
-            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-            this.cardRepository = cardRepository ?? throw new ArgumentNullException(nameof(cardRepository));
-            this.notificationHandler = notificationHandler ?? throw new ArgumentNullException(nameof(notificationHandler)); ;
+            this._eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+            this._cardRepository = cardRepository ?? throw new ArgumentNullException(nameof(cardRepository));
+            this._notificationHandler = notificationHandler ?? throw new ArgumentNullException(nameof(notificationHandler)); ;
         }
 
         public async Task<CreateCardCommandResult> Handle(CreateCardCommand command)
         {
-            if (cardRepository.IsDuplicatedCardNumber(command.Number))
+            if (_cardRepository.IsDuplicatedCardNumber(command.Number))
             {
-                notificationHandler.AddNotification(nameof(CreateCardCommand.Number), $"Card number already exists {command.Number}");
+                _notificationHandler.AddNotification(nameof(CreateCardCommand.Number), $"Card number already exists {command.Number}");
             }
 
             var newCard = Card.CreateNewCard(command.Number, command.CardHolder, command.ExpirationDate);
-            newCard.Validate(notificationHandler);
+            newCard.Validate(_notificationHandler);
 
             if (newCard.Valid)
             {
-                var success = await cardRepository.Add(newCard);
+                var success = await _cardRepository.Add(newCard);
 
                 if (success)
                 {
                     var cardCreatedEvent = new CardCreatedEvent(newCard);
 
-                    eventBus.Publish(cardCreatedEvent);
+                    _eventBus.Publish(cardCreatedEvent);
                 }
 
                 return new CreateCardCommandResult(newCard.Id, newCard.Number, newCard.CardHolder, newCard.ExpirationDate, success);

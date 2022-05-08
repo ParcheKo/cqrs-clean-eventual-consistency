@@ -12,27 +12,27 @@ namespace Orders.Query.Queries.Cards
 {
     public class GetCardListQueryHandler : IQueryHandler<GetCardListQuery, IEnumerable<CardListQueryModel>>
     {
-        private readonly ReadDbContext readDbContext;
-        private readonly ICache cache;
+        private readonly ReadDbContext _readDbContext;
+        private readonly ICache _cache;
 
         public GetCardListQueryHandler(ReadDbContext readDbContext, ICache cache)
         {
-            this.readDbContext = readDbContext ?? throw new ArgumentNullException(nameof(readDbContext));
-            this.cache = cache ?? throw new ArgumentNullException(nameof(cache));
+            this._readDbContext = readDbContext ?? throw new ArgumentNullException(nameof(readDbContext));
+            this._cache = cache ?? throw new ArgumentNullException(nameof(cache));
         }
 
         public async Task<IEnumerable<CardListQueryModel>> HandleAsync(GetCardListQuery query)
         {
             try
             {
-                var cached = await cache.Get<IEnumerable<CardListQueryModel>>(nameof(CardListQueryModel));
+                var cached = await _cache.Get<IEnumerable<CardListQueryModel>>(nameof(CardListQueryModel));
 
                 if (cached != null && cached.Any())
                 {
                     return cached;
                 }
 
-                var result = readDbContext
+                var result = _readDbContext
                    .CardListMaterializedView
                    .AsQueryable()
                    .WhereIf(!string.IsNullOrEmpty(query.Number), x => x.Number.Contains(query.Number))
@@ -44,7 +44,7 @@ namespace Orders.Query.Queries.Cards
                     .Take(query.Limit)
                     .ToListAsync();
 
-                await cache.Store<IEnumerable<CardListQueryModel>>(nameof(GetCardListQuery), itemsTask, null);
+                await _cache.Store<IEnumerable<CardListQueryModel>>(nameof(GetCardListQuery), itemsTask, null);
 
                 return itemsTask;
             }

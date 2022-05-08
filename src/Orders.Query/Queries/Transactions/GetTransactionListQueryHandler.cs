@@ -10,18 +10,18 @@ namespace Orders.Query.Queries.Transactions
 {
     public class GetTransactionListQueryHandler : IQueryHandler<GetTransactionListQuery, IEnumerable<TransactionListQueryModel>>
     {
-        private readonly ReadDbContext readDbContext;
+        private readonly ReadDbContext _readDbContext;
 
         public GetTransactionListQueryHandler(ReadDbContext readDbContext)
         {
-            this.readDbContext = readDbContext ?? throw new ArgumentNullException(nameof(readDbContext));
+            this._readDbContext = readDbContext ?? throw new ArgumentNullException(nameof(readDbContext));
         }
 
         public async Task<IEnumerable<TransactionListQueryModel>> HandleAsync(GetTransactionListQuery query)
         {
             try
             {
-                var result = readDbContext
+                var result = _readDbContext
                 .TransactionListMaterializedView
                 .AsQueryable()
                 .WhereIf(!string.IsNullOrEmpty(query.CardNumber), x => x.CardNumber == query.CardNumber)

@@ -12,11 +12,11 @@ namespace Orders.Api.Endpoints.GetCardList
     [Produces("application/json")]
     public class GetCardListEndpoint : Controller
     {
-        private readonly IQueryDispatcher queryDispatcher;
+        private readonly IQueryDispatcher _queryDispatcher;
 
         public GetCardListEndpoint(IQueryDispatcher queryDispatcher)
         {
-            this.queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
+            this._queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
         }
 
         [HttpGet]
@@ -31,7 +31,7 @@ namespace Orders.Api.Endpoints.GetCardList
                 Offset = request.Offset
             };
 
-            var result = await queryDispatcher.ExecuteAsync(query);
+            var result = await _queryDispatcher.ExecuteAsync(query);
 
             if (!result.Any())
             {

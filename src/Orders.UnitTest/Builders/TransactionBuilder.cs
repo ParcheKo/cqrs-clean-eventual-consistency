@@ -7,45 +7,45 @@ namespace Orders.UnitTest.Builders
 {
     public class TransactionBuilder : IBuilder<Transaction>
     {
-        private Guid cardId;
+        private Guid _cardId;
 
-        private Money charge;
+        private Money _charge;
 
-        private DateTimeOffset chargeDate;
+        private DateTimeOffset _chargeDate;
 
-        private string uniqueId;
+        private string _uniqueId;
 
         public TransactionBuilder ForCard(Guid id)
         {
-            cardId = id;
+            _cardId = id;
 
             return this;
         }
 
         public TransactionBuilder ContainingChargeAmount(Money charge)
         {
-            this.charge = charge;
+            this._charge = charge;
 
             return this;
         }
 
         public TransactionBuilder ChargedAt(DateTimeOffset date)
         {
-            this.chargeDate = date;
+            this._chargeDate = date;
 
             return this;
         }
 
         public TransactionBuilder HavingUniqueId(string uniqueId)
         {
-            this.uniqueId = uniqueId;
+            this._uniqueId = uniqueId;
 
             return this;
         }
 
         public Transaction Build()
         {
-            return Transaction.CreateTransactionForCard(cardId, uniqueId, chargeDate, charge);
+            return Transaction.CreateTransactionForCard(_cardId, _uniqueId, _chargeDate, _charge);
         }
     }
 }

@@ -12,20 +12,20 @@ namespace Orders.Api.Endpoints.CreateTransaction
     [ApiController]
     public class CreateTransactionEndpoint : ControllerBase
     {
-        private readonly ICommandDispatcher commandDispatcher;
-        private readonly ValidationNotificationHandler validationNotificationHandler;
+        private readonly ICommandDispatcher _commandDispatcher;
+        private readonly ValidationNotificationHandler _validationNotificationHandler;
 
         public CreateTransactionEndpoint(ICommandDispatcher commandDispatcher, ValidationNotificationHandler validationNotificationHandler)
         {
-            this.commandDispatcher = commandDispatcher ?? throw new ArgumentNullException(nameof(commandDispatcher));
-            this.validationNotificationHandler = validationNotificationHandler ?? throw new ArgumentNullException(nameof(validationNotificationHandler));
+            this._commandDispatcher = commandDispatcher ?? throw new ArgumentNullException(nameof(commandDispatcher));
+            this._validationNotificationHandler = validationNotificationHandler ?? throw new ArgumentNullException(nameof(validationNotificationHandler));
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateTransactionRequest request)
         {
             var command = new CreateTransactionCommand(request.Amount, request.CurrencyCode, request.CardId, request.UniqueId, request.ChargeDate);
-            var result = await commandDispatcher.Dispatch(command);
+            var result = await _commandDispatcher.Dispatch(command);
 
             if (result.Success)
             {
@@ -42,7 +42,7 @@ namespace Orders.Api.Endpoints.CreateTransaction
                 return CreatedAtAction(null, response);
             }
 
-            return BadRequest(validationNotificationHandler.Notifications);
+            return BadRequest(_validationNotificationHandler.Notifications);
         }
     }
 }

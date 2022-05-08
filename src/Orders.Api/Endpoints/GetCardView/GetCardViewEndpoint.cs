@@ -11,11 +11,11 @@ namespace Orders.Api.Endpoints.GetCardView
     [Produces("application/json")]
     public class GetCardViewEndpoint : Controller
     {
-        private readonly IQueryDispatcher queryDispatcher;
+        private readonly IQueryDispatcher _queryDispatcher;
 
         public GetCardViewEndpoint(IQueryDispatcher queryDispatcher)
         {
-            this.queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
+            this._queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
         }
 
         [HttpGet("{id}")]
@@ -23,7 +23,7 @@ namespace Orders.Api.Endpoints.GetCardView
         {
             var query = new GetCardByIdQuery(id);
 
-            var queryResult = await queryDispatcher.ExecuteAsync(query);
+            var queryResult = await _queryDispatcher.ExecuteAsync(query);
 
             if (queryResult == null)
             {

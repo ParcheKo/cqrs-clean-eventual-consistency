@@ -12,11 +12,11 @@ namespace Orders.Api.Endpoints.GetTransactions
     [ApiController]
     public class TransactionController : ControllerBase
     {
-        private readonly IQueryDispatcher queryDispatcher;
+        private readonly IQueryDispatcher _queryDispatcher;
 
         public TransactionController(IQueryDispatcher queryDispatcher)
         {
-            this.queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
+            this._queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
         }
 
         [HttpGet]
@@ -32,7 +32,7 @@ namespace Orders.Api.Endpoints.GetTransactions
                 Offset = request.Offset
             };
 
-            var result = await queryDispatcher.ExecuteAsync(query);
+            var result = await _queryDispatcher.ExecuteAsync(query);
 
             if (!result.Any())
             {

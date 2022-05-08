@@ -8,11 +8,11 @@ namespace Orders.UnitTest.Query
 {
     public class TransactionListQueryModelMaterializerUnitTest
     {
-        private readonly ITransactionListQueryModelMaterializer materializer;
+        private readonly ITransactionListQueryModelMaterializer _materializer;
 
         public TransactionListQueryModelMaterializerUnitTest()
         {
-            materializer = new TransactionListQueryModelMaterializer();
+            _materializer = new TransactionListQueryModelMaterializer();
         }
 
         [Fact]
@@ -28,7 +28,7 @@ namespace Orders.UnitTest.Query
 
             // Act
 
-            var queryModel = materializer.Materialize(transaction, cardList);
+            var queryModel = _materializer.Materialize(transaction, cardList);
 
             // Assert
             AssertProperties(queryModel, transaction, cardList);

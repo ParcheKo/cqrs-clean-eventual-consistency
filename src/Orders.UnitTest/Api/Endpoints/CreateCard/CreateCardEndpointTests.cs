@@ -11,13 +11,13 @@ namespace Orders.UnitTest.Api.Endpoints.CreateCard
 {
     public class CreateCardEndpointTests
     {
-        private readonly CreateCardEndpoint sut;
-        private readonly Mock<ICommandDispatcher> commandDispatcherMock;
+        private readonly CreateCardEndpoint _sut;
+        private readonly Mock<ICommandDispatcher> _commandDispatcherMock;
 
         public CreateCardEndpointTests()
         {
-            commandDispatcherMock = new Mock<ICommandDispatcher>();
-            sut = new CreateCardEndpoint(commandDispatcherMock.Object);
+            _commandDispatcherMock = new Mock<ICommandDispatcher>();
+            _sut = new CreateCardEndpoint(_commandDispatcherMock.Object);
         }
 
         [Fact]
@@ -39,12 +39,12 @@ namespace Orders.UnitTest.Api.Endpoints.CreateCard
                 success: true
                 );
 
-            commandDispatcherMock
+            _commandDispatcherMock
                 .Setup(x => x.Dispatch(It.IsAny<CreateCardCommand>()))
                 .ReturnsAsync(commandResult);
 
             // Act
-            var actionResult = await sut.Post(request);
+            var actionResult = await _sut.Post(request);
 
             // Assert
             var createdResult = Assert.IsType<CreatedAtActionResult>(actionResult);

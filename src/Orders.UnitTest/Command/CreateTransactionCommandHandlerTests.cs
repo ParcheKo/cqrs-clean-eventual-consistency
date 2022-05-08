@@ -10,18 +10,18 @@ namespace Orders.UnitTest.Command
 {
     public class CreateTransactionCommandHandlerTests
     {
-        private readonly CreateTransactionCommandHandler sut;
-        private readonly Mock<IEventBus> eventBusMock;
-        private readonly Mock<ITransactionWriteOnlyRepository> transactionRepositoryMock;
+        private readonly CreateTransactionCommandHandler _sut;
+        private readonly Mock<IEventBus> _eventBusMock;
+        private readonly Mock<ITransactionWriteOnlyRepository> _transactionRepositoryMock;
 
         public CreateTransactionCommandHandlerTests()
         {
-            eventBusMock = new Mock<IEventBus>();
-            transactionRepositoryMock = new Mock<ITransactionWriteOnlyRepository>();
-            transactionRepositoryMock.Setup(x => x.Add(It.IsAny<Transaction>()))
+            _eventBusMock = new Mock<IEventBus>();
+            _transactionRepositoryMock = new Mock<ITransactionWriteOnlyRepository>();
+            _transactionRepositoryMock.Setup(x => x.Add(It.IsAny<Transaction>()))
                 .ReturnsAsync(true);
 
-            sut = new CreateTransactionCommandHandler(eventBusMock.Object, transactionRepositoryMock.Object);
+            _sut = new CreateTransactionCommandHandler(_eventBusMock.Object, _transactionRepositoryMock.Object);
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace Orders.UnitTest.Command
             var command = CreateTransactionCommand();
 
             // Act
-            var result = await sut.Handle(command);
+            var result = await _sut.Handle(command);
 
             // Assert
             Assert.True(result.Success);
@@ -46,7 +46,7 @@ namespace Orders.UnitTest.Command
             var command = CreateTransactionCommand();
 
             // Act
-            var result = await sut.Handle(command);
+            var result = await _sut.Handle(command);
 
             // Assert
             Assert.NotEqual(Guid.Empty, result.Id);
@@ -60,7 +60,7 @@ namespace Orders.UnitTest.Command
             var command = CreateTransactionCommand();
 
             // Act
-            var result = await sut.Handle(command);
+            var result = await _sut.Handle(command);
 
             // Assert
             Assert.Equal(command.UniqueId, result.UniqueId);
@@ -74,7 +74,7 @@ namespace Orders.UnitTest.Command
             var command = CreateTransactionCommand();
 
             // Act
-            var result = await sut.Handle(command);
+            var result = await _sut.Handle(command);
 
             // Assert
             Assert.Equal(command.ChargeDate, result.ChargeDate);
@@ -88,7 +88,7 @@ namespace Orders.UnitTest.Command
             var command = CreateTransactionCommand();
 
             // Act
-            var result = await sut.Handle(command);
+            var result = await _sut.Handle(command);
 
             // Assert
             Assert.Equal(command.Amount, result.Amount);
@@ -102,7 +102,7 @@ namespace Orders.UnitTest.Command
             var command = CreateTransactionCommand();
 
             // Act
-            var result = await sut.Handle(command);
+            var result = await _sut.Handle(command);
 
             // Assert
             Assert.Equal(command.CurrencyCode, result.CurrencyCode);

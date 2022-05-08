@@ -7,39 +7,39 @@ namespace Orders.Infrastructure.Persistence.Repository
 {
     public class TransactionWriteOnlyRepository : ITransactionWriteOnlyRepository
     {
-        private readonly WriteDbContext writeDbContext;
+        private readonly WriteDbContext _writeDbContext;
 
         public TransactionWriteOnlyRepository(WriteDbContext writeDbContext)
         {
-            this.writeDbContext = writeDbContext ?? throw new ArgumentNullException(nameof(writeDbContext));
+            this._writeDbContext = writeDbContext ?? throw new ArgumentNullException(nameof(writeDbContext));
         }
 
         public async Task<bool> Add(Transaction entity)
         {
-            writeDbContext.Transactions.Add(entity);
-            return await writeDbContext.SaveChangesAsync() > 0;
+            _writeDbContext.Transactions.Add(entity);
+            return await _writeDbContext.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> Delete(Transaction entity)
         {
-            writeDbContext.Transactions.Remove(entity);
-            return await writeDbContext.SaveChangesAsync() > 0;
+            _writeDbContext.Transactions.Remove(entity);
+            return await _writeDbContext.SaveChangesAsync() > 0;
         }
 
         public IQueryable<Transaction> FindAll()
         {
-            return writeDbContext.Transactions;
+            return _writeDbContext.Transactions;
         }
 
         public async Task<Transaction> FindAsync(Guid id)
         {
-            return await writeDbContext.Transactions.FindAsync(id);
+            return await _writeDbContext.Transactions.FindAsync(id);
         }
 
         public async Task<bool> Update(Transaction entity)
         {
-            writeDbContext.Transactions.Update(entity);
-            return await writeDbContext.SaveChangesAsync() > 0;
+            _writeDbContext.Transactions.Update(entity);
+            return await _writeDbContext.SaveChangesAsync() > 0;
         }
     }
 }

@@ -11,18 +11,18 @@ namespace Orders.UnitTest.Command
 {
     public class CreateCardCommandHandlerTests
     {
-        private readonly CreateCardCommandHandler sut;
-        private readonly Mock<IEventBus> eventBusMock;
-        private readonly Mock<ICardWriteOnlyRepository> cardRepositoryMock;
+        private readonly CreateCardCommandHandler _sut;
+        private readonly Mock<IEventBus> _eventBusMock;
+        private readonly Mock<ICardWriteOnlyRepository> _cardRepositoryMock;
 
         public CreateCardCommandHandlerTests()
         {
-            eventBusMock = new Mock<IEventBus>();
-            cardRepositoryMock = new Mock<ICardWriteOnlyRepository>();
-            cardRepositoryMock.Setup(x => x.Add(It.IsAny<Card>()))
+            _eventBusMock = new Mock<IEventBus>();
+            _cardRepositoryMock = new Mock<ICardWriteOnlyRepository>();
+            _cardRepositoryMock.Setup(x => x.Add(It.IsAny<Card>()))
                 .ReturnsAsync(true);
 
-            sut = new CreateCardCommandHandler(eventBusMock.Object, cardRepositoryMock.Object, new ValidationNotificationHandler());
+            _sut = new CreateCardCommandHandler(_eventBusMock.Object, _cardRepositoryMock.Object, new ValidationNotificationHandler());
         }
 
         [Fact]
@@ -33,7 +33,7 @@ namespace Orders.UnitTest.Command
             var command = CreateCardCommand();
 
             // Act
-            var result = await sut.Handle(command);
+            var result = await _sut.Handle(command);
 
             // Assert
             Assert.True(result.Success);
@@ -47,7 +47,7 @@ namespace Orders.UnitTest.Command
             var command = CreateCardCommand();
 
             // Act
-            var result = await sut.Handle(command);
+            var result = await _sut.Handle(command);
 
             // Assert
             Assert.Equal(command.CardHolder, result.CardHolder);
@@ -61,7 +61,7 @@ namespace Orders.UnitTest.Command
             var command = CreateCardCommand();
 
             // Act
-            var result = await sut.Handle(command);
+            var result = await _sut.Handle(command);
 
             // Assert
             Assert.Equal(command.Number, result.Number);
@@ -75,7 +75,7 @@ namespace Orders.UnitTest.Command
             var command = CreateCardCommand();
 
             // Act
-            var result = await sut.Handle(command);
+            var result = await _sut.Handle(command);
 
             // Assert
             Assert.Equal(command.ExpirationDate, result.ExpirationDate);

@@ -6,11 +6,11 @@ namespace Orders.Infrastructure.Dispatchers
 {
     public class CommandDispatcher : ICommandDispatcher
     {
-        private readonly IComponentContext componentContext;
+        private readonly IComponentContext _componentContext;
 
         public CommandDispatcher(IComponentContext componentContext)
         {
-            this.componentContext = componentContext;
+            this._componentContext = componentContext;
         }
 
         public Task<TResult> Dispatch<TResult>(ICommand<TResult> command) where TResult : ICommandResult
@@ -22,7 +22,7 @@ namespace Orders.Infrastructure.Dispatchers
 
             var commandHandlerType = typeof(ICommandHandler<,>).MakeGenericType(command.GetType(), typeof(TResult));
 
-            dynamic handler = componentContext.Resolve(commandHandlerType);
+            dynamic handler = _componentContext.Resolve(commandHandlerType);
 
             return (Task<TResult>)commandHandlerType
                 .GetMethod("Handle")
@@ -33,7 +33,7 @@ namespace Orders.Infrastructure.Dispatchers
         {
             var commandHandlerType = typeof(ICommandHandler<>).MakeGenericType(command.GetType());
 
-            dynamic handler = componentContext.Resolve(commandHandlerType);
+            dynamic handler = _componentContext.Resolve(commandHandlerType);
 
             return (Task)commandHandlerType
                 .GetMethod("HandleNonResult")

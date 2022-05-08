@@ -9,13 +9,13 @@ namespace Orders.Command.CreateTransaction
 {
     public class CreateTransactionCommandHandler : ICommandHandler<CreateTransactionCommand, CreateTransactionCommandResult>
     {
-        private readonly IEventBus eventBus;
-        private readonly ITransactionWriteOnlyRepository transactionRepository;
+        private readonly IEventBus _eventBus;
+        private readonly ITransactionWriteOnlyRepository _transactionRepository;
 
         public CreateTransactionCommandHandler(IEventBus eventBus, ITransactionWriteOnlyRepository transactionRepository)
         {
-            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-            this.transactionRepository = transactionRepository ?? throw new ArgumentNullException(nameof(transactionRepository));
+            this._eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+            this._transactionRepository = transactionRepository ?? throw new ArgumentNullException(nameof(transactionRepository));
         }
 
         public async Task<CreateTransactionCommandResult> Handle(CreateTransactionCommand command)
@@ -23,13 +23,13 @@ namespace Orders.Command.CreateTransaction
             var charge = new Money(command.Amount, command.CurrencyCode);
             var newTransaction = Transaction.CreateTransactionForCard(command.CardId, command.UniqueId, command.ChargeDate, charge);
 
-            var success = await transactionRepository.Add(newTransaction);
+            var success = await _transactionRepository.Add(newTransaction);
 
             if (success)
             {
                 var transactionCreatedEvent = new TransactionCreatedEvent(newTransaction);
 
-                eventBus.Publish(transactionCreatedEvent);
+                _eventBus.Publish(transactionCreatedEvent);
             }
 
             return new CreateTransactionCommandResult(

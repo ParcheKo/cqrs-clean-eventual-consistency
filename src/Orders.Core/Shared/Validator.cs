@@ -4,11 +4,11 @@ namespace Orders.Core.Shared
 {
     public abstract class Validator<TEntity>
     {
-        private readonly ValidationNotificationHandler notificationHandler;
+        private readonly ValidationNotificationHandler _notificationHandler;
 
         protected Validator(ValidationNotificationHandler notificationHandler)
         {
-            this.notificationHandler = notificationHandler ?? throw new ArgumentNullException(nameof(notificationHandler));
+            this._notificationHandler = notificationHandler ?? throw new ArgumentNullException(nameof(notificationHandler));
         }
 
         public abstract void Validate(TEntity entity);
@@ -19,7 +19,7 @@ namespace Orders.Core.Shared
 
             if (!isSatisfied)
             {
-                notificationHandler.AddNotification(code, message);
+                _notificationHandler.AddNotification(code, message);
             }
         }
 
