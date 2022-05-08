@@ -10,7 +10,7 @@ namespace Orders.Infrastructure.Dispatchers
 
         public QueryDispatcher(IComponentContext componentContext)
         {
-            this._componentContext = componentContext;
+            _componentContext = componentContext;
         }
 
         public Task<TModel> ExecuteAsync<TModel>(IQuery<TModel> query)

@@ -8,7 +8,7 @@ using Orders.Query.QueryModel;
 
 namespace Orders.Query.EventHandlers
 {
-    public class TransactionCreatedEventHandler : IEventHandler<Core.Transactions.TransactionCreatedEvent>
+    public class TransactionCreatedEventHandler : IEventHandler<TransactionCreatedEvent>
     {
         private readonly ReadDbContext _readDbContext;
         private readonly ICache _cache;
@@ -19,13 +19,13 @@ namespace Orders.Query.EventHandlers
             ITransactionListQueryModelMaterializer transactionMaterializer, 
             ICardListQueryModelMaterializer cardListMaterializer)
         {
-            this._readDbContext = readDbContext ?? throw new ArgumentNullException(nameof(readDbContext));
-            this._cache = cache ?? throw new ArgumentNullException(nameof(cache));
-            this._transactionMaterializer = transactionMaterializer ?? throw new ArgumentNullException(nameof(transactionMaterializer));
-            this._cardListMaterializer = cardListMaterializer ?? throw new ArgumentNullException(nameof(cardListMaterializer));
+            _readDbContext = readDbContext ?? throw new ArgumentNullException(nameof(readDbContext));
+            _cache = cache ?? throw new ArgumentNullException(nameof(cache));
+            _transactionMaterializer = transactionMaterializer ?? throw new ArgumentNullException(nameof(transactionMaterializer));
+            _cardListMaterializer = cardListMaterializer ?? throw new ArgumentNullException(nameof(cardListMaterializer));
         }
 
-        public async Task Handle(Core.Transactions.TransactionCreatedEvent e)
+        public async Task Handle(TransactionCreatedEvent e)
         {
             FilterDefinition<CardListQueryModel> filter = Builders<CardListQueryModel>.Filter.Eq("Id", e.Data.CardId);
             var cardList = await _readDbContext.CardListMaterializedView

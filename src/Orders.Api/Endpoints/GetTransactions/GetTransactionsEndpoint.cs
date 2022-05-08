@@ -16,7 +16,7 @@ namespace Orders.Api.Endpoints.GetTransactions
 
         public TransactionController(IQueryDispatcher queryDispatcher)
         {
-            this._queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
+            _queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
         }
 
         [HttpGet]

@@ -8,7 +8,7 @@ namespace Orders.Core.Shared
 
         protected Validator(ValidationNotificationHandler notificationHandler)
         {
-            this._notificationHandler = notificationHandler ?? throw new ArgumentNullException(nameof(notificationHandler));
+            _notificationHandler = notificationHandler ?? throw new ArgumentNullException(nameof(notificationHandler));
         }
 
         public abstract void Validate(TEntity entity);

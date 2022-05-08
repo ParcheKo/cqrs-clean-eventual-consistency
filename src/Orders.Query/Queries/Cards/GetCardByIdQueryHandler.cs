@@ -12,7 +12,7 @@ namespace Orders.Query.Queries.Cards
 
         public GetCardByIdQueryHandler(ReadDbContext readDbContext)
         {
-            this._readDbContext = readDbContext ?? throw new ArgumentNullException(nameof(readDbContext));
+            _readDbContext = readDbContext ?? throw new ArgumentNullException(nameof(readDbContext));
         }
 
         public async Task<CardViewQueryModel> HandleAsync(GetCardByIdQuery query)

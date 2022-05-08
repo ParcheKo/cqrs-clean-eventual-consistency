@@ -10,7 +10,7 @@ namespace Orders.Infrastructure.Dispatchers
 
         public CommandDispatcher(IComponentContext componentContext)
         {
-            this._componentContext = componentContext;
+            _componentContext = componentContext;
         }
 
         public Task<TResult> Dispatch<TResult>(ICommand<TResult> command) where TResult : ICommandResult

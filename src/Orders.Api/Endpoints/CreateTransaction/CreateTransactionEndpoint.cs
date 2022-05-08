@@ -17,8 +17,8 @@ namespace Orders.Api.Endpoints.CreateTransaction
 
         public CreateTransactionEndpoint(ICommandDispatcher commandDispatcher, ValidationNotificationHandler validationNotificationHandler)
         {
-            this._commandDispatcher = commandDispatcher ?? throw new ArgumentNullException(nameof(commandDispatcher));
-            this._validationNotificationHandler = validationNotificationHandler ?? throw new ArgumentNullException(nameof(validationNotificationHandler));
+            _commandDispatcher = commandDispatcher ?? throw new ArgumentNullException(nameof(commandDispatcher));
+            _validationNotificationHandler = validationNotificationHandler ?? throw new ArgumentNullException(nameof(validationNotificationHandler));
         }
 
         [HttpPost]

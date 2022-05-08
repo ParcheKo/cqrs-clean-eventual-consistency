@@ -6,7 +6,7 @@ using RabbitMQ.Client;
 
 namespace Orders.Infrastructure.IoC
 {
-    public class InfrastructureModule : Autofac.Module
+    public class InfrastructureModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {

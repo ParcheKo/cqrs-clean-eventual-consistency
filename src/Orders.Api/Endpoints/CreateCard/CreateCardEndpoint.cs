@@ -14,7 +14,7 @@ namespace Orders.Api.Endpoints.CreateCard
 
         public CreateCardEndpoint(ICommandDispatcher commandDispatcher)
         {
-            this._commandDispatcher = commandDispatcher ?? throw new ArgumentNullException(nameof(commandDispatcher));
+            _commandDispatcher = commandDispatcher ?? throw new ArgumentNullException(nameof(commandDispatcher));
         }
 
         [HttpPost]

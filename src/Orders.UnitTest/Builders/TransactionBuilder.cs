@@ -24,21 +24,21 @@ namespace Orders.UnitTest.Builders
 
         public TransactionBuilder ContainingChargeAmount(Money charge)
         {
-            this._charge = charge;
+            _charge = charge;
 
             return this;
         }
 
         public TransactionBuilder ChargedAt(DateTimeOffset date)
         {
-            this._chargeDate = date;
+            _chargeDate = date;
 
             return this;
         }
 
         public TransactionBuilder HavingUniqueId(string uniqueId)
         {
-            this._uniqueId = uniqueId;
+            _uniqueId = uniqueId;
 
             return this;
         }

@@ -11,7 +11,7 @@ namespace Orders.Infrastructure.Persistence.Repository
 
         public TransactionWriteOnlyRepository(WriteDbContext writeDbContext)
         {
-            this._writeDbContext = writeDbContext ?? throw new ArgumentNullException(nameof(writeDbContext));
+            _writeDbContext = writeDbContext ?? throw new ArgumentNullException(nameof(writeDbContext));
         }
 
         public async Task<bool> Add(Transaction entity)

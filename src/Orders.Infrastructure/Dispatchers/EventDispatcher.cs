@@ -10,7 +10,7 @@ namespace Orders.Infrastructure.Dispatchers
 
         public EventDispatcher(IComponentContext componentContext)
         {
-            this._componentContext = componentContext;
+            _componentContext = componentContext;
         }
 
         public Task Dispatch<TEvent>(TEvent e) where TEvent : IEvent

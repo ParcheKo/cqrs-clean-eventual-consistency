@@ -36,8 +36,8 @@ namespace Orders.Core.Shared
 
         public AndSpecification(ISpecification<T> left, ISpecification<T> right)
         {
-            this._left = left;
-            this._right = right;
+            _left = left;
+            _right = right;
         }
 
         public override bool IsSatisfiedBy(T candidate) => _left.IsSatisfiedBy(candidate) && _right.IsSatisfiedBy(candidate);
@@ -50,8 +50,8 @@ namespace Orders.Core.Shared
 
         public AndNotSpecification(ISpecification<T> left, ISpecification<T> right)
         {
-            this._left = left;
-            this._right = right;
+            _left = left;
+            _right = right;
         }
 
         public override bool IsSatisfiedBy(T candidate) => _left.IsSatisfiedBy(candidate) && _right.IsSatisfiedBy(candidate) != true;
@@ -64,8 +64,8 @@ namespace Orders.Core.Shared
 
         public OrSpecification(ISpecification<T> left, ISpecification<T> right)
         {
-            this._left = left;
-            this._right = right;
+            _left = left;
+            _right = right;
         }
 
         public override bool IsSatisfiedBy(T candidate) => _left.IsSatisfiedBy(candidate) || _right.IsSatisfiedBy(candidate);
@@ -77,8 +77,8 @@ namespace Orders.Core.Shared
 
         public OrNotSpecification(ISpecification<T> left, ISpecification<T> right)
         {
-            this._left = left;
-            this._right = right;
+            _left = left;
+            _right = right;
         }
 
         public override bool IsSatisfiedBy(T candidate) => _left.IsSatisfiedBy(candidate) || !_right.IsSatisfiedBy(candidate);
@@ -87,7 +87,7 @@ namespace Orders.Core.Shared
     public class NotSpecification<T> : CompositeSpecification<T>
     {
         private readonly ISpecification<T> _other;
-        public NotSpecification(ISpecification<T> other) => this._other = other;
+        public NotSpecification(ISpecification<T> other) => _other = other;
         public override bool IsSatisfiedBy(T candidate) => !_other.IsSatisfiedBy(candidate);
     }
 }

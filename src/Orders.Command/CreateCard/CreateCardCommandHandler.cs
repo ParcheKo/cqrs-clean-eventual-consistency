@@ -15,9 +15,9 @@ namespace Orders.Command.CreateCard
 
         public CreateCardCommandHandler(IEventBus eventBus, ICardWriteOnlyRepository cardRepository, ValidationNotificationHandler notificationHandler)
         {
-            this._eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-            this._cardRepository = cardRepository ?? throw new ArgumentNullException(nameof(cardRepository));
-            this._notificationHandler = notificationHandler ?? throw new ArgumentNullException(nameof(notificationHandler)); ;
+            _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+            _cardRepository = cardRepository ?? throw new ArgumentNullException(nameof(cardRepository));
+            _notificationHandler = notificationHandler ?? throw new ArgumentNullException(nameof(notificationHandler)); ;
         }
 
         public async Task<CreateCardCommandResult> Handle(CreateCardCommand command)

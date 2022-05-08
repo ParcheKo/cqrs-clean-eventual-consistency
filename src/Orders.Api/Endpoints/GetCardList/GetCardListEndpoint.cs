@@ -16,7 +16,7 @@ namespace Orders.Api.Endpoints.GetCardList
 
         public GetCardListEndpoint(IQueryDispatcher queryDispatcher)
         {
-            this._queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
+            _queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
         }
 
         [HttpGet]

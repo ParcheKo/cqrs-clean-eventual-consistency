@@ -14,7 +14,7 @@ namespace Orders.Query.Queries.Transactions
 
         public GetTransactionListQueryHandler(ReadDbContext readDbContext)
         {
-            this._readDbContext = readDbContext ?? throw new ArgumentNullException(nameof(readDbContext));
+            _readDbContext = readDbContext ?? throw new ArgumentNullException(nameof(readDbContext));
         }
 
         public async Task<IEnumerable<TransactionListQueryModel>> HandleAsync(GetTransactionListQuery query)

@@ -17,8 +17,8 @@ namespace Orders.Query.Queries.Cards
 
         public GetCardListQueryHandler(ReadDbContext readDbContext, ICache cache)
         {
-            this._readDbContext = readDbContext ?? throw new ArgumentNullException(nameof(readDbContext));
-            this._cache = cache ?? throw new ArgumentNullException(nameof(cache));
+            _readDbContext = readDbContext ?? throw new ArgumentNullException(nameof(readDbContext));
+            _cache = cache ?? throw new ArgumentNullException(nameof(cache));
         }
 
         public async Task<IEnumerable<CardListQueryModel>> HandleAsync(GetCardListQuery query)

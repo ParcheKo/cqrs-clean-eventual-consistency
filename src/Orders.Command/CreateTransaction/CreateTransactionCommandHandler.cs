@@ -14,8 +14,8 @@ namespace Orders.Command.CreateTransaction
 
         public CreateTransactionCommandHandler(IEventBus eventBus, ITransactionWriteOnlyRepository transactionRepository)
         {
-            this._eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-            this._transactionRepository = transactionRepository ?? throw new ArgumentNullException(nameof(transactionRepository));
+            _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+            _transactionRepository = transactionRepository ?? throw new ArgumentNullException(nameof(transactionRepository));
         }
 
         public async Task<CreateTransactionCommandResult> Handle(CreateTransactionCommand command)

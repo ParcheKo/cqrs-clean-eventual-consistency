@@ -15,7 +15,7 @@ namespace Orders.Api.Endpoints.GetCardView
 
         public GetCardViewEndpoint(IQueryDispatcher queryDispatcher)
         {
-            this._queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
+            _queryDispatcher = queryDispatcher ?? throw new ArgumentNullException(nameof(queryDispatcher));
         }
 
         [HttpGet("{id}")]
