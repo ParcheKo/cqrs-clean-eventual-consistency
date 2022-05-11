@@ -1,7 +1,5 @@
-﻿namespace Orders.Infrastructure.Processing.Outbox
-{
-    public interface IRecurringCommand
-    {
+﻿namespace Orders.Infrastructure.Processing.Outbox;
 
-    }
+public interface IRecurringCommand
+{
 }

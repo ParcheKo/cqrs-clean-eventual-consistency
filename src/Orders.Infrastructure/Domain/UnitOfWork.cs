@@ -4,26 +4,25 @@ using Orders.Domain.SeedWork;
 using Orders.Infrastructure.Processing;
 using Orders.Infrastructure.WriteDatabase;
 
-namespace Orders.Infrastructure.Domain
+namespace Orders.Infrastructure.Domain;
+
+public class UnitOfWork : IUnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork
+    private readonly IDomainEventsDispatcher _domainEventsDispatcher;
+    private readonly OrdersContext _ordersContext;
+
+    public UnitOfWork(
+        OrdersContext ordersContext,
+        IDomainEventsDispatcher domainEventsDispatcher
+    )
     {
-        private readonly OrdersContext _ordersContext;
-        private readonly IDomainEventsDispatcher _domainEventsDispatcher;
+        _ordersContext = ordersContext;
+        _domainEventsDispatcher = domainEventsDispatcher;
+    }
 
-        public UnitOfWork(
-            OrdersContext ordersContext,
-            IDomainEventsDispatcher domainEventsDispatcher
-        )
-        {
-            this._ordersContext = ordersContext;
-            this._domainEventsDispatcher = domainEventsDispatcher;
-        }
-
-        public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
-        {
-            await this._domainEventsDispatcher.DispatchEventsAsync();
-            return await this._ordersContext.SaveChangesAsync(cancellationToken);
-        }
+    public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
+    {
+        await _domainEventsDispatcher.DispatchEventsAsync();
+        return await _ordersContext.SaveChangesAsync(cancellationToken);
     }
 }

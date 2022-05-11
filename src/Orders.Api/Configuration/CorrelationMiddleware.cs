@@ -2,30 +2,29 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Orders.Api.Configuration
+namespace Orders.Api.Configuration;
+
+internal class CorrelationMiddleware
 {
-    internal class CorrelationMiddleware
+    internal const string CorrelationHeaderKey = "Request-Id";
+
+    private readonly RequestDelegate _next;
+
+    public CorrelationMiddleware(RequestDelegate next)
     {
-        internal const string CorrelationHeaderKey = "Request-Id";
+        _next = next;
+    }
 
-        private readonly RequestDelegate _next;
+    public async Task Invoke(HttpContext context)
+    {
+        var correlationId = Guid.NewGuid();
 
-        public CorrelationMiddleware(
-            RequestDelegate next)
-        {
-            this._next = next;
-        }
+        if (context.Request != null)
+            context.Request.Headers.Add(
+                CorrelationHeaderKey,
+                correlationId.ToString()
+            );
 
-        public async Task Invoke(HttpContext context)
-        {
-            var correlationId = Guid.NewGuid();
-
-            if (context.Request != null)
-            {
-                context.Request.Headers.Add(CorrelationHeaderKey, correlationId.ToString());
-            }
-
-            await this._next.Invoke(context);
-        }
+        await _next.Invoke(context);
     }
 }

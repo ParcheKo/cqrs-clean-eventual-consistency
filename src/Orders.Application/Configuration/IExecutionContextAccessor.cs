@@ -1,11 +1,10 @@
 ﻿using System;
 
-namespace Orders.Application.Configuration
-{
-    public interface IExecutionContextAccessor
-    {
-        Guid RequestId { get; }
+namespace Orders.Application.Configuration;
 
-        bool IsAvailable { get; }
-    }
+public interface IExecutionContextAccessor
+{
+    Guid RequestId { get; }
+
+    bool IsAvailable { get; }
 }

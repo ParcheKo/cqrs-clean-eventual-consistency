@@ -1,21 +1,26 @@
 ﻿using Orders.Domain.SeedWork;
 
-namespace Orders.Domain.SharedKernel
+namespace Orders.Domain.SharedKernel;
+
+public class MoneyValueOperationMustBePerformedOnTheSameCurrencyRule : IBusinessRule
 {
-    public class MoneyValueOperationMustBePerformedOnTheSameCurrencyRule : IBusinessRule
+    private readonly MoneyValue _left;
+
+    private readonly MoneyValue _right;
+
+    public MoneyValueOperationMustBePerformedOnTheSameCurrencyRule(
+        MoneyValue left,
+        MoneyValue right
+    )
     {
-        private readonly MoneyValue _left;
-
-        private readonly MoneyValue _right;
-
-        public MoneyValueOperationMustBePerformedOnTheSameCurrencyRule(MoneyValue left, MoneyValue right)
-        {
-            _left = left;
-            _right = right;
-        }
-
-        public bool IsBroken() => _left.Currency != _right.Currency;
-
-        public string Message => "Money value currencies must be the same";
+        _left = left;
+        _right = right;
     }
+
+    public bool IsBroken()
+    {
+        return _left.Currency != _right.Currency;
+    }
+
+    public string Message => "Money value currencies must be the same";
 }

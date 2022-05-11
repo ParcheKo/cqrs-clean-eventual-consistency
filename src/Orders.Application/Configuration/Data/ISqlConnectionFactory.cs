@@ -1,9 +1,8 @@
 ﻿using System.Data;
 
-namespace Orders.Application.Configuration.Data
+namespace Orders.Application.Configuration.Data;
+
+public interface ISqlConnectionFactory
 {
-    public interface ISqlConnectionFactory
-    {
-        IDbConnection GetOpenConnection();
-    }
+    IDbConnection GetOpenConnection();
 }

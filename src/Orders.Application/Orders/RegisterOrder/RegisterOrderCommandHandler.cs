@@ -36,10 +36,10 @@ public class RegisterOrderCommandHandler : ICommandHandler<RegisterOrderCommand,
             orderNoIsUnique
         );
 
-        await this._orderRepository.Add(order);
+        await _orderRepository.Add(order);
 
-        await this._unitOfWork.CommitAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
 
-        return new OrderDto() { Id = order.Id.Value };
+        return new OrderDto { Id = order.Id.Value };
     }
 }

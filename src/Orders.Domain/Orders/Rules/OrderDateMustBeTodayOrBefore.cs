@@ -12,7 +12,10 @@ public class OrderDateMustBeTodayOrBefore : IBusinessRule
         _orderDate = orderDate;
     }
 
-    public bool IsBroken() => _orderDate.Date > DateTime.Today;
+    public bool IsBroken()
+    {
+        return _orderDate.Date > DateTime.Today;
+    }
 
     public string Message => "Order date can not be after today.";
 }

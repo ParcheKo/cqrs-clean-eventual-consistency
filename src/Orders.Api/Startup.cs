@@ -133,13 +133,9 @@ public class Startup
         app.UseMiddleware<CorrelationMiddleware>();
 
         if (env.IsDevelopment())
-        {
             app.UseDeveloperExceptionPage();
-        }
         else
-        {
             app.UseProblemDetails();
-        }
 
         // app.UseStaticFiles();
 

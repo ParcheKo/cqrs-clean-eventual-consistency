@@ -1,7 +1,5 @@
-﻿namespace Orders.Domain.SeedWork
+﻿namespace Orders.Domain.SeedWork;
+
+public interface IAggregateRoot
 {
-    public interface IAggregateRoot
-    {
-        
-    }
 }

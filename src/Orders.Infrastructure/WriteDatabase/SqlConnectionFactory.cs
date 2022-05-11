@@ -3,35 +3,31 @@ using System.Data;
 using Microsoft.Data.SqlClient;
 using Orders.Application.Configuration.Data;
 
-namespace Orders.Infrastructure.WriteDatabase
+namespace Orders.Infrastructure.WriteDatabase;
+
+public class SqlConnectionFactory : ISqlConnectionFactory, IDisposable
 {
-    public class SqlConnectionFactory : ISqlConnectionFactory, IDisposable
+    private readonly string _connectionString;
+    private IDbConnection _connection;
+
+    public SqlConnectionFactory(string connectionString)
     {
-        private readonly string _connectionString;
-        private IDbConnection _connection;
+        _connectionString = connectionString;
+    }
 
-        public SqlConnectionFactory(string connectionString)
+    public void Dispose()
+    {
+        if (_connection != null && _connection.State == ConnectionState.Open) _connection.Dispose();
+    }
+
+    public IDbConnection GetOpenConnection()
+    {
+        if (_connection == null || _connection.State != ConnectionState.Open)
         {
-            this._connectionString = connectionString;
+            _connection = new SqlConnection(_connectionString);
+            _connection.Open();
         }
 
-        public IDbConnection GetOpenConnection()
-        {
-            if (this._connection == null || this._connection.State != ConnectionState.Open)
-            {
-                this._connection = new SqlConnection(_connectionString);
-                this._connection.Open();
-            }
-
-            return this._connection;
-        }
-
-        public void Dispose()
-        {
-            if (this._connection != null && this._connection.State == ConnectionState.Open)
-            {
-                this._connection.Dispose();
-            }
-        }
+        return _connection;
     }
 }

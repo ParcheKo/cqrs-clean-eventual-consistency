@@ -4,25 +4,22 @@ using Orders.Domain.Persons;
 using Orders.Infrastructure.Processing.InternalCommands;
 using Orders.Infrastructure.Processing.Outbox;
 
-namespace Orders.Infrastructure.WriteDatabase
+namespace Orders.Infrastructure.WriteDatabase;
+
+public class OrdersContext : DbContext
 {
-    public class OrdersContext : DbContext
+    public OrdersContext(DbContextOptions options) : base(options)
     {
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Person> Persons { get; set; }
-        
-        public DbSet<OutboxMessage> OutboxMessages { get; set; }
-        public DbSet<InternalCommand> InternalCommands { get; set; }
+    }
 
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<Person> Persons { get; set; }
 
-        public OrdersContext(DbContextOptions options) : base(options)
-        {
+    public DbSet<OutboxMessage> OutboxMessages { get; set; }
+    public DbSet<InternalCommand> InternalCommands { get; set; }
 
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrdersContext).Assembly);
-        }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrdersContext).Assembly);
     }
 }

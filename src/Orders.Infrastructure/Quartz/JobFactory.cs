@@ -2,26 +2,28 @@
 using Quartz;
 using Quartz.Spi;
 
-namespace Orders.Infrastructure.Quartz
+namespace Orders.Infrastructure.Quartz;
+
+public class JobFactory : IJobFactory
 {
-    public class JobFactory : IJobFactory
+    private readonly IContainer _container;
+
+    public JobFactory(IContainer container)
     {
-        private readonly IContainer _container;
+        _container = container;
+    }
 
-        public JobFactory(IContainer container)
-        {
-            this._container = container;
-        }
+    public IJob NewJob(
+        TriggerFiredBundle bundle,
+        IScheduler scheduler
+    )
+    {
+        var job = _container.Resolve(bundle.JobDetail.JobType);
 
-        public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
-        {
-            var job = _container.Resolve(bundle.JobDetail.JobType);
-                
-            return job  as IJob;
-        }
+        return job as IJob;
+    }
 
-        public void ReturnJob(IJob job)
-        {
-        }
+    public void ReturnJob(IJob job)
+    {
     }
 }

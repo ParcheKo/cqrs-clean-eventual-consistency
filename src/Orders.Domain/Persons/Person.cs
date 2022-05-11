@@ -2,42 +2,41 @@
 using Orders.Domain.Persons.Rules;
 using Orders.Domain.SeedWork;
 
-namespace Orders.Domain.Persons
+namespace Orders.Domain.Persons;
+
+public class Person : Entity, IAggregateRoot
 {
-    public class Person : Entity, IAggregateRoot
+    private Person()
     {
-        public PersonId Id { get; private set; }
-        public string Name { get; private set; }
-        public string Email { get; private set; } // todo : make it value-object 
+    }
 
-        private Person()
-        {
-        }
+    private Person(
+        string email,
+        string name
+    )
+    {
+        Id = new PersonId(Guid.NewGuid());
+        Email = email;
+        Name = name;
 
-        private Person(
-            string email,
-            string name
-        )
-        {
-            this.Id = new PersonId(Guid.NewGuid());
-            Email = email;
-            Name = name;
+        AddDomainEvent(new PersonRegistered(Id));
+    }
 
-            this.AddDomainEvent(new PersonRegistered(this.Id));
-        }
+    public PersonId Id { get; private set; }
+    public string Name { get; private set; }
+    public string Email { get; private set; } // todo : make it value-object 
 
-        public static Person From(
-            string email,
-            string name,
-            bool emailIsUnique
-        )
-        {
-            CheckRule(new PersonEmailMustBeUnique(emailIsUnique));
+    public static Person From(
+        string email,
+        string name,
+        bool emailIsUnique
+    )
+    {
+        CheckRule(new PersonEmailMustBeUnique(emailIsUnique));
 
-            return new Person(
-                email,
-                name
-            );
-        }
+        return new Person(
+            email,
+            name
+        );
     }
 }

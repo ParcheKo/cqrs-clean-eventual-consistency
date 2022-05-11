@@ -6,48 +6,44 @@ using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 
-namespace Orders.Application.Configuration.Validation
+namespace Orders.Application.Configuration.Validation;
+
+public class CommandValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : IRequest<TResponse>
 {
-    public class CommandValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+    private readonly IList<IValidator<TRequest>> _validators;
+
+    public CommandValidationBehavior(IList<IValidator<TRequest>> validators)
     {
-        private readonly IList<IValidator<TRequest>> _validators;
+        _validators = validators;
+    }
 
-        public CommandValidationBehavior(IList<IValidator<TRequest>> validators)
+    public Task<TResponse> Handle(
+        TRequest request,
+        CancellationToken cancellationToken,
+        RequestHandlerDelegate<TResponse> next
+    )
+    {
+        var errors = _validators
+            .Select(v => v.Validate(request))
+            .SelectMany(result => result.Errors)
+            .Where(error => error != null)
+            .ToList();
+
+        if (errors.Any())
         {
-            this._validators = validators;
+            var errorBuilder = new StringBuilder();
+
+            errorBuilder.AppendLine("Invalid command, reason: ");
+
+            foreach (var error in errors) errorBuilder.AppendLine(error.ErrorMessage);
+
+            throw new InvalidCommandException(
+                errorBuilder.ToString(),
+                null
+            );
         }
 
-        public Task<TResponse> Handle(
-            TRequest request,
-            CancellationToken cancellationToken,
-            RequestHandlerDelegate<TResponse> next
-        )
-        {
-            var errors = _validators
-                .Select(v => v.Validate(request))
-                .SelectMany(result => result.Errors)
-                .Where(error => error != null)
-                .ToList();
-
-            if (errors.Any())
-            {
-                var errorBuilder = new StringBuilder();
-
-                errorBuilder.AppendLine("Invalid command, reason: ");
-
-                foreach (var error in errors)
-                {
-                    errorBuilder.AppendLine(error.ErrorMessage);
-                }
-
-                throw new InvalidCommandException(
-                    errorBuilder.ToString(),
-                    null
-                );
-            }
-
-            return next();
-        }
+        return next();
     }
 }

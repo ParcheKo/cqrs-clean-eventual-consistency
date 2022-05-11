@@ -1,10 +1,10 @@
-﻿namespace Orders.Infrastructure.WriteDatabase
+﻿namespace Orders.Infrastructure.WriteDatabase;
+
+internal static class SchemaNames
 {
-    internal static class SchemaNames
-    {
-        internal const string Orders = "orders";
-        internal const string Application = "app";
-        // internal const string Payments = "payments";
-        // internal const string Persons = "persons";
-    }
+    internal const string Orders = "orders";
+
+    internal const string Application = "app";
+    // internal const string Payments = "payments";
+    // internal const string Persons = "persons";
 }

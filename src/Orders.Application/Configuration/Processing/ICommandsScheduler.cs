@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Orders.Application.Configuration.Commands;
 
-namespace Orders.Application.Configuration.Processing
+namespace Orders.Application.Configuration.Processing;
+
+public interface ICommandsScheduler
 {
-    public interface ICommandsScheduler
-    {
-        Task EnqueueAsync<T>(ICommand<T> command);
-    }
+    Task EnqueueAsync<T>(ICommand<T> command);
 }

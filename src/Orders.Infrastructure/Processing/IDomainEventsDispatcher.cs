@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace Orders.Infrastructure.Processing
+namespace Orders.Infrastructure.Processing;
+
+public interface IDomainEventsDispatcher
 {
-    public interface IDomainEventsDispatcher
-    {
-        Task DispatchEventsAsync();
-    }
+    Task DispatchEventsAsync();
 }

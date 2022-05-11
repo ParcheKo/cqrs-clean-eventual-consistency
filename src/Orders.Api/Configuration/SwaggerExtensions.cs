@@ -1,41 +1,52 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 
-namespace Orders.Api.Configuration
+namespace Orders.Api.Configuration;
+
+internal static class SwaggerExtensions
 {
-    internal static class SwaggerExtensions
+    internal static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services)
     {
-        internal static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services)
-        {
-            services.AddSwaggerGen(options =>
+        services.AddSwaggerGen(
+            options =>
             {
-                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-                {
-                    Title = "Sample CQRS API",
-                    Version = "v1",
-                    Description = "Sample .NET Core REST API CQRS implementation with raw SQL and DDD using Clean Architecture.",
-                });
+                options.SwaggerDoc(
+                    "v1",
+                    new OpenApiInfo
+                    {
+                        Title = "Sample CQRS API",
+                        Version = "v1",
+                        Description =
+                            "Sample .NET Core REST API CQRS implementation with raw SQL and DDD using Clean Architecture."
+                    }
+                );
 
                 // todo: no description set yet for api controller actions.
                 // var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 // var commentsFileName = Assembly.GetExecutingAssembly().GetName().Name + ".XML";
                 // var commentsFile = Path.Combine(baseDirectory, commentsFileName);
                 // options.IncludeXmlComments(commentsFile);
-            });
+            }
+        );
 
-            return services;
-        }
+        return services;
+    }
 
-        internal static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app)
-        {
-            app.UseSwagger();
+    internal static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app)
+    {
+        app.UseSwagger();
 
-            app.UseSwaggerUI(c =>
+        app.UseSwaggerUI(
+            c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sample CQRS API V1");
-            });
+                c.SwaggerEndpoint(
+                    "/swagger/v1/swagger.json",
+                    "Sample CQRS API V1"
+                );
+            }
+        );
 
-            return app;
-        }
+        return app;
     }
 }

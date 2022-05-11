@@ -1,12 +1,11 @@
 ﻿using System;
 using Orders.Domain.SeedWork;
 
-namespace Orders.Domain.Orders
+namespace Orders.Domain.Orders;
+
+public class OrderId : TypedIdValueBase
 {
-    public class OrderId : TypedIdValueBase
+    public OrderId(Guid value) : base(value)
     {
-        public OrderId(Guid value) : base(value)
-        {
-        }
     }
 }

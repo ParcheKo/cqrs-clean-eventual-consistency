@@ -4,16 +4,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Orders.Application.Configuration.Queries;
 
-namespace Orders.Application.Orders.GetOrdersByEmail
+namespace Orders.Application.Orders.GetOrdersByEmail;
+
+internal sealed class GetOrdersByEmailQueryHandler : IQueryHandler<GetOrdersByEmailQuery, List<OrderDto>>
 {
-    internal sealed class GetOrdersByEmailQueryHandler : IQueryHandler<GetOrdersByEmailQuery, List<OrderDto>>
+    public Task<List<OrderDto>> Handle(
+        GetOrdersByEmailQuery request,
+        CancellationToken cancellationToken
+    )
     {
-        public Task<List<OrderDto>> Handle(
-            GetOrdersByEmailQuery request,
-            CancellationToken cancellationToken
-        )
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
 }

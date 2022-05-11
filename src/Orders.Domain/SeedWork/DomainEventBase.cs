@@ -1,14 +1,13 @@
 ﻿using System;
 
-namespace Orders.Domain.SeedWork
-{
-    public class DomainEventBase : IDomainEvent
-    {
-        public DomainEventBase()
-        {
-            this.OccurredOn = DateTime.Now;
-        }
+namespace Orders.Domain.SeedWork;
 
-        public DateTime OccurredOn { get; }
+public class DomainEventBase : IDomainEvent
+{
+    public DomainEventBase()
+    {
+        OccurredOn = DateTime.Now;
     }
+
+    public DateTime OccurredOn { get; }
 }

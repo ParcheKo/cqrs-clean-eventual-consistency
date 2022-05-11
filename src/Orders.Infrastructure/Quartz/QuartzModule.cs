@@ -3,14 +3,13 @@ using Autofac;
 using Quartz;
 using Module = Autofac.Module;
 
-namespace Orders.Infrastructure.Quartz
+namespace Orders.Infrastructure.Quartz;
+
+public class QuartzModule : Module
 {
-    public class QuartzModule : Module
+    protected override void Load(ContainerBuilder builder)
     {
-        protected override void Load(ContainerBuilder builder)
-        {
-            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(x => typeof(IJob).IsAssignableFrom(x)).InstancePerDependency();
-        }
+        builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+            .Where(x => typeof(IJob).IsAssignableFrom(x)).InstancePerDependency();
     }
 }

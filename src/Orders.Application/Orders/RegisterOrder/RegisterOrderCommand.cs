@@ -5,13 +5,6 @@ namespace Orders.Application.Orders.RegisterOrder;
 
 public class RegisterOrderCommand : CommandBase<OrderDto>
 {
-    public DateTime OrderDate { get; }
-    public string CreatedBy { get; }
-    public string OrderNo { get; }
-    public string ProductName { get; }
-    public int Total { get; }
-    public decimal Price { get; }
-
     public RegisterOrderCommand(
         DateTime orderDate,
         string createdBy,
@@ -19,7 +12,7 @@ public class RegisterOrderCommand : CommandBase<OrderDto>
         string productName,
         int total,
         decimal price
-    ) 
+    )
     {
         OrderDate = orderDate;
         CreatedBy = createdBy;
@@ -28,4 +21,11 @@ public class RegisterOrderCommand : CommandBase<OrderDto>
         Total = total;
         Price = price;
     }
+
+    public DateTime OrderDate { get; }
+    public string CreatedBy { get; }
+    public string OrderNo { get; }
+    public string ProductName { get; }
+    public int Total { get; }
+    public decimal Price { get; }
 }

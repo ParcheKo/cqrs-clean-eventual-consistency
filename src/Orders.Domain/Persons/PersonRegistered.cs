@@ -1,14 +1,13 @@
 ﻿using Orders.Domain.SeedWork;
 
-namespace Orders.Domain.Persons
-{
-    public class PersonRegistered : DomainEventBase
-    {
-        public PersonId PersonId { get; }
+namespace Orders.Domain.Persons;
 
-        public PersonRegistered(PersonId personId)
-        {
-            this.PersonId = personId;
-        }
+public class PersonRegistered : DomainEventBase
+{
+    public PersonRegistered(PersonId personId)
+    {
+        PersonId = personId;
     }
+
+    public PersonId PersonId { get; }
 }

@@ -1,39 +1,36 @@
 ﻿using Autofac;
 using Orders.Application.Configuration.Emails;
-using Module = Autofac.Module;
 
-namespace Orders.Infrastructure.Emails
+namespace Orders.Infrastructure.Emails;
+
+internal class EmailModule : Module
 {
-    internal class EmailModule : Module
+    private readonly IEmailSender _emailSender;
+    private readonly EmailSettings _emailSettings;
+
+    internal EmailModule(
+        IEmailSender emailSender,
+        EmailSettings emailSettings
+    )
     {
-        private readonly IEmailSender _emailSender;
-        private readonly EmailSettings _emailSettings;
-        
-        internal EmailModule(IEmailSender emailSender, EmailSettings emailSettings)
-        {
-            _emailSender = emailSender;
-            _emailSettings = emailSettings;
-        }
+        _emailSender = emailSender;
+        _emailSettings = emailSettings;
+    }
 
-        internal EmailModule(EmailSettings emailSettings)
-        {
-            _emailSettings = emailSettings;
-        }
+    internal EmailModule(EmailSettings emailSettings)
+    {
+        _emailSettings = emailSettings;
+    }
 
-        protected override void Load(ContainerBuilder builder)
-        {
-            if (_emailSender != null)
-            {
-                builder.RegisterInstance(_emailSender);
-            }
-            else
-            {
-                builder.RegisterType<EmailSender>()
-                    .As<IEmailSender>()
-                    .InstancePerLifetimeScope();
-            }
+    protected override void Load(ContainerBuilder builder)
+    {
+        if (_emailSender != null)
+            builder.RegisterInstance(_emailSender);
+        else
+            builder.RegisterType<EmailSender>()
+                .As<IEmailSender>()
+                .InstancePerLifetimeScope();
 
-            builder.RegisterInstance(_emailSettings);
-        }
+        builder.RegisterInstance(_emailSettings);
     }
 }

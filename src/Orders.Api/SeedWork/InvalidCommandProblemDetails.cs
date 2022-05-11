@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Orders.Application.Configuration.Validation;
 
-namespace Orders.Api.SeedWork
+namespace Orders.Api.SeedWork;
+
+public class InvalidCommandProblemDetails : ProblemDetails
 {
-    public class InvalidCommandProblemDetails : Microsoft.AspNetCore.Mvc.ProblemDetails
+    public InvalidCommandProblemDetails(InvalidCommandException exception)
     {
-        public InvalidCommandProblemDetails(InvalidCommandException exception)
-        {
-            this.Title = exception.Message;
-            this.Status = StatusCodes.Status400BadRequest;
-            this.Detail = exception.Details;
-            this.Type = "https://somedomain/validation-error";
-        }
+        Title = exception.Message;
+        Status = StatusCodes.Status400BadRequest;
+        Detail = exception.Details;
+        Type = "https://somedomain/validation-error";
     }
 }

@@ -4,39 +4,38 @@ using Orders.Application.Configuration.Commands;
 using Orders.Domain.Persons;
 using Orders.Domain.SeedWork;
 
-namespace Orders.Application.Persons.RegisterPerson
+namespace Orders.Application.Persons.RegisterPerson;
+
+public class RegisterPersonCommandHandler : ICommandHandler<RegisterPersonCommand, PersonDto>
 {
-    public class RegisterPersonCommandHandler : ICommandHandler<RegisterPersonCommand, PersonDto>
+    private readonly IPersonRepository _personRepository;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public RegisterPersonCommandHandler(
+        IPersonRepository personRepository,
+        IUnitOfWork unitOfWork
+    )
     {
-        private readonly IPersonRepository _personRepository;
-        private readonly IUnitOfWork _unitOfWork;
+        _personRepository = personRepository;
+        _unitOfWork = unitOfWork;
+    }
 
-        public RegisterPersonCommandHandler(
-            IPersonRepository personRepository,
-            IUnitOfWork unitOfWork
-        )
-        {
-            this._personRepository = personRepository;
-            _unitOfWork = unitOfWork;
-        }
+    public async Task<PersonDto> Handle(
+        RegisterPersonCommand request,
+        CancellationToken cancellationToken
+    )
+    {
+        var noOneRegisteredWithTheEmail = !await _personRepository.ExistsWithEmail(request.Email);
+        var person = Person.From(
+            request.Email,
+            request.Name,
+            noOneRegisteredWithTheEmail
+        );
 
-        public async Task<PersonDto> Handle(
-            RegisterPersonCommand request,
-            CancellationToken cancellationToken
-        )
-        {
-            var noOneRegisteredWithTheEmail = !await _personRepository.ExistsWithEmail(request.Email);
-            var person = Person.From(
-                request.Email,
-                request.Name,
-                noOneRegisteredWithTheEmail
-            );
+        await _personRepository.Add(person);
 
-            await this._personRepository.Add(person);
+        await _unitOfWork.CommitAsync(cancellationToken);
 
-            await this._unitOfWork.CommitAsync(cancellationToken);
-
-            return new PersonDto { Id = person.Id.Value };
-        }
+        return new PersonDto { Id = person.Id.Value };
     }
 }

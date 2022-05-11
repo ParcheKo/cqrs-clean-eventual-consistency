@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace Orders.Application.Persons
+namespace Orders.Application.Persons;
+
+public class PersonDto
 {
-    public class PersonDto
-    {
-        public Guid Id { get; set; }
-    }
+    public Guid Id { get; set; }
 }

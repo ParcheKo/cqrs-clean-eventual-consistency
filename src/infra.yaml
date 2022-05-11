@@ -2,14 +2,14 @@ version: '3.4'
 
 services:
   # mssql.data:
-    # image: mcr.microsoft.com/mssql/server:2019-latest
-    # container_name: finlex-task-mssql
-    # environment:
-      # ACCEPT_EULA: Y
-      # MSSQL_PID: Express
-      # SA_PASSWORD: MyPassword123456
-    # ports:
-      # - "1433:1433"
+  # image: mcr.microsoft.com/mssql/server:2019-latest
+  # container_name: finlex-task-mssql
+  # environment:
+  # ACCEPT_EULA: Y
+  # MSSQL_PID: Express
+  # SA_PASSWORD: MyPassword123456
+  # ports:
+  # - "1433:1433"
 
   nosql.data:
     container_name: finlex-task-mongodb
@@ -29,21 +29,21 @@ services:
     image: redis:alpine
     ports:
       - "6379:6379"
-
-  # orders.api:
-    # container_name: finlex-task-orders-api
-    # restart: always
-    # image: finlex-task-orders-api
-    # build:
+      
+      # orders.api:
+      # container_name: finlex-task-orders-api
+      # restart: always
+      # image: finlex-task-orders-api
+      # build:
       # context: .
       # dockerfile: Orders.Api/Dockerfile
-    # depends_on:
+      # depends_on:
       # - mssql.data
       # - rabbitmq.broker
       # - nosql.data
       # - redis.cache
-    # ports:
+      # ports:
       # - "5000:80"
       # - "5443:443"
-    # environment:
+      # environment:
       # - ASPNETCORE_ENVIRONMENT=Docker
