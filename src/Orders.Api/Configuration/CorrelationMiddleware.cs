@@ -19,7 +19,7 @@ internal class CorrelationMiddleware
     {
         var correlationId = Guid.NewGuid();
 
-        if (context.Request != null)
+        // if (context.Request != null)
             context.Request.Headers.Add(
                 CorrelationHeaderKey,
                 correlationId.ToString()
