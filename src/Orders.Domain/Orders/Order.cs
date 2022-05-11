@@ -15,7 +15,7 @@ public class Order : Entity, IAggregateRoot
 
     private Order(
         DateTime orderDate,
-        string personEmail,
+        string createdBy,
         string orderNo,
         string productName,
         int total,
@@ -24,7 +24,7 @@ public class Order : Entity, IAggregateRoot
     {
         Id = new OrderId(Guid.NewGuid());
         OrderDate = orderDate;
-        CreatedBy = personEmail;
+        CreatedBy = createdBy;
         OrderNo = orderNo;
         ProductName = productName;
         Total = total;
@@ -33,7 +33,7 @@ public class Order : Entity, IAggregateRoot
         AddDomainEvent(
             new OrderRegisteredEvent(
                 new OrderId(Guid.NewGuid()),
-                personEmail
+                createdBy
             )
         );
     }
@@ -54,7 +54,7 @@ public class Order : Entity, IAggregateRoot
 
     public static Order From(
         DateTime orderDate,
-        string personEmail,
+        string createdBy,
         string orderNo,
         string productName,
         int total,
@@ -67,7 +67,7 @@ public class Order : Entity, IAggregateRoot
 
         return new Order(
             orderDate,
-            personEmail,
+            createdBy,
             orderNo,
             productName,
             total,

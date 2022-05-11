@@ -28,7 +28,7 @@ public class RegisterOrderCommandHandler : ICommandHandler<RegisterOrderCommand,
         var orderNoIsUnique = !await _orderRepository.ExistsWithOrderNo(request.OrderNo);
         var order = Order.From(
             request.OrderDate,
-            request.CreatedBy,
+            request.PersonEmail,
             request.OrderNo,
             request.ProductName,
             request.Total,

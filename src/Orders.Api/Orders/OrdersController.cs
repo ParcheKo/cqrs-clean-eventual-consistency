@@ -68,7 +68,7 @@ public class OrdersController : ControllerBase
         var orderDto = await _mediator.Send(
             new RegisterOrderCommand(
                 request.OrderDate,
-                request.CreatedBy,
+                request.PersonEmail,
                 request.OrderNo,
                 request.ProductName,
                 request.Total,

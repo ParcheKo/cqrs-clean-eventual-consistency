@@ -7,7 +7,7 @@ public class RegisterOrderCommand : CommandBase<OrderDto>
 {
     public RegisterOrderCommand(
         DateTime orderDate,
-        string createdBy,
+        string personEmail,
         string orderNo,
         string productName,
         int total,
@@ -15,7 +15,7 @@ public class RegisterOrderCommand : CommandBase<OrderDto>
     )
     {
         OrderDate = orderDate;
-        CreatedBy = createdBy;
+        PersonEmail = personEmail;
         OrderNo = orderNo;
         ProductName = productName;
         Total = total;
@@ -23,7 +23,7 @@ public class RegisterOrderCommand : CommandBase<OrderDto>
     }
 
     public DateTime OrderDate { get; }
-    public string CreatedBy { get; }
+    public string PersonEmail { get; }
     public string OrderNo { get; }
     public string ProductName { get; }
     public int Total { get; }
