@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -28,9 +29,12 @@ namespace SampleProject.API.Orders
             typeof(List<OrderViewModel>),
             StatusCodes.Status200OK
         )]
-        public async Task<IActionResult> GetAllOrders()
+        public async Task<IActionResult> GetOrders(CancellationToken cancellationToken)
         {
-            var orders = await _mediator.Send(new GetOrdersQuery());
+            var orders = await _mediator.Send(
+                new GetOrdersQuery(),
+                cancellationToken
+            );
 
             return Ok(orders);
         }
@@ -41,9 +45,15 @@ namespace SampleProject.API.Orders
             typeof(List<OrderViewModel>),
             StatusCodes.Status200OK
         )]
-        public async Task<IActionResult> GetOrdersByPersonEmail(string personEmail)
+        public async Task<IActionResult> GetOrdersByPersonEmail(
+            string personEmail,
+            CancellationToken cancellationToken
+        )
         {
-            var orders = await _mediator.Send(new GetOrdersByEmailQuery(personEmail));
+            var orders = await _mediator.Send(
+                new GetOrdersByEmailQuery(personEmail),
+                cancellationToken
+            );
 
             return Ok(orders);
         }
@@ -51,9 +61,12 @@ namespace SampleProject.API.Orders
         [Route("")]
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created)]
-        public async Task<IActionResult> RegisterOrder([FromBody] RegisterOrderRequest request)
+        public async Task<IActionResult> RegisterOrder(
+            [FromBody] RegisterOrderRequest request,
+            CancellationToken cancellationToken
+        )
         {
-            await _mediator.Send(
+            var orderDto = await _mediator.Send(
                 new RegisterOrderCommand(
                     request.OrderDate,
                     request.CreatedBy,
@@ -61,12 +74,12 @@ namespace SampleProject.API.Orders
                     request.ProductName,
                     request.Total,
                     request.Price
-                )
+                ), cancellationToken
             );
 
             return Created(
                 string.Empty,
-                null
+                orderDto
             );
         }
     }
