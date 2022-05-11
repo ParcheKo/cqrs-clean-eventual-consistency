@@ -3,7 +3,7 @@ using Orders.Domain.Persons;
 using Orders.Domain.Persons.Rules;
 using Orders.UnitTests.SeedWork;
 
-namespace Orders.UnitTests.Customers;
+namespace Orders.UnitTests.Orders;
 
 [TestFixture]
 public class PersonTests : TestBase

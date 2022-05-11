@@ -4,7 +4,7 @@ using Orders.Domain.Orders;
 using Orders.Domain.Orders.Rules;
 using Orders.UnitTests.SeedWork;
 
-namespace Orders.UnitTests.Customers;
+namespace Orders.UnitTests.Orders;
 
 [TestFixture]
 public class OrderTests : TestBase

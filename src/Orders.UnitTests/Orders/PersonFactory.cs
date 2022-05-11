@@ -1,6 +1,6 @@
 ﻿using Orders.Domain.Persons;
 
-namespace Orders.UnitTests.Customers;
+namespace Orders.UnitTests.Orders;
 
 public class PersonFactory
 {
