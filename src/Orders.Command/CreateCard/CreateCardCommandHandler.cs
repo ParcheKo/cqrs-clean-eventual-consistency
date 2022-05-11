@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Orders.Command.Abstractions;
+using CqrsEssentials;
 using Orders.Core.Cards;
 using Orders.Core.Shared;
 
 namespace Orders.Command.CreateCard;
 
-public class CreateCardCommandHandler : ICommandHandler<CreateCardCommand, CreateCardCommandResult>
+public class CreateCardCommandHandler : IAsyncCommandHandler<CreateCardCommand>
 {
     private readonly ICardRepository _cardRepository;
     private readonly IEventBus _eventBus;
@@ -24,7 +24,7 @@ public class CreateCardCommandHandler : ICommandHandler<CreateCardCommand, Creat
         ;
     }
 
-    public async Task<CreateCardCommandResult> Handle(CreateCardCommand command)
+    public async Task HandleAsync(CreateCardCommand command)
     {
         if (_cardRepository.IsDuplicatedCardNumber(command.Number))
             _notificationHandler.AddNotification(

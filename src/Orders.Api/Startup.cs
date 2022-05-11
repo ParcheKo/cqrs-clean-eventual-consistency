@@ -1,33 +1,49 @@
-﻿using Autofac;
+﻿using System;
+using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using Orders.Api.Extensions;
 using Orders.Core;
-using Orders.Core.Cards;
-using Orders.Core.Shared;
-using Orders.Core.Transactions;
-using Orders.Infrastructure.IoC;
-using Orders.Infrastructure.Persistence;
+using SampleProject.API.Configuration;
+using SampleProject.API.SeedWork;
+using SampleProject.Application.Configuration;
+using SampleProject.Application.Configuration.Emails;
+using SampleProject.Application.Configuration.Validation;
+using SampleProject.Domain.SeedWork;
+using SampleProject.Infrastructure;
+using SampleProject.Infrastructure.Database;
+using Serilog;
+using Serilog.Formatting.Compact;
 
 namespace Orders.Api;
 
 public class Startup
 {
+    private const string OrdersConnectionString = "OrdersConnectionString";
+
+
+    private readonly ILogger _logger;
+
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
+        _logger = ConfigureLogger();
+        _logger.Information("Logger configured");
     }
 
     public IConfiguration Configuration { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
-    public virtual void ConfigureServices(IServiceCollection services)
+    public IServiceProvider ConfigureServices(IServiceCollection services)
     {
+        var appConfiguration = Configuration.Get<AppConfiguration>();
+        services.AddSingleton(appConfiguration);
+
         services.AddCors(
             options =>
             {
@@ -39,55 +55,76 @@ public class Startup
                 );
             }
         );
-        services.AddScoped<ValidationNotificationHandler>();
-        var appConfiguration = Configuration.Get<AppConfiguration>();
-        services.AddSingleton(appConfiguration);
 
         services.AddControllers();
 
-        services.AddSwaggerGen(
-            c =>
+        services.AddMemoryCache();
+
+        services.AddSwaggerDocumentation();
+
+        services.AddProblemDetails(
+            x =>
             {
-                c.SwaggerDoc(
-                    "v1",
-                    new OpenApiInfo { Title = "My API", Version = "v1" }
-                );
+                x.Map<InvalidCommandException>(ex => new InvalidCommandProblemDetails(ex));
+                x.Map<BusinessRuleValidationException>(ex => new BusinessRuleValidationExceptionProblemDetails(ex));
             }
         );
 
-        var sqlConnString = Configuration.GetConnectionString("SqlServerConnectionString");
+        services.AddHttpContextAccessor();
 
-        services
-            .AddDbContext<WriteDbContext>(
-                options => options.UseSqlServer(
-                    sqlConnString,
-                    b => b.MigrationsAssembly(typeof(WriteDbContext).Assembly.GetName().Name)
-                ).ConfigureDatabaseNamingConvention(appConfiguration.DatabaseNamingConvention)
-            );
+        // services.AddScoped<ValidationNotificationHandler>();
 
-        var redisConnString = Configuration.GetConnectionString("RedisCache");
+        // services.AddControllers();
+        //
+        // services.AddSwaggerGen(
+        //     c =>
+        //     {
+        //         c.SwaggerDoc(
+        //             "v1",
+        //             new OpenApiInfo { Title = "My API", Version = "v1" }
+        //         );
+        //     }
+        // );
 
-        services
-            .AddHealthChecks()
-            .AddSqlServer(sqlConnString)
-            .AddRedis(redisConnString);
+        var serviceProvider = services.BuildServiceProvider();
+
+        IExecutionContextAccessor executionContextAccessor =
+            new ExecutionContextAccessor(serviceProvider.GetService<IHttpContextAccessor>());
+
+        // var children = this.Configuration.GetSection("Caching").GetChildren();
+        // var cachingConfiguration = children.ToDictionary(
+        //     child => child.Key,
+        //     child => TimeSpan.Parse(child.Value)
+        // );
+        var emailsSettings = Configuration.GetSection("EmailsSettings").Get<EmailsSettings>();
+        var memoryCache = serviceProvider.GetService<IMemoryCache>();
+
+        // todo: setup health-checks
+        // var redisConnString = Configuration.GetConnectionString("RedisCache");
+        // services
+        //     .AddHealthChecks()
+        //     .AddSqlServer(this.Configuration[OrdersConnectionString])
+        //     .AddRedis(redisConnString);
+
+        return ApplicationStartup.Initialize(
+            services,
+            appConfiguration,
+            null,
+            emailsSettings,
+            _logger,
+            executionContextAccessor
+        );
     }
 
-    public virtual void ConfigureContainer(ContainerBuilder builder)
-    {
-        builder.RegisterModule(new CommandModule());
-        builder.RegisterModule(new EventModule());
-        builder.RegisterModule(new InfrastructureModule());
-        builder.RegisterModule(new QueryModule());
-    }
 
-    private void ConfigureEventBus(IApplicationBuilder app)
-    {
-        var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+    // public virtual void ConfigureContainer(ContainerBuilder builder)
+    // {
+    //     builder.RegisterModule(new CommandModule());
+    //     builder.RegisterModule(new EventModule());
+    //     builder.RegisterModule(new InfrastructureModule());
+    //     builder.RegisterModule(new QueryModule());
+    // }
 
-        eventBus.Subscribe<CardCreatedEvent>();
-        eventBus.Subscribe<TransactionCreatedEvent>();
-    }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public virtual void Configure(
@@ -95,41 +132,66 @@ public class Startup
         IWebHostEnvironment env
     )
     {
-        app.UseSwagger();
+        app.UseMiddleware<CorrelationMiddleware>();
 
-        // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-        // specifying the Swagger JSON endpoint.
-        app.UseSwaggerUI(
-            c =>
-            {
-                c.SwaggerEndpoint(
-                    "/swagger/v1/swagger.json",
-                    "My API V1"
-                );
-            }
-        );
-
-        if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
-
-        if (env.EnvironmentName == "Docker" || env.EnvironmentName == Environments.Development)
+        if (env.IsDevelopment())
         {
-            using var serviceScope = app.ApplicationServices.CreateScope();
-            var context = serviceScope.ServiceProvider.GetService<WriteDbContext>()!;
-            // var hasPendingMigrations = context.Database.GetPendingMigrations().Any();
-            context.Database.Migrate();
+            app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            app.UseProblemDetails();
         }
 
-        app.UseStaticFiles();
+        // app.UseStaticFiles();
+
         app.UseRouting();
+
         app.UseCors("CorsPolicy");
+
         app.UseEndpoints(
             endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHealthChecks("/healthcheck");
+                // endpoints.MapHealthChecks("/hc");
             }
         );
 
-        ConfigureEventBus(app);
+        app.UseSwaggerDocumentation();
+
+        if (env.EnvironmentName == "Docker" || env.EnvironmentName == Environments.Development)
+        {
+            using var serviceScope = app.ApplicationServices.CreateScope();
+            var context = serviceScope.ServiceProvider.GetService<OrdersContext>()!;
+            // var hasPendingMigrations = context.Database.GetPendingMigrations().Any();
+            context.Database.Migrate();
+        }
+
+        // todo: if another micro was in the picture 
+        // ConfigureEventBus(app);
     }
+
+    private static ILogger ConfigureLogger()
+    {
+        return new LoggerConfiguration()
+            .Enrich.FromLogContext()
+            .WriteTo.Console(
+                outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] [{Context}] {Message:lj}{NewLine}{Exception}"
+            )
+            .WriteTo.RollingFile(
+                new CompactJsonFormatter(),
+                "logs/logs"
+            )
+            .CreateLogger();
+    }
+
+    // private void ConfigureEventBus(IApplicationBuilder app)
+    // {
+    //     var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+    //
+    //     // todo: if another micro was in the picture 
+    //     // eventBus.Subscribe<PersonRegistered>();
+    //     // eventBus.Subscribe<CardCreatedEvent>();
+    //     // eventBus.Subscribe<TransactionCreatedEvent>();
+    // }
 }

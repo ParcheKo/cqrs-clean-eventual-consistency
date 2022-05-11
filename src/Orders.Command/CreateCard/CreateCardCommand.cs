@@ -1,9 +1,10 @@
 ﻿using System;
+using CqrsEssentials;
 using Orders.Command.Abstractions;
 
 namespace Orders.Command.CreateCard;
 
-public class CreateCardCommand : ICommand<CreateCardCommandResult>
+public class CreateCardCommand : ICommand
 {
     public CreateCardCommand(
         string number,

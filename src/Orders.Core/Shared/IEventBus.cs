@@ -1,8 +1,9 @@
-﻿namespace Orders.Core.Shared;
-
-public interface IEventBus
-{
-    void Publish(IEvent @event);
-
-    void Subscribe<T>() where T : IEvent;
-}
+﻿// namespace Orders.Core.Shared;
+// //     // todo: if another micro was in the picture 
+//
+// public interface IEventBus
+// {
+//     void Publish(IIntegrationEvent @event);
+//
+//     void Subscribe<T>() where T : IIntegrationEvent;
+// }
