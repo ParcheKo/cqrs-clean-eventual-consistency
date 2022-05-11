@@ -4,7 +4,7 @@ namespace SampleProject.Application.Configuration
 {
     public interface IExecutionContextAccessor
     {
-        Guid CorrelationId { get; }
+        Guid RequestId { get; }
 
         bool IsAvailable { get; }
     }

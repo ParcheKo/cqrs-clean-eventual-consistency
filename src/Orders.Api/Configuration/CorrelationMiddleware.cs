@@ -6,7 +6,7 @@ namespace SampleProject.API.Configuration
 {
     internal class CorrelationMiddleware
     {
-        internal const string CorrelationHeaderKey = "CorrelationId";
+        internal const string CorrelationHeaderKey = "Request-Id";
 
         private readonly RequestDelegate _next;
 

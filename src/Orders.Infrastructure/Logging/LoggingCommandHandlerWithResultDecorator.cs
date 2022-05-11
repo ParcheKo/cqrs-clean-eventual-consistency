@@ -84,7 +84,7 @@ namespace SampleProject.Infrastructure.Logging
             {
                 if (_executionContextAccessor.IsAvailable)
                 {
-                    logEvent.AddOrUpdateProperty(new LogEventProperty("CorrelationId", new ScalarValue(_executionContextAccessor.CorrelationId)));
+                    logEvent.AddOrUpdateProperty(new LogEventProperty("Request-Id", new ScalarValue(_executionContextAccessor.RequestId)));
                 }
             }
         }

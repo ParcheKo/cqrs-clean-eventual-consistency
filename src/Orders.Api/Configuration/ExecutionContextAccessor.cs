@@ -14,7 +14,7 @@ namespace SampleProject.API.Configuration
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public Guid CorrelationId
+        public Guid RequestId
         {
             get
             {
@@ -23,7 +23,7 @@ namespace SampleProject.API.Configuration
                     return Guid.Parse(
                         _httpContextAccessor.HttpContext.Request.Headers[CorrelationMiddleware.CorrelationHeaderKey]);
                 }
-                throw new ApplicationException("Http context and correlation id is not available");
+                throw new ApplicationException("Http context and Request-Id is not available");
             }
         }
 
