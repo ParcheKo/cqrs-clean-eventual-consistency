@@ -51,10 +51,7 @@ namespace SampleProject.API.Orders
         [Route("")]
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created)]
-        public async Task<IActionResult> RegisterOrder(
-            [FromRoute] Guid customerId,
-            [FromBody] RegisterOrderRequest request
-        )
+        public async Task<IActionResult> RegisterOrder([FromBody] RegisterOrderRequest request)
         {
             await _mediator.Send(
                 new RegisterOrderCommand(

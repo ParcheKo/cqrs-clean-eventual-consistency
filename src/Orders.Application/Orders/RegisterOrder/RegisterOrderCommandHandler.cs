@@ -26,7 +26,7 @@ public class RegisterOrderCommandHandler : ICommandHandler<RegisterOrderCommand,
         CancellationToken cancellationToken
     )
     {
-        var orderNoIsUnique = await _orderRepository.ExistsWithOrderNo(request.OrderNo);
+        var orderNoIsUnique = !await _orderRepository.ExistsWithOrderNo(request.OrderNo);
         var order = Order.From(
             request.OrderDate,
             request.CreatedBy,
