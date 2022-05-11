@@ -15,6 +15,10 @@ internal sealed class InternalCommandEntityTypeConfiguration : IEntityTypeConfig
         );
 
         builder.HasKey(b => b.Id);
+        builder.Property(p => p.Id).HasColumnName(nameof(InternalCommand.Id));
+        builder.Property(p => p.Type).HasColumnName(nameof(InternalCommand.Type));
+        builder.Property(p => p.Data).HasColumnName(nameof(InternalCommand.Data));
+        builder.Property(p => p.ProcessedDate).HasColumnName(nameof(InternalCommand.ProcessedDate));
         builder.Property(b => b.Id).ValueGeneratedNever();
     }
 }

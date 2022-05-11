@@ -103,19 +103,19 @@ namespace Orders.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id");
+                        .HasColumnName("Id");
 
                     b.Property<string>("Data")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("data");
+                        .HasColumnName("Data");
 
                     b.Property<DateTime?>("ProcessedDate")
                         .HasColumnType("datetime2")
-                        .HasColumnName("processed_date");
+                        .HasColumnName("ProcessedDate");
 
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("type");
+                        .HasColumnName("Type");
 
                     b.HasKey("Id")
                         .HasName("pk_internal_commands");
@@ -127,23 +127,23 @@ namespace Orders.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id");
+                        .HasColumnName("Id");
 
                     b.Property<string>("Data")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("data");
+                        .HasColumnName("Data");
 
                     b.Property<DateTime>("OccurredOn")
                         .HasColumnType("datetime2")
-                        .HasColumnName("occurred_on");
+                        .HasColumnName("OccurredOn");
 
                     b.Property<DateTime?>("ProcessedDate")
                         .HasColumnType("datetime2")
-                        .HasColumnName("processed_date");
+                        .HasColumnName("ProcessedDate");
 
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("type");
+                        .HasColumnName("Type");
 
                     b.HasKey("Id")
                         .HasName("pk_outbox_messages");

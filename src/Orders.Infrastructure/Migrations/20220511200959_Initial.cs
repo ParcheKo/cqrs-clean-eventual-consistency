@@ -20,14 +20,14 @@ namespace Orders.Infrastructure.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    type = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    data = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    processed_date = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Data = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProcessedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_internal_commands", x => x.id);
+                    table.PrimaryKey("pk_internal_commands", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,15 +54,15 @@ namespace Orders.Infrastructure.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    occurred_on = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    type = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    data = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    processed_date = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OccurredOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Data = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProcessedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_outbox_messages", x => x.id);
+                    table.PrimaryKey("pk_outbox_messages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(

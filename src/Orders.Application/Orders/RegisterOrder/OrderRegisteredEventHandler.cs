@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Orders.Domain.Orders.Events;
@@ -25,7 +26,7 @@ public class OrderRegisteredEventHandler : INotificationHandler<OrderRegisteredE
         {
             var person = Person.From(
                 e.Email,
-                e.Email,
+                e.Email, // todo: name??
                 true
             );
             await _personRepository.Add(person);
