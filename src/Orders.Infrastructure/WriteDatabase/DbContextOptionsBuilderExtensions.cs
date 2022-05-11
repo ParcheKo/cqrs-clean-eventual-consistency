@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Orders.Core;
 
 namespace Orders.Api.Extensions;
@@ -13,16 +12,16 @@ public static class DbContextOptionsBuilderExtensions
     {
         switch (namingConvention)
         {
-            case DatabaseNamingConvention.AsIs:
+            case DatabaseNamingConvention.Normal:
                 break;
             case DatabaseNamingConvention.CamelCase:
-                builder.UseSnakeCaseNamingConvention();
+                builder.UseCamelCaseNamingConvention();
                 break;
             case DatabaseNamingConvention.SnakeCase:
                 builder.UseSnakeCaseNamingConvention();
                 break;
             default:
-                throw new InvalidOperationException("Database naming convention not specified.");
+                throw new DatabaseNamingConventionBotSpecifiedException();
         }
     }
 }
