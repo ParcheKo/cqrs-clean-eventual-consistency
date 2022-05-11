@@ -12,7 +12,7 @@ using SampleProject.Infrastructure.Database;
 namespace Orders.Infrastructure.Migrations
 {
     [DbContext(typeof(OrdersContext))]
-    [Migration("20220511151535_Initial")]
+    [Migration("20220511153545_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
