@@ -3,7 +3,7 @@ using Orders.Domain.Persons;
 using Orders.Domain.Persons.Rules;
 using Orders.UnitTests.SeedWork;
 
-namespace Orders.UnitTests.Orders;
+namespace Orders.UnitTests;
 
 [TestFixture]
 public class PersonTests : TestBase
@@ -40,6 +40,24 @@ public class PersonTests : TestBase
                     );
                 }
             );
+        }
+    }
+
+    class WhenPersonRegisteredSuccessfully : PersonTests
+    {
+        [Test]
+        public void person_registration_must_have_been_notified()
+        {
+            const string email = "testEmail@email.com";
+            const bool emailIsUnique = true;
+            const string name = "Amir";
+            var person = Person.From(
+                email,
+                name,
+                emailIsUnique
+            );
+
+            AssertPublishedDomainEvent<PersonRegistered>(person);
         }
     }
 }
