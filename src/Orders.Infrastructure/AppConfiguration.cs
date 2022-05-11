@@ -12,7 +12,7 @@ public class AppConfiguration
 
 public enum DatabaseNamingConvention
 {
-    AsIs = 1,
+    Normal = 1,
     CamelCase,
     SnakeCase
 }

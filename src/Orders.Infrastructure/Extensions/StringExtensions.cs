@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using System.Text;
+using Humanizer;
+using Orders.Api.Extensions;
+using Orders.Core;
 
 namespace Orders.Query.Extensions;
 
@@ -10,7 +13,7 @@ public static class StringExtensions
     {
         if (string.IsNullOrEmpty(name))
             return name;
-
+    
         var builder = new StringBuilder(
             name.Length + Math.Min(
                 2,
@@ -18,7 +21,7 @@ public static class StringExtensions
             )
         );
         var previousCategory = default(UnicodeCategory?);
-
+    
         for (var currentIndex = 0; currentIndex < name.Length; currentIndex++)
         {
             var currentChar = name[currentIndex];
@@ -28,7 +31,7 @@ public static class StringExtensions
                 previousCategory = null;
                 continue;
             }
-
+    
             var currentCategory = char.GetUnicodeCategory(currentChar);
             switch (currentCategory)
             {
@@ -42,26 +45,42 @@ public static class StringExtensions
                         currentIndex + 1 < name.Length &&
                         char.IsLower(name[currentIndex + 1]))
                         builder.Append('_');
-
+    
                     currentChar = char.ToLower(currentChar);
                     break;
-
+    
                 case UnicodeCategory.LowercaseLetter:
                 case UnicodeCategory.DecimalDigitNumber:
                     if (previousCategory == UnicodeCategory.SpaceSeparator)
                         builder.Append('_');
                     break;
-
+    
                 default:
                     if (previousCategory != null)
                         previousCategory = UnicodeCategory.SpaceSeparator;
                     continue;
             }
-
+    
             builder.Append(currentChar);
             previousCategory = currentCategory;
         }
-
+    
         return builder.ToString();
+    }
+
+    public static string ConvertBasedOn(
+        this string identifier,
+        DatabaseNamingConvention namingConvention
+    )
+    {
+        var converted = namingConvention switch
+        {
+            DatabaseNamingConvention.Normal => identifier,
+            // using Humanizer to convert strings
+            DatabaseNamingConvention.CamelCase => identifier.Camelize(),
+            DatabaseNamingConvention.SnakeCase => identifier.Underscore(),
+            _ => throw new DatabaseNamingConventionNotSpecifiedException()
+        };
+        return converted;
     }
 }

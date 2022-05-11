@@ -120,7 +120,7 @@ namespace Orders.Infrastructure.Migrations
                     b.HasKey("Id")
                         .HasName("pk_internal_commands");
 
-                    b.ToTable("internal_commands", "app");
+                    b.ToTable("InternalCommands", "app");
                 });
 
             modelBuilder.Entity("SampleProject.Infrastructure.Processing.Outbox.OutboxMessage", b =>
@@ -148,7 +148,7 @@ namespace Orders.Infrastructure.Migrations
                     b.HasKey("Id")
                         .HasName("pk_outbox_messages");
 
-                    b.ToTable("outbox_messages", "app");
+                    b.ToTable("OutboxMessages", "app");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Orders.Query.Extensions;
 using SampleProject.Infrastructure.Database;
 
 namespace SampleProject.Infrastructure.Processing.InternalCommands
@@ -10,11 +9,12 @@ namespace SampleProject.Infrastructure.Processing.InternalCommands
         public void Configure(EntityTypeBuilder<InternalCommand> builder)
         {
             builder.ToTable(
-                nameof(OrdersContext.InternalCommands).ToSnakeCase(),
+                // as long as it is queried using raw sql
+                nameof(OrdersContext.InternalCommands) /*.ToLower()*/,
                 SchemaNames.Application
             );
 
-            // builder.HasKey(b => b.Id);
+            builder.HasKey(b => b.Id);
             builder.Property(b => b.Id).ValueGeneratedNever();
         }
     }

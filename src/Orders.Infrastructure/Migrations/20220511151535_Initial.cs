@@ -16,7 +16,7 @@ namespace Orders.Infrastructure.Migrations
                 name: "orders");
 
             migrationBuilder.CreateTable(
-                name: "internal_commands",
+                name: "InternalCommands",
                 schema: "app",
                 columns: table => new
                 {
@@ -50,7 +50,7 @@ namespace Orders.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "outbox_messages",
+                name: "OutboxMessages",
                 schema: "app",
                 columns: table => new
                 {
@@ -99,7 +99,7 @@ namespace Orders.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "internal_commands",
+                name: "InternalCommands",
                 schema: "app");
 
             migrationBuilder.DropTable(
@@ -107,7 +107,7 @@ namespace Orders.Infrastructure.Migrations
                 schema: "orders");
 
             migrationBuilder.DropTable(
-                name: "outbox_messages",
+                name: "OutboxMessages",
                 schema: "app");
 
             migrationBuilder.DropTable(

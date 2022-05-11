@@ -1,22 +1,18 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Orders.Query.Extensions;
 using SampleProject.Domain.Customers;
-using SampleProject.Domain.Customers.Orders;
-using SampleProject.Domain.SharedKernel;
 using SampleProject.Infrastructure.Database;
 
 namespace SampleProject.Infrastructure.Domain.Customers
 {
-    internal sealed class PersonEntityTypeConfiguration : IEntityTypeConfiguration<Person>
+    public class PersonEntityTypeConfiguration : IEntityTypeConfiguration<Person>
     {
+        // todo: ef migration fails to run this config when it has a ctor with injected service
         public void Configure(EntityTypeBuilder<Person> builder)
         {
             builder.ToTable(
-                nameof(OrdersContext.Persons).ToSnakeCase(),
+                nameof(OrdersContext.Persons).ToLower(),
                 SchemaNames.Orders
             );
 

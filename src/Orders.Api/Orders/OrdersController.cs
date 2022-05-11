@@ -41,7 +41,7 @@ namespace SampleProject.API.Orders
             typeof(List<OrderViewModel>),
             StatusCodes.Status200OK
         )]
-        public async Task<IActionResult> GetPersonOrders(string personEmail)
+        public async Task<IActionResult> GetOrdersByPersonEmail(string personEmail)
         {
             var orders = await _mediator.Send(new GetOrdersByEmailQuery(personEmail));
 

@@ -21,7 +21,7 @@ public static class DbContextOptionsBuilderExtensions
                 builder.UseSnakeCaseNamingConvention();
                 break;
             default:
-                throw new DatabaseNamingConventionBotSpecifiedException();
+                throw new DatabaseNamingConventionNotSpecifiedException();
         }
     }
 }

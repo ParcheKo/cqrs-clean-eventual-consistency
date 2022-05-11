@@ -1,22 +1,18 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Orders.Query.Extensions;
-using SampleProject.Domain.Customers;
 using SampleProject.Domain.Customers.Orders;
-using SampleProject.Domain.SharedKernel;
 using SampleProject.Infrastructure.Database;
 
 namespace SampleProject.Infrastructure.Domain.Customers
 {
     internal sealed class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Order>
     {
+        // todo: ef migration fails to run this config when it has a ctor with injected service
         public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.ToTable(
-                nameof(OrdersContext.Orders).ToSnakeCase(),
+                nameof(OrdersContext.Orders).ToLower(),
                 SchemaNames.Orders
             );
 
@@ -35,7 +31,7 @@ namespace SampleProject.Infrastructure.Domain.Customers
                 2
             ).UsePropertyAccessMode(PropertyAccessMode.Property);
             builder.HasIndex(p => p.OrderNo).IsUnique();
-            
+
             // builder.OwnsMany<Order>(OrdersList, x =>
             // {
             //     x.WithOwner().HasForeignKey("CustomerId");
