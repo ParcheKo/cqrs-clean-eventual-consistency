@@ -91,14 +91,14 @@ public class ApplicationStartup
         var buildContainer = container.Build();
 
         ServiceLocator.SetLocatorProvider(() => new AutofacServiceLocator(buildContainer));
-
+        
         var serviceProvider = new AutofacServiceProvider(buildContainer);
 
         CompositionRoot.SetContainer(buildContainer);
 
         return serviceProvider;
     }
-
+    
     private static void StartQuartz(
         AppConfiguration appConfiguration,
         EmailSettings emailSettings,
