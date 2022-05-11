@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Autofac.Core.Activators.Reflection;
 
-namespace SampleProject.Infrastructure.Processing
+namespace Orders.Infrastructure.Processing
 {
     internal class AllConstructorFinder : IConstructorFinder
     {

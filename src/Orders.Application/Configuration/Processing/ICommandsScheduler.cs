@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
-using MediatR;
-using SampleProject.Application.Configuration.Commands;
+using Orders.Application.Configuration.Commands;
 
-namespace SampleProject.Application.Configuration.Processing
+namespace Orders.Application.Configuration.Processing
 {
     public interface ICommandsScheduler
     {

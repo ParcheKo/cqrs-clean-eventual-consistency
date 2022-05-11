@@ -2,12 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using SampleProject.Application;
-using SampleProject.Application.Configuration.Commands;
-using SampleProject.Domain.SeedWork;
-using SampleProject.Infrastructure.Database;
+using Orders.Application.Configuration.Commands;
+using Orders.Domain.SeedWork;
+using Orders.Infrastructure.WriteDatabase;
 
-namespace SampleProject.Infrastructure.Processing
+namespace Orders.Infrastructure.Processing
 {
     public class UnitOfWorkCommandHandlerWithResultDecorator<T, TResult> : ICommandHandler<T, TResult> where T : ICommand<TResult>
     {

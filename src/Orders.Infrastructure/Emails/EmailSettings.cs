@@ -1,4 +1,4 @@
-﻿namespace SampleProject.Application.Configuration.Emails
+﻿namespace Orders.Infrastructure.Emails
 {
     public class EmailSettings
     {

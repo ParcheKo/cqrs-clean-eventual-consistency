@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SampleProject.Domain.SeedWork
+namespace Orders.Domain.SeedWork
 {
     /// <summary>
     /// Base class for entities.

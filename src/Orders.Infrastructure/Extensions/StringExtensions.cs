@@ -2,10 +2,9 @@
 using System.Globalization;
 using System.Text;
 using Humanizer;
-using Orders.Api.Extensions;
-using Orders.Core;
+using Orders.Infrastructure.WriteDatabase;
 
-namespace Orders.Query.Extensions;
+namespace Orders.Infrastructure.Extensions;
 
 public static class StringExtensions
 {

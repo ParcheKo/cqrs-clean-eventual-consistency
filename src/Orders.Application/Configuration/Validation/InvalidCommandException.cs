@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SampleProject.Application.Configuration.Validation
+namespace Orders.Application.Configuration.Validation
 {
     public class InvalidCommandException : Exception
     {

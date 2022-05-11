@@ -1,15 +1,15 @@
 ﻿using System.Reflection;
 using Autofac;
 using MediatR;
-using SampleProject.Application.Configuration.Commands;
-using SampleProject.Application.Configuration.DomainEvents;
-using SampleProject.Application.Configuration.Processing;
-using SampleProject.Domain.Customers.Orders.Events;
-using SampleProject.Infrastructure.Logging;
-using SampleProject.Infrastructure.Processing.InternalCommands;
+using Orders.Application.Configuration.Commands;
+using Orders.Application.Configuration.DomainEvents;
+using Orders.Application.Configuration.Processing;
+using Orders.Domain.Orders.Events;
+using Orders.Infrastructure.Logging;
+using Orders.Infrastructure.Processing.InternalCommands;
 using Module = Autofac.Module;
 
-namespace SampleProject.Infrastructure.Processing
+namespace Orders.Infrastructure.Processing
 {
     public class ProcessingModule : Module
     {

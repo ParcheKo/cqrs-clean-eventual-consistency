@@ -4,11 +4,10 @@ using System.Threading.Tasks;
 using Dapper;
 using MediatR;
 using Newtonsoft.Json;
-using SampleProject.Application;
-using SampleProject.Application.Configuration.Commands;
-using SampleProject.Application.Configuration.Data;
+using Orders.Application.Configuration.Commands;
+using Orders.Application.Configuration.Data;
 
-namespace SampleProject.Infrastructure.Processing.InternalCommands
+namespace Orders.Infrastructure.Processing.InternalCommands
 {
     internal class ProcessInternalCommandsCommandHandler : ICommandHandler<ProcessInternalCommandsCommand, Unit>
     {

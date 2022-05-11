@@ -1,11 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using SampleProject.Application.Configuration.Commands;
-using SampleProject.Application.Customers;
-using SampleProject.Domain.Customers.Orders;
-using SampleProject.Domain.SeedWork;
+using Orders.Application.Configuration.Commands;
+using Orders.Domain.Orders;
+using Orders.Domain.SeedWork;
 
-namespace SampleProject.Application.Orders.PlaceCustomerOrder;
+namespace Orders.Application.Orders.RegisterOrder;
 
 public class RegisterOrderCommandHandler : ICommandHandler<RegisterOrderCommand, OrderDto>
 {

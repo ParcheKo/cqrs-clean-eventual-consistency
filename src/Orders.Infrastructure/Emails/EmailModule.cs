@@ -1,8 +1,8 @@
 ﻿using Autofac;
-using SampleProject.Application.Configuration.Emails;
+using Orders.Application.Configuration.Emails;
 using Module = Autofac.Module;
 
-namespace SampleProject.Infrastructure.Emails
+namespace Orders.Infrastructure.Emails
 {
     internal class EmailModule : Module
     {

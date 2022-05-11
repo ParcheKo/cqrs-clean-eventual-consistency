@@ -8,10 +8,10 @@ using Autofac.Features.Variance;
 using FluentValidation;
 using MediatR;
 using MediatR.Pipeline;
-using SampleProject.Application.Configuration.Validation;
+using Orders.Application.Configuration.Validation;
 using Module = Autofac.Module;
 
-namespace SampleProject.Infrastructure.Processing
+namespace Orders.Infrastructure.Processing
 {
     public class MediatorModule : Module
     {

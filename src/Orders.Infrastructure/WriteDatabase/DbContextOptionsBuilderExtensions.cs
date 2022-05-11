@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Orders.Core;
 
-namespace Orders.Api.Extensions;
+namespace Orders.Infrastructure.WriteDatabase;
 
 public static class DbContextOptionsBuilderExtensions
 {

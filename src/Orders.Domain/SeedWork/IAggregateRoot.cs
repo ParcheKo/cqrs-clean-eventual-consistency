@@ -1,4 +1,4 @@
-﻿namespace SampleProject.Domain.SeedWork
+﻿namespace Orders.Domain.SeedWork
 {
     public interface IAggregateRoot
     {

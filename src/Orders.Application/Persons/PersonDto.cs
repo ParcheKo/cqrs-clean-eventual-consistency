@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SampleProject.Application.Customers
+namespace Orders.Application.Persons
 {
     public class PersonDto
     {

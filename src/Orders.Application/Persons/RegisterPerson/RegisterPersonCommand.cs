@@ -1,7 +1,6 @@
-﻿using MediatR;
-using SampleProject.Application.Configuration.Commands;
+﻿using Orders.Application.Configuration.Commands;
 
-namespace SampleProject.Application.Customers.RegisterCustomer
+namespace Orders.Application.Persons.RegisterPerson
 {
     public class RegisterPersonCommand : CommandBase<PersonDto>
     {

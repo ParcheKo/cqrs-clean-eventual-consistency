@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace SampleProject.Application.Configuration.Emails
+namespace Orders.Application.Configuration.Emails
 {
     public interface IEmailSender
     {

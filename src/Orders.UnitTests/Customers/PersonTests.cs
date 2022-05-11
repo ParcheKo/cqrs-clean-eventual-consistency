@@ -1,10 +1,9 @@
-﻿using NSubstitute;
-using NUnit.Framework;
-using SampleProject.Domain.Customers;
-using SampleProject.Domain.Customers.Rules;
-using SampleProject.UnitTests.SeedWork;
+﻿using NUnit.Framework;
+using Orders.Domain.Persons;
+using Orders.Domain.Persons.Rules;
+using Orders.UnitTests.SeedWork;
 
-namespace SampleProject.UnitTests.Customers
+namespace Orders.UnitTests.Customers
 {
     [TestFixture]
     public class PersonTests : TestBase

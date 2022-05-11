@@ -1,4 +1,4 @@
-﻿namespace SampleProject.Application.Configuration.Emails
+﻿namespace Orders.Application.Configuration.Emails
 {
     public struct EmailMessage
     {

@@ -1,7 +1,6 @@
 ﻿using System;
-using MediatR;
 
-namespace SampleProject.Domain.SeedWork
+namespace Orders.Domain.SeedWork
 {
     public interface IIntegrationEvent
     {

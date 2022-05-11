@@ -1,6 +1,6 @@
-﻿using SampleProject.Domain.SeedWork;
+﻿using Orders.Domain.SeedWork;
 
-namespace SampleProject.Domain.SharedKernel
+namespace Orders.Domain.SharedKernel
 {
     public class MoneyValueOperationMustBePerformedOnTheSameCurrencyRule : IBusinessRule
     {

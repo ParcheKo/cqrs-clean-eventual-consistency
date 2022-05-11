@@ -1,11 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using SampleProject.Application.Configuration.Commands;
-using SampleProject.Domain.Customers;
-using SampleProject.Domain.Customers.Orders;
-using SampleProject.Domain.SeedWork;
+using Orders.Application.Configuration.Commands;
+using Orders.Domain.Persons;
+using Orders.Domain.SeedWork;
 
-namespace SampleProject.Application.Customers.RegisterCustomer
+namespace Orders.Application.Persons.RegisterPerson
 {
     public class RegisterPersonCommandHandler : ICommandHandler<RegisterPersonCommand, PersonDto>
     {

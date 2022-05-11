@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Quartz;
 
-namespace SampleProject.Infrastructure.Processing.Outbox
+namespace Orders.Infrastructure.Processing.Outbox
 {
     [DisallowConcurrentExecution]
     public class ProcessOutboxJob : IJob

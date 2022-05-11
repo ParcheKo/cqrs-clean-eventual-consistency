@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-using SampleProject.Domain.SeedWork;
+using Orders.Domain.SeedWork;
 
-namespace SampleProject.API.SeedWork
+namespace Orders.Api.SeedWork
 {
     public class BusinessRuleValidationExceptionProblemDetails : Microsoft.AspNetCore.Mvc.ProblemDetails
     {

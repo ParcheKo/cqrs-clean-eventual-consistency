@@ -4,15 +4,14 @@ using System.Threading.Tasks;
 using Dapper;
 using MediatR;
 using Newtonsoft.Json;
-using SampleProject.Application;
-using SampleProject.Application.Configuration.Commands;
-using SampleProject.Application.Configuration.Data;
-using SampleProject.Application.Configuration.DomainEvents;
+using Orders.Application.Configuration.Commands;
+using Orders.Application.Configuration.Data;
+using Orders.Application.Configuration.DomainEvents;
 using Serilog.Context;
 using Serilog.Core;
 using Serilog.Events;
 
-namespace SampleProject.Infrastructure.Processing.Outbox
+namespace Orders.Infrastructure.Processing.Outbox
 {
     internal class ProcessOutboxCommandHandler : ICommandHandler<ProcessOutboxCommand, Unit>
     {

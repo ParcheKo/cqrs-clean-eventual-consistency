@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-namespace SampleProject.Infrastructure.Domain
+namespace Orders.Infrastructure.Domain
 {
     public class DomainModule : Module
     {

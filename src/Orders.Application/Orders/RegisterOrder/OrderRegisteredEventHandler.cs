@@ -1,11 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using SampleProject.Domain.Customers;
-using SampleProject.Domain.Customers.Orders;
-using SampleProject.Domain.Customers.Orders.Events;
+using Orders.Domain.Orders.Events;
+using Orders.Domain.Persons;
 
-namespace SampleProject.Application.Orders.PlaceCustomerOrder
+namespace Orders.Application.Orders.RegisterOrder
 {
     public class OrderRegisteredEventHandler : INotificationHandler<OrderRegisteredEvent>
     {

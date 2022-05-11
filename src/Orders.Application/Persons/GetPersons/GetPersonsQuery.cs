@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using SampleProject.Application.Configuration.Queries;
+using Orders.Application.Configuration.Queries;
 
-namespace SampleProject.Application.Customers;
+namespace Orders.Application.Persons.GetPersons;
 
 public class GetPersonsQuery : IQuery<List< PersonDto>>
 {

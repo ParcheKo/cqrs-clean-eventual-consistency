@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace SampleProject.Infrastructure.Processing
+namespace Orders.Infrastructure.Processing
 {
     public interface IDomainEventsDispatcher
     {

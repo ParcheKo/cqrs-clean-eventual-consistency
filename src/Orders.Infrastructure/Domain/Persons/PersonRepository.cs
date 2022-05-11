@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using SampleProject.Domain.Customers;
-using SampleProject.Domain.Customers.Orders;
-using SampleProject.Infrastructure.Database;
-using SampleProject.Infrastructure.SeedWork;
+using Orders.Domain.Persons;
+using Orders.Infrastructure.WriteDatabase;
 
-namespace SampleProject.Infrastructure.Domain.Customers
+namespace Orders.Infrastructure.Domain.Persons
 {
     public class PersonRepository : IPersonRepository
     {

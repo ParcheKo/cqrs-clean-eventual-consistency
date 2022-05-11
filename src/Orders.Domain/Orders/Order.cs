@@ -1,10 +1,9 @@
 ﻿using System;
-using SampleProject.Domain.Customers.Orders.Events;
-using SampleProject.Domain.Customers.Orders.Rules;
-using SampleProject.Domain.Customers.Rules;
-using SampleProject.Domain.SeedWork;
+using Orders.Domain.Orders.Events;
+using Orders.Domain.Orders.Rules;
+using Orders.Domain.SeedWork;
 
-namespace SampleProject.Domain.Customers.Orders
+namespace Orders.Domain.Orders
 {
     public class Order : Entity, IAggregateRoot
     {

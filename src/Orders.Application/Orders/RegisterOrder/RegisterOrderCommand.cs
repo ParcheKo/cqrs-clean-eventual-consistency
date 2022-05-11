@@ -1,8 +1,7 @@
 ﻿using System;
-using SampleProject.Application.Configuration.Commands;
-using SampleProject.Application.Customers;
+using Orders.Application.Configuration.Commands;
 
-namespace SampleProject.Application.Orders.PlaceCustomerOrder;
+namespace Orders.Application.Orders.RegisterOrder;
 
 public class RegisterOrderCommand : CommandBase<OrderDto>
 {

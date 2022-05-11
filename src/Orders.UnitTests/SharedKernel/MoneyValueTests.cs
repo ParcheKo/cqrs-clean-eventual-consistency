@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
-using SampleProject.Domain.SharedKernel;
-using SampleProject.UnitTests.SeedWork;
+using Orders.Domain.SharedKernel;
+using Orders.UnitTests.SeedWork;
 
-namespace SampleProject.UnitTests.SharedKernel
+namespace Orders.UnitTests.SharedKernel
 {
     [TestFixture]
     public class MoneyValueTests : TestBase

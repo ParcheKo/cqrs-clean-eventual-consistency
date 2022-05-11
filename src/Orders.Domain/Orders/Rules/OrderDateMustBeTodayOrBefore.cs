@@ -1,7 +1,7 @@
 ﻿using System;
-using SampleProject.Domain.SeedWork;
+using Orders.Domain.SeedWork;
 
-namespace SampleProject.Domain.Customers.Orders.Rules;
+namespace Orders.Domain.Orders.Rules;
 
 public class OrderDateMustBeTodayOrBefore : IBusinessRule
 {

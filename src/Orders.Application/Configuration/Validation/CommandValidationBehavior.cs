@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 
-namespace SampleProject.Application.Configuration.Validation
+namespace Orders.Application.Configuration.Validation
 {
     public class CommandValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>

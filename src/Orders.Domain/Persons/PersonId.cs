@@ -1,7 +1,7 @@
 ﻿using System;
-using SampleProject.Domain.SeedWork;
+using Orders.Domain.SeedWork;
 
-namespace SampleProject.Domain.Customers
+namespace Orders.Domain.Persons
 {
     public class PersonId : TypedIdValueBase
     {

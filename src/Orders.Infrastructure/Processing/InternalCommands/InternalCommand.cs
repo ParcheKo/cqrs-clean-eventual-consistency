@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SampleProject.Infrastructure.Processing.InternalCommands
+namespace Orders.Infrastructure.Processing.InternalCommands
 {
     public class InternalCommand
     {

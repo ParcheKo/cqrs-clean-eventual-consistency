@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using SampleProject.Domain.SeedWork;
+using Orders.Domain.SeedWork;
 
-namespace SampleProject.UnitTests.SeedWork
+namespace Orders.UnitTests.SeedWork
 {
     public class DomainEventsTestHelper
     {

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace SampleProject.API.Configuration
+namespace Orders.Api.Configuration
 {
     internal class CorrelationMiddleware
     {

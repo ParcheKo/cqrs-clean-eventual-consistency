@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace SampleProject.Domain.SeedWork
+namespace Orders.Domain.SeedWork
 {
     public abstract class ValueObject : IEquatable<ValueObject>
     {

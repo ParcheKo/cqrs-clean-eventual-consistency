@@ -6,12 +6,12 @@ using Autofac;
 using Autofac.Core;
 using MediatR;
 using Newtonsoft.Json;
-using SampleProject.Application.Configuration.DomainEvents;
-using SampleProject.Domain.SeedWork;
-using SampleProject.Infrastructure.Database;
-using SampleProject.Infrastructure.Processing.Outbox;
+using Orders.Application.Configuration.DomainEvents;
+using Orders.Domain.SeedWork;
+using Orders.Infrastructure.Processing.Outbox;
+using Orders.Infrastructure.WriteDatabase;
 
-namespace SampleProject.Infrastructure.Processing
+namespace Orders.Infrastructure.Processing
 {
     public class DomainEventsDispatcher : IDomainEventsDispatcher
     {

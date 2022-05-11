@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SampleProject.Domain.SeedWork;
+using Orders.Domain.SeedWork;
 
-namespace SampleProject.Infrastructure.SeedWork
+namespace Orders.Infrastructure.SeedWork
 {
     public class TypedIdValueConverter<TTypedIdValue> : ValueConverter<TTypedIdValue, Guid>
         where TTypedIdValue : TypedIdValueBase

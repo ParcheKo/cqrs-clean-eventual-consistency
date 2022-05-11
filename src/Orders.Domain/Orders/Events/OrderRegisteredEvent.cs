@@ -1,8 +1,6 @@
-﻿using System;
-using SampleProject.Domain.SeedWork;
-using SampleProject.Domain.SharedKernel;
+﻿using Orders.Domain.SeedWork;
 
-namespace SampleProject.Domain.Customers.Orders.Events
+namespace Orders.Domain.Orders.Events
 {
     public class OrderRegisteredEvent : DomainEventBase
     {

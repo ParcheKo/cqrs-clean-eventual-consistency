@@ -1,4 +1,4 @@
-﻿namespace SampleProject.Infrastructure.Processing.Outbox
+﻿namespace Orders.Infrastructure.Processing.Outbox
 {
     public interface IRecurringCommand
     {

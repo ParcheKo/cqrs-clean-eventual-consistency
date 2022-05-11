@@ -1,6 +1,6 @@
-﻿using SampleProject.Domain.SeedWork;
+﻿using Orders.Domain.SeedWork;
 
-namespace SampleProject.Domain.Customers.Rules
+namespace Orders.Domain.Orders.Rules
 {
     public class OrderNoMustBeUnique : IBusinessRule
     {

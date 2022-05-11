@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using SampleProject.Domain.SeedWork;
-using SampleProject.Infrastructure.Database;
-using SampleProject.Infrastructure.Processing;
+using Orders.Domain.SeedWork;
+using Orders.Infrastructure.Processing;
+using Orders.Infrastructure.WriteDatabase;
 
-namespace SampleProject.Infrastructure.Domain
+namespace Orders.Infrastructure.Domain
 {
     public class UnitOfWork : IUnitOfWork
     {

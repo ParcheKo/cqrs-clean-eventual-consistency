@@ -2,16 +2,15 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using SampleProject.Application;
-using SampleProject.Application.Configuration;
-using SampleProject.Application.Configuration.Commands;
-using SampleProject.Infrastructure.Processing.Outbox;
+using Orders.Application.Configuration;
+using Orders.Application.Configuration.Commands;
+using Orders.Infrastructure.Processing.Outbox;
 using Serilog;
 using Serilog.Context;
 using Serilog.Core;
 using Serilog.Events;
 
-namespace SampleProject.Infrastructure.Logging
+namespace Orders.Infrastructure.Logging
 {
     internal class LoggingCommandHandlerDecorator<T> : ICommandHandler<T> where T : ICommand
     {

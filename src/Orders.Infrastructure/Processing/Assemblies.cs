@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
-using SampleProject.Application.Orders.PlaceCustomerOrder;
+using Orders.Application.Orders.RegisterOrder;
 
-namespace SampleProject.Infrastructure.Processing
+namespace Orders.Infrastructure.Processing
 {
     internal static class Assemblies
     {

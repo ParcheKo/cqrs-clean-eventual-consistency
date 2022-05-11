@@ -1,9 +1,8 @@
 ﻿using System;
-using MediatR;
 using Newtonsoft.Json;
-using SampleProject.Domain.SeedWork;
+using Orders.Domain.SeedWork;
 
-namespace SampleProject.Application.Configuration.DomainEvents
+namespace Orders.Application.Configuration.DomainEvents
 {
     public class DomainNotificationBase<T> : IDomainEventNotification<T> where T : IDomainEvent
     {

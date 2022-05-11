@@ -1,8 +1,8 @@
 ﻿using System;
-using SampleProject.Domain.Customers.Rules;
-using SampleProject.Domain.SeedWork;
+using Orders.Domain.Persons.Rules;
+using Orders.Domain.SeedWork;
 
-namespace SampleProject.Domain.Customers
+namespace Orders.Domain.Persons
 {
     public class Person : Entity, IAggregateRoot
     {

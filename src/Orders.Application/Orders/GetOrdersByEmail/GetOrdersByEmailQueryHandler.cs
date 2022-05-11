@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using SampleProject.Application.Configuration.Queries;
-using SampleProject.Application.Customers;
+using Orders.Application.Configuration.Queries;
 
-namespace SampleProject.Application.Orders.GetCustomerOrders
+namespace Orders.Application.Orders.GetOrdersByEmail
 {
     internal sealed class GetOrdersByEmailQueryHandler : IQueryHandler<GetOrdersByEmailQuery, List<OrderDto>>
     {

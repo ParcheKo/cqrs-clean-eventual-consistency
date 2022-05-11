@@ -1,17 +1,16 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Orders.Api.Extensions;
-using Orders.Core;
-using SampleProject.Application.Configuration.Data;
-using SampleProject.Domain.Customers.Orders;
-using SampleProject.Domain.SeedWork;
-using SampleProject.Infrastructure.Domain;
-using SampleProject.Infrastructure.Domain.Customers;
-using SampleProject.Infrastructure.SeedWork;
+using Orders.Application.Configuration.Data;
+using Orders.Domain.Orders;
+using Orders.Domain.Persons;
+using Orders.Domain.SeedWork;
+using Orders.Infrastructure.Domain;
+using Orders.Infrastructure.Domain.Orders;
+using Orders.Infrastructure.Domain.Persons;
+using Orders.Infrastructure.SeedWork;
 
-namespace SampleProject.Infrastructure.Database
+namespace Orders.Infrastructure.WriteDatabase
 {
     public class DataAccessModule : Module
     {

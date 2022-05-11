@@ -1,4 +1,4 @@
-﻿namespace SampleProject.Infrastructure.Database
+﻿namespace Orders.Infrastructure.WriteDatabase
 {
     internal static class SchemaNames
     {

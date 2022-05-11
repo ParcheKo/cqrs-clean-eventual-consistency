@@ -1,6 +1,6 @@
-﻿using SampleProject.Application.Configuration.Emails;
+﻿using Orders.Infrastructure.Emails;
 
-namespace Orders.Core;
+namespace Orders.Infrastructure;
 
 public class AppConfiguration
 {

@@ -2,7 +2,7 @@
 using Quartz;
 using Quartz.Spi;
 
-namespace SampleProject.Infrastructure.Quartz
+namespace Orders.Infrastructure.Quartz
 {
     public class JobFactory : IJobFactory
     {

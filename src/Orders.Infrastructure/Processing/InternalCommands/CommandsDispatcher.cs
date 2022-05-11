@@ -4,12 +4,10 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using SampleProject.Application.Configuration.Processing;
-using SampleProject.Application.Customers;
-using SampleProject.Application.Orders.PlaceCustomerOrder;
-using SampleProject.Infrastructure.Database;
+using Orders.Application.Orders.RegisterOrder;
+using Orders.Infrastructure.WriteDatabase;
 
-namespace SampleProject.Infrastructure.Processing.InternalCommands
+namespace Orders.Infrastructure.Processing.InternalCommands
 {
     public class CommandsDispatcher : ICommandsDispatcher
     {

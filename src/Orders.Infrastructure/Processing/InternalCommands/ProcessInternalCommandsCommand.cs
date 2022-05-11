@@ -1,9 +1,8 @@
 ﻿using MediatR;
-using SampleProject.Application;
-using SampleProject.Application.Configuration.Commands;
-using SampleProject.Infrastructure.Processing.Outbox;
+using Orders.Application.Configuration.Commands;
+using Orders.Infrastructure.Processing.Outbox;
 
-namespace SampleProject.Infrastructure.Processing.InternalCommands
+namespace Orders.Infrastructure.Processing.InternalCommands
 {
     internal class ProcessInternalCommandsCommand : CommandBase<Unit>, IRecurringCommand
     {

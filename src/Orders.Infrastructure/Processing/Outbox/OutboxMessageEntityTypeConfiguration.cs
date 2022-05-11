@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SampleProject.Infrastructure.Database;
+using Orders.Infrastructure.WriteDatabase;
 
-namespace SampleProject.Infrastructure.Processing.Outbox
+namespace Orders.Infrastructure.Processing.Outbox
 {
     internal sealed class OutboxMessageEntityTypeConfiguration : IEntityTypeConfiguration<OutboxMessage>
     {

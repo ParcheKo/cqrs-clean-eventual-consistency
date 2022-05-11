@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SampleProject.Domain.SeedWork
+namespace Orders.Domain.SeedWork
 {
     public class DomainEventBase : IDomainEvent
     {

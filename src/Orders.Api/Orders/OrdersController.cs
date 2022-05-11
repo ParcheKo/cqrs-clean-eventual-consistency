@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Orders.Application.Orders.GetOrders;
 using Orders.Application.Orders.GetOrdersByEmail;
-using SampleProject.Application.Customers;
-using SampleProject.Application.Orders.PlaceCustomerOrder;
+using Orders.Application.Orders.RegisterOrder;
 
-namespace SampleProject.API.Orders
+namespace Orders.Api.Orders
 {
     [Route("api/orders")]
     [ApiController]

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using SampleProject.Application.Configuration.Emails;
+using Orders.Application.Configuration.Emails;
 
-namespace SampleProject.Infrastructure.Emails
+namespace Orders.Infrastructure.Emails
 {
     public class EmailSender : IEmailSender
     {

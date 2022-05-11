@@ -1,10 +1,10 @@
 ﻿using System.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SampleProject.Domain.Customers;
-using SampleProject.Infrastructure.Database;
+using Orders.Domain.Persons;
+using Orders.Infrastructure.WriteDatabase;
 
-namespace SampleProject.Infrastructure.Domain.Customers
+namespace Orders.Infrastructure.Domain.Persons
 {
     public class PersonEntityTypeConfiguration : IEntityTypeConfiguration<Person>
     {

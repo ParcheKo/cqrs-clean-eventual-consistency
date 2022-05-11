@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Orders.Application.Configuration.Queries;
 using Orders.Application.Orders.GetOrdersByEmail;
-using SampleProject.Application.Configuration.Queries;
-using SampleProject.Application.Customers;
 
-namespace SampleProject.Application.Orders.GetCustomerOrders
+namespace Orders.Application.Orders.GetOrders
 {
     internal sealed class GetOrdersQueryHandler : IQueryHandler<GetOrdersQuery, List<OrderViewModel>>
     {

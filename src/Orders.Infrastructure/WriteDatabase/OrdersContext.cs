@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SampleProject.Domain.Customers;
-using SampleProject.Domain.Customers.Orders;
-using SampleProject.Infrastructure.Processing.InternalCommands;
-using SampleProject.Infrastructure.Processing.Outbox;
+using Orders.Domain.Orders;
+using Orders.Domain.Persons;
+using Orders.Infrastructure.Processing.InternalCommands;
+using Orders.Infrastructure.Processing.Outbox;
 
-namespace SampleProject.Infrastructure.Database
+namespace Orders.Infrastructure.WriteDatabase
 {
     public class OrdersContext : DbContext
     {

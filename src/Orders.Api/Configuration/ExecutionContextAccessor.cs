@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
-using SampleProject.Application.Configuration;
+using Orders.Application.Configuration;
 
-namespace SampleProject.API.Configuration
+namespace Orders.Api.Configuration
 {
     public class ExecutionContextAccessor : IExecutionContextAccessor
     {

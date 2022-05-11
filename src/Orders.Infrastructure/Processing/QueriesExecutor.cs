@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Autofac;
 using MediatR;
-using SampleProject.Application;
-using SampleProject.Application.Configuration.Queries;
+using Orders.Application.Configuration.Queries;
 
-namespace SampleProject.Infrastructure.Processing
+namespace Orders.Infrastructure.Processing
 {
     public static class QueriesExecutor
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using MediatR;
 
-namespace SampleProject.Application.Configuration.DomainEvents
+namespace Orders.Application.Configuration.DomainEvents
 {
     public interface IDomainEventNotification<out TEventType> : IDomainEventNotification
     {

@@ -6,24 +6,22 @@ using CommonServiceLocator;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.DependencyInjection;
-using Orders.Api.Extensions;
-using Orders.Core;
+using Orders.Application.Configuration;
+using Orders.Application.Configuration.Emails;
+using Orders.Infrastructure.Domain;
+using Orders.Infrastructure.Emails;
+using Orders.Infrastructure.Logging;
+using Orders.Infrastructure.Processing;
+using Orders.Infrastructure.Processing.InternalCommands;
+using Orders.Infrastructure.Processing.Outbox;
+using Orders.Infrastructure.Quartz;
+using Orders.Infrastructure.SeedWork;
+using Orders.Infrastructure.WriteDatabase;
 using Quartz;
 using Quartz.Impl;
-using SampleProject.Application.Configuration;
-using SampleProject.Application.Configuration.Emails;
-using SampleProject.Infrastructure.Database;
-using SampleProject.Infrastructure.Domain;
-using SampleProject.Infrastructure.Emails;
-using SampleProject.Infrastructure.Logging;
-using SampleProject.Infrastructure.Processing;
-using SampleProject.Infrastructure.Processing.InternalCommands;
-using SampleProject.Infrastructure.Processing.Outbox;
-using SampleProject.Infrastructure.Quartz;
-using SampleProject.Infrastructure.SeedWork;
 using Serilog;
 
-namespace SampleProject.Infrastructure
+namespace Orders.Infrastructure
 {
     public class ApplicationStartup
     {

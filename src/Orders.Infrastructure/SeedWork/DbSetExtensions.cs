@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 
-namespace SampleProject.Infrastructure.SeedWork
+namespace Orders.Infrastructure.SeedWork
 {
     public static class DbSetExtensions
     {

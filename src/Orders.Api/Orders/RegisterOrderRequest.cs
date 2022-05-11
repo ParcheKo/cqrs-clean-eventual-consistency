@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using SampleProject.Application.Orders;
 
-namespace SampleProject.API.Orders
+namespace Orders.Api.Orders
 {
     public class RegisterOrderRequest
     {

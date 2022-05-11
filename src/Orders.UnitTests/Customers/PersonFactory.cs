@@ -1,7 +1,6 @@
-﻿using NSubstitute;
-using SampleProject.Domain.Customers;
+﻿using Orders.Domain.Persons;
 
-namespace SampleProject.UnitTests.Customers
+namespace Orders.UnitTests.Customers
 {
     public class PersonFactory
     {

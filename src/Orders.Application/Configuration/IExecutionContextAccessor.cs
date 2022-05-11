@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SampleProject.Application.Configuration
+namespace Orders.Application.Configuration
 {
     public interface IExecutionContextAccessor
     {

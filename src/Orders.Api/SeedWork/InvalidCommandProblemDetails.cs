@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-using SampleProject.Application.Configuration.Validation;
+using Orders.Application.Configuration.Validation;
 
-namespace SampleProject.API.SeedWork
+namespace Orders.Api.SeedWork
 {
     public class InvalidCommandProblemDetails : Microsoft.AspNetCore.Mvc.ProblemDetails
     {

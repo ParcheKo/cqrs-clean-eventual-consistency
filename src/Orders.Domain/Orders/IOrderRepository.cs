@@ -1,7 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace SampleProject.Domain.Customers.Orders
+namespace Orders.Domain.Orders
 {
     public interface IOrderRepository
     {

@@ -1,11 +1,10 @@
 ﻿using System;
 using NUnit.Framework;
-using SampleProject.Domain.Customers.Orders;
-using SampleProject.Domain.Customers.Orders.Rules;
-using SampleProject.Domain.Customers.Rules;
-using SampleProject.UnitTests.SeedWork;
+using Orders.Domain.Orders;
+using Orders.Domain.Orders.Rules;
+using Orders.UnitTests.SeedWork;
 
-namespace SampleProject.UnitTests.Customers
+namespace Orders.UnitTests.Customers
 {
     [TestFixture]
     public class OrderTests : TestBase

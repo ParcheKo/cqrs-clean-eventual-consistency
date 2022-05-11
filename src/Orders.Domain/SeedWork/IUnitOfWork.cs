@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace SampleProject.Domain.SeedWork
+namespace Orders.Domain.SeedWork
 {
     public interface IUnitOfWork
     {

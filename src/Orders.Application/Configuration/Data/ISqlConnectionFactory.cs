@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace SampleProject.Application.Configuration.Data
+namespace Orders.Application.Configuration.Data
 {
     public interface ISqlConnectionFactory
     {

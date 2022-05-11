@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
-using SampleProject.Application;
-using SampleProject.Application.Configuration.Data;
+using Orders.Application.Configuration.Data;
 
-namespace SampleProject.Infrastructure.Database
+namespace Orders.Infrastructure.WriteDatabase
 {
     public class SqlConnectionFactory : ISqlConnectionFactory, IDisposable
     {

@@ -1,10 +1,10 @@
 ﻿using System.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SampleProject.Domain.Customers.Orders;
-using SampleProject.Infrastructure.Database;
+using Orders.Domain.Orders;
+using Orders.Infrastructure.WriteDatabase;
 
-namespace SampleProject.Infrastructure.Domain.Customers
+namespace Orders.Infrastructure.Domain.Orders
 {
     internal sealed class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Order>
     {

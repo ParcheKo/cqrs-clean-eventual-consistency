@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using SampleProject.Domain.SeedWork;
-using SampleProject.Domain.SharedKernel;
+using Orders.Domain.SeedWork;
 
-namespace SampleProject.UnitTests.SeedWork
+namespace Orders.UnitTests.SeedWork
 {
     public abstract class TestBase
     {

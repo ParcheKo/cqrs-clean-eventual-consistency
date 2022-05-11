@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SampleProject.Infrastructure.Processing.Outbox
+namespace Orders.Infrastructure.Processing.Outbox
 {
     public class OutboxMessage
     {

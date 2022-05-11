@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-namespace SampleProject.Infrastructure
+namespace Orders.Infrastructure
 {
     public static class CompositionRoot
     {
