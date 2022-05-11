@@ -22,7 +22,7 @@ namespace Orders.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("SampleProject.Domain.Customers.Orders.Order", b =>
+            modelBuilder.Entity("Orders.Domain.Orders.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier")
@@ -72,7 +72,7 @@ namespace Orders.Infrastructure.Migrations
                     b.ToTable("orders", "orders");
                 });
 
-            modelBuilder.Entity("SampleProject.Domain.Customers.Person", b =>
+            modelBuilder.Entity("Orders.Domain.Persons.Person", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier")
@@ -99,7 +99,7 @@ namespace Orders.Infrastructure.Migrations
                     b.ToTable("persons", "orders");
                 });
 
-            modelBuilder.Entity("SampleProject.Infrastructure.Processing.InternalCommands.InternalCommand", b =>
+            modelBuilder.Entity("Orders.Infrastructure.Processing.InternalCommands.InternalCommand", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier")
@@ -123,7 +123,7 @@ namespace Orders.Infrastructure.Migrations
                     b.ToTable("InternalCommands", "app");
                 });
 
-            modelBuilder.Entity("SampleProject.Infrastructure.Processing.Outbox.OutboxMessage", b =>
+            modelBuilder.Entity("Orders.Infrastructure.Processing.Outbox.OutboxMessage", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier")
