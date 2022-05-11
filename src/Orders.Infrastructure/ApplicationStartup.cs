@@ -27,13 +27,11 @@ namespace SampleProject.Infrastructure
 {
     public class ApplicationStartup
     {
-        private const string OrdersConnectionString = "OrdersConnectionString";
-
         public static IServiceProvider Initialize(
             IServiceCollection services,
             AppConfiguration appConfiguration,
             IEmailSender emailSender,
-            EmailsSettings emailsSettings,
+            EmailSettings emailSettings,
             ILogger logger,
             IExecutionContextAccessor executionContextAccessor,
             bool runQuartz = true
@@ -43,7 +41,7 @@ namespace SampleProject.Infrastructure
             {
                 StartQuartz(
                     appConfiguration,
-                    emailsSettings,
+                    emailSettings,
                     logger,
                     executionContextAccessor
                 );
@@ -54,7 +52,7 @@ namespace SampleProject.Infrastructure
                 services,
                 appConfiguration,
                 emailSender,
-                emailsSettings,
+                emailSettings,
                 logger,
                 executionContextAccessor
             );
@@ -66,7 +64,7 @@ namespace SampleProject.Infrastructure
             IServiceCollection services,
             AppConfiguration appConfiguration,
             IEmailSender emailSender,
-            EmailsSettings emailsSettings,
+            EmailSettings emailSettings,
             ILogger logger,
             IExecutionContextAccessor executionContextAccessor
         )
@@ -85,13 +83,13 @@ namespace SampleProject.Infrastructure
                 container.RegisterModule(
                     new EmailModule(
                         emailSender,
-                        emailsSettings
+                        emailSettings
                     )
                 );
             }
             else
             {
-                container.RegisterModule(new EmailModule(emailsSettings));
+                container.RegisterModule(new EmailModule(emailSettings));
             }
 
             container.RegisterModule(new ProcessingModule());
@@ -111,7 +109,7 @@ namespace SampleProject.Infrastructure
 
         private static void StartQuartz(
             AppConfiguration appConfiguration,
-            EmailsSettings emailsSettings,
+            EmailSettings emailSettings,
             ILogger logger,
             IExecutionContextAccessor executionContextAccessor
         )
@@ -125,7 +123,7 @@ namespace SampleProject.Infrastructure
             container.RegisterModule(new QuartzModule());
             container.RegisterModule(new MediatorModule());
             container.RegisterModule(new DataAccessModule(appConfiguration));
-            container.RegisterModule(new EmailModule(emailsSettings));
+            container.RegisterModule(new EmailModule(emailSettings));
             container.RegisterModule(new ProcessingModule());
 
             container.RegisterInstance(executionContextAccessor);

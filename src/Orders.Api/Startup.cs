@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -96,8 +97,8 @@ public class Startup
         //     child => child.Key,
         //     child => TimeSpan.Parse(child.Value)
         // );
-        var emailsSettings = Configuration.GetSection("EmailsSettings").Get<EmailsSettings>();
-        var memoryCache = serviceProvider.GetService<IMemoryCache>();
+        var emailsSettings = appConfiguration.EmailSettings;
+        // var memoryCache = serviceProvider.GetService<IMemoryCache>();
 
         // todo: setup health-checks
         // var redisConnString = Configuration.GetConnectionString("RedisCache");
@@ -163,7 +164,7 @@ public class Startup
         {
             using var serviceScope = app.ApplicationServices.CreateScope();
             var context = serviceScope.ServiceProvider.GetService<OrdersContext>()!;
-            // var hasPendingMigrations = context.Database.GetPendingMigrations().Any();
+            var hasPendingMigrations = context.Database.GetPendingMigrations().Any();
             context.Database.Migrate();
         }
 

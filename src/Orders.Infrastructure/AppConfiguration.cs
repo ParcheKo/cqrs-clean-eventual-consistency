@@ -1,10 +1,13 @@
-﻿namespace Orders.Core;
+﻿using SampleProject.Application.Configuration.Emails;
+
+namespace Orders.Core;
 
 public class AppConfiguration
 {
     public ConnectionStrings ConnectionStrings { get; set; }
     public int? RetryCount { get; set; }
     public DatabaseNamingConvention DatabaseNamingConvention { get; set; }
+    public EmailSettings EmailSettings { get; set; }
 }
 
 public enum DatabaseNamingConvention

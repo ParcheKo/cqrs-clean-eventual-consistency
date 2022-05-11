@@ -7,17 +7,17 @@ namespace SampleProject.Infrastructure.Emails
     internal class EmailModule : Module
     {
         private readonly IEmailSender _emailSender;
-        private readonly EmailsSettings _emailsSettings;
+        private readonly EmailSettings _emailSettings;
         
-        internal EmailModule(IEmailSender emailSender, EmailsSettings emailsSettings)
+        internal EmailModule(IEmailSender emailSender, EmailSettings emailSettings)
         {
             _emailSender = emailSender;
-            _emailsSettings = emailsSettings;
+            _emailSettings = emailSettings;
         }
 
-        internal EmailModule(EmailsSettings emailsSettings)
+        internal EmailModule(EmailSettings emailSettings)
         {
-            _emailsSettings = emailsSettings;
+            _emailSettings = emailSettings;
         }
 
         protected override void Load(ContainerBuilder builder)
@@ -33,7 +33,7 @@ namespace SampleProject.Infrastructure.Emails
                     .InstancePerLifetimeScope();
             }
 
-            builder.RegisterInstance(_emailsSettings);
+            builder.RegisterInstance(_emailSettings);
         }
     }
 }
