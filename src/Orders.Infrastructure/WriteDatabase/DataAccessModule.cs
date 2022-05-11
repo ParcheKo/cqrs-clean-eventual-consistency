@@ -38,7 +38,9 @@ namespace SampleProject.Infrastructure.Database
                 .As<IUnitOfWork>()
                 .InstancePerLifetimeScope();
 
-            // todo order repository
+            builder.RegisterType<OrderRepository>()
+                .As<IOrderRepository>()
+                .InstancePerLifetimeScope();
 
             builder.RegisterType<PersonRepository>()
                 .As<IPersonRepository>()
