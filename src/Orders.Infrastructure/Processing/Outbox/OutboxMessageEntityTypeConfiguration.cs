@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Orders.Query.Extensions;
 using SampleProject.Infrastructure.Database;
 
 namespace SampleProject.Infrastructure.Processing.Outbox
@@ -8,7 +10,10 @@ namespace SampleProject.Infrastructure.Processing.Outbox
     {
         public void Configure(EntityTypeBuilder<OutboxMessage> builder)
         {
-            builder.ToTable("OutboxMessages", SchemaNames.Application);
+            builder.ToTable(
+                nameof(OrdersContext.OutboxMessages).ToSnakeCase(),
+                SchemaNames.Application
+            );
             
             builder.HasKey(b => b.Id);
             builder.Property(b => b.Id).ValueGeneratedNever();

@@ -15,9 +15,16 @@ namespace SampleProject.Domain.Customers.Orders
         public string ProductName { get; private set; }
         public int Total { get; private set; }
         public decimal Price { get; private set; } // convert to value-object
-        public decimal TotalPrice => Total * Price; // todo : does it persist to db using ef? 
 
-        protected Order()
+        private decimal _totalPrice;
+
+        public decimal TotalPrice
+        {
+            get => Total * Price;
+            set => _totalPrice = value;
+        }
+
+        private Order()
         {
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -10,20 +11,31 @@ using SampleProject.Infrastructure.Database;
 
 namespace SampleProject.Infrastructure.Domain.Customers
 {
-    internal sealed class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Person>
+    internal sealed class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Order>
     {
-        public void Configure(EntityTypeBuilder<Person> builder)
+        public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.ToTable(
-                "Persons".ToSnakeCase(),
+                nameof(OrdersContext.Orders).ToSnakeCase(),
                 SchemaNames.Orders
             );
 
-            // todo : test if these simple configs are done by conventions
             builder.HasKey(b => b.Id);
-            builder.Property(p => p.Name);
-            builder.Property(p => p.Email);
-
+            builder.Property(p => p.OrderDate).HasColumnType(nameof(SqlDbType.DateTime2));
+            builder.Property(p => p.CreatedBy).HasColumnType(nameof(SqlDbType.NVarChar)).HasMaxLength(150);
+            builder.Property(p => p.OrderNo).HasColumnType(nameof(SqlDbType.NVarChar)).HasMaxLength(50);
+            builder.Property(p => p.ProductName).HasColumnType(nameof(SqlDbType.NVarChar)).HasMaxLength(100);
+            builder.Property(p => p.Total).HasColumnType(nameof(SqlDbType.Int));
+            builder.Property(p => p.Price).HasColumnType(nameof(SqlDbType.Decimal)).HasPrecision(
+                24,
+                2
+            );
+            builder.Property(p => p.TotalPrice).HasColumnType(nameof(SqlDbType.Decimal)).HasPrecision(
+                24,
+                2
+            ).UsePropertyAccessMode(PropertyAccessMode.Property);
+            builder.HasIndex(p => p.OrderNo).IsUnique();
+            
             // builder.OwnsMany<Order>(OrdersList, x =>
             // {
             //     x.WithOwner().HasForeignKey("CustomerId");
