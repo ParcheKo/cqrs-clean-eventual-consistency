@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Orders.Core.Extensions;
 using Orders.Domain.Persons;
 using Orders.Infrastructure.WriteDatabase;
 
@@ -18,7 +19,14 @@ public class PersonEntityTypeConfiguration : IEntityTypeConfiguration<Person>
 
         builder.HasKey(b => b.Id);
         builder.Property(p => p.Name).HasColumnType(nameof(SqlDbType.NVarChar)).HasMaxLength(50);
-        builder.Property(p => p.Email).HasColumnType(nameof(SqlDbType.NVarChar)).HasMaxLength(150);
-        builder.HasIndex(p => p.Email).IsUnique();
+        builder.OwnsOne(
+            p => p.Email,
+            o =>
+            {
+                o.Property(e => e.Value).HasColumnName(nameof(Person.Email).ToSnakeCase())
+                    .HasColumnType(nameof(SqlDbType.NVarChar)).HasMaxLength(150);
+                o.HasIndex(e => e.Value);
+            }
+        );
     }
 }

@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Orders.Domain.Persons;
 using Orders.Domain.Persons.Rules;
+using Orders.Domain.SharedKernel.Email;
 using Orders.UnitTests.SeedWork;
 
 namespace Orders.UnitTests;
@@ -13,7 +14,7 @@ public class PersonTests : TestBase
         [Test]
         public void should_succeed_when_email_is_unique()
         {
-            const string email = "testEmail@email.com";
+            var email = Email.Of("testEmail@email.com");
             const bool emailIsUnique = true;
             const string name = "Amir";
             Person.From(
@@ -26,7 +27,7 @@ public class PersonTests : TestBase
         [Test]
         public void should_fail_when_email_is_duplicated()
         {
-            const string email = "testEmail@email.com";
+            var email = "testEmail@email.com";
             const bool emailIsUnique = false;
             const string name = "Amir";
 
@@ -34,7 +35,7 @@ public class PersonTests : TestBase
                 () =>
                 {
                     Person.From(
-                        email,
+                        Email.Of(email),
                         name,
                         emailIsUnique
                     );
@@ -48,11 +49,11 @@ public class PersonTests : TestBase
         [Test]
         public void person_registration_must_have_been_notified()
         {
-            const string email = "testEmail@email.com";
+            var email = "testEmail@email.com";
             const bool emailIsUnique = true;
             const string name = "Amir";
             var person = Person.From(
-                email,
+                Email.Of(email),
                 name,
                 emailIsUnique
             );

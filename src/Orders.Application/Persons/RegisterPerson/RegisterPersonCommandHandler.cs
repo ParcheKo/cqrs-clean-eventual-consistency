@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Orders.Application.Configuration.Commands;
 using Orders.Domain.Persons;
 using Orders.Domain.SeedWork;
+using Orders.Domain.SharedKernel.Email;
 
 namespace Orders.Application.Persons.RegisterPerson;
 
@@ -27,7 +28,7 @@ public class RegisterPersonCommandHandler : ICommandHandler<RegisterPersonComman
     {
         var noOneRegisteredWithTheEmail = !await _personRepository.ExistsWithEmail(request.Email);
         var person = Person.From(
-            request.Email,
+            Email.Of(request.Email),
             request.Name,
             noOneRegisteredWithTheEmail
         );

@@ -1,6 +1,7 @@
 ﻿using System;
 using Orders.Domain.Persons.Rules;
 using Orders.Domain.SeedWork;
+using Orders.Domain.SharedKernel.Email;
 
 namespace Orders.Domain.Persons;
 
@@ -11,7 +12,7 @@ public class Person : Entity, IAggregateRoot
     }
 
     private Person(
-        string email,
+        Email email,
         string name
     )
     {
@@ -19,15 +20,15 @@ public class Person : Entity, IAggregateRoot
         Email = email;
         Name = name;
 
-        AddDomainEvent(new PersonRegistered(Id, Email, Name));
+        AddDomainEvent(new PersonRegistered(Id, Email.Value, Name));
     }
 
     public PersonId Id { get; private set; }
     public string Name { get; private set; }
-    public string Email { get; private set; } // todo : make it value-object 
+    public Email Email { get; private set; }
 
     public static Person From(
-        string email,
+        Email email,
         string name,
         bool emailIsUnique
     )

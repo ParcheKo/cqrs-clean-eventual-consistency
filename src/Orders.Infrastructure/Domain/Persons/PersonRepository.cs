@@ -22,7 +22,7 @@ public class PersonRepository : IPersonRepository
 
     public async Task<bool> ExistsWithEmail(string email)
     {
-        return await _context.Persons.AnyAsync(p => p.Email == email);
+        return await _context.Persons.AnyAsync(p => p.Email.Value == email);
     }
 
     public async Task<Person> GetById(PersonId id)

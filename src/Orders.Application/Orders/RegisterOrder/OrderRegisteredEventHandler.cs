@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Orders.Domain.Orders.Events;
 using Orders.Domain.Persons;
+using Orders.Domain.SharedKernel.Email;
 
 namespace Orders.Application.Orders.RegisterOrder;
 
@@ -25,7 +26,7 @@ public class OrderRegisteredEventHandler : INotificationHandler<OrderRegisteredE
         if (!personExists)
         {
             var person = Person.From(
-                e.CreatedBy,
+                Email.Of(e.CreatedBy),
                 e.CreatedBy, // todo: name??
                 true
             );
