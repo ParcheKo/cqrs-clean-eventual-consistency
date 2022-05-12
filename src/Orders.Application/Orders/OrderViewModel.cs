@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Orders.Application.Orders.GetOrdersByEmail;
+namespace Orders.Application.Orders;
 
 public class OrderViewModel
 {
@@ -12,4 +12,5 @@ public class OrderViewModel
     public int Total { get; set; }
     public decimal Price { get; set; }
     public decimal TotalPrice { get; set; }
+    public string PersonName { get; set; }
 }

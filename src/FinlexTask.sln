@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orders.UnitTests", "Orders.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleProject.IntegrationTests", "SampleProject.IntegrationTests\SampleProject.IntegrationTests.csproj", "{88971F34-5176-4BC7-A766-2343346F4DAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temp", "Temp\Temp.csproj", "{40E36447-F5F4-417D-A294-1D81AE07328A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orders.Query", "Orders.Query\Orders.Query.csproj", "{40E36447-F5F4-417D-A294-1D81AE07328A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{75C6911E-597E-4BF7-9366-BF48A7B5F7F7}"
 EndProject

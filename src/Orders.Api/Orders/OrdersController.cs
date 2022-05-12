@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Orders.Application.Orders;
 using Orders.Application.Orders.GetOrders;
 using Orders.Application.Orders.GetOrdersByEmail;
 using Orders.Application.Orders.RegisterOrder;
