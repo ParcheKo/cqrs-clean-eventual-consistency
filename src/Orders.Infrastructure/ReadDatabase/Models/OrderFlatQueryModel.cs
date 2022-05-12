@@ -4,6 +4,7 @@ namespace Orders.Infrastructure.ReadDatabase.Models;
 
 public class OrderFlatQueryModel
 {
+    public Guid Id { get; set; }
     public Guid OrderId { get; set; }
     public DateTime OrderDate { get; set; }
     public string CreatedBy { get; set; }

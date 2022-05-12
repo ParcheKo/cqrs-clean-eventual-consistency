@@ -15,10 +15,9 @@ public class ReadDbContext
         var mongoClient = new MongoClient(appConfiguration.ConnectionStrings.MongoConnectionString);
         _database = mongoClient.GetDatabase(appConfiguration.ConnectionStrings.MongoDatabase);
         ConfigureDatabaseNamingConvention(appConfiguration.DatabaseNamingConvention);
-        Map();
+        // todo: a bug must be solved -> 
+        // Map();
     }
-    // internal IMongoCollection<OrderViewQueryModel> OrderViewMaterializedView =>
-    //     _database.GetCollection<OrderViewQueryModel>(nameof(OrderViewMaterializedView));
     
     internal IMongoCollection<OrderFlatQueryModel> OrderFlatMaterializedView =>
         _database.GetCollection<OrderFlatQueryModel>(nameof(OrderFlatMaterializedView));

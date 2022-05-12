@@ -50,11 +50,13 @@ public class Order : Entity, IAggregateRoot
     public int Total { get; private set; }
     public decimal Price { get; private set; } // convert to value-object
 
-    public decimal TotalPrice => Total * Price;
-    // {
-    //     get => Total * Price;
-    //     set => _totalPrice = value;
-    // }
+    private decimal _totalPrice;
+
+    public decimal TotalPrice
+    {
+        get => Total * Price;
+        set => _totalPrice = value;
+    }
 
     public static Order From(
         DateTime orderDate,

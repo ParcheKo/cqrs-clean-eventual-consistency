@@ -22,6 +22,6 @@ public class MaterializePersonFlatWhenPersonRegisteredHandler : INotificationHan
         CancellationToken cancellationToken
     )
     {
-        throw new NotImplementedException();
+      return;
     }
 }
