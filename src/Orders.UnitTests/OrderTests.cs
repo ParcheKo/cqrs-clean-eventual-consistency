@@ -16,7 +16,7 @@ public class OrderTests : TestBase
         [Test]
         public void should_fail_when_order_date_is_after_today()
         {
-            const string personEmail = "test@test.com";
+            const string createdBy = "test@test.com";
             const string productName = "test product";
             const string orderNo = "order-1";
             const int total = 1;
@@ -31,7 +31,7 @@ public class OrderTests : TestBase
                 {
                     Order.From(
                         tomorrow,
-                        personEmail,
+                        createdBy,
                         orderNo,
                         productName,
                         total,
@@ -47,7 +47,7 @@ public class OrderTests : TestBase
         [TestCase(1)]
         public void should_succeed_when_order_date_is_up_to_today(int daysBeforeToday)
         {
-            const string personEmail = "test@test.com";
+            const string createdBy = "test@test.com";
             const string productName = "test product";
             const string orderNo = "order-1";
             const int total = 1;
@@ -59,7 +59,7 @@ public class OrderTests : TestBase
 
             var order = Order.From(
                 orderDate,
-                personEmail,
+                createdBy,
                 orderNo,
                 productName,
                 total,
@@ -71,7 +71,7 @@ public class OrderTests : TestBase
         [Test]
         public void should_fail_when_order_no_is_duplicate()
         {
-            const string personEmail = "test@test.com";
+            const string createdBy = "test@test.com";
             const string productName = "test product";
             const string orderNo = "order-1";
             const int total = 1;
@@ -85,7 +85,7 @@ public class OrderTests : TestBase
                 {
                     Order.From(
                         today,
-                        personEmail,
+                        createdBy,
                         orderNo,
                         productName,
                         total,
@@ -116,7 +116,7 @@ public class OrderTests : TestBase
             decimal totalPrice
         )
         {
-            const string personEmail = "test@test.com";
+            const string createdBy = "test@test.com";
             const string productName = "test product";
             const string orderNo = "order-1";
             const bool orderNoIsUnique = true;
@@ -125,7 +125,7 @@ public class OrderTests : TestBase
 
             var order = Order.From(
                 today,
-                personEmail,
+                createdBy,
                 orderNo,
                 productName,
                 total,
@@ -142,7 +142,7 @@ public class OrderTests : TestBase
         [Test]
         public void order_registration_must_have_been_notified()
         {
-            const string personEmail = "test@test.com";
+            const string createdBy = "test@test.com";
             const string productName = "test product";
             const string orderNo = "order-1";
             const int total = 1;
@@ -153,7 +153,7 @@ public class OrderTests : TestBase
 
             var order = Order.From(
                 today,
-                personEmail,
+                createdBy,
                 orderNo,
                 productName,
                 total,
@@ -162,12 +162,12 @@ public class OrderTests : TestBase
             );
 
             var orderRegisteredEvent = AssertPublishedDomainEvent<OrderRegisteredEvent>(order);
-            orderRegisteredEvent.Email.Should().Be(personEmail);
+            orderRegisteredEvent.CreatedBy.Should().Be(createdBy);
         }
 
         public void order_properties_must_have_been_set()
         {
-            const string personEmail = "test@test.com";
+            const string createdBy = "test@test.com";
             const string productName = "test product";
             const string orderNo = "order-1";
             const int total = 1;
@@ -178,7 +178,7 @@ public class OrderTests : TestBase
 
             var order = Order.From(
                 today,
-                personEmail,
+                createdBy,
                 orderNo,
                 productName,
                 total,
@@ -187,7 +187,7 @@ public class OrderTests : TestBase
             );
 
             order.OrderDate.Should().Be(today);
-            order.CreatedBy.Should().Be(personEmail);
+            order.CreatedBy.Should().Be(createdBy);
             order.OrderNo.Should().Be(orderNo);
             order.ProductName.Should().Be(productName);
             order.Total.Should().Be(total);

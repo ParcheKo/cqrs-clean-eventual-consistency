@@ -19,7 +19,7 @@ public class Person : Entity, IAggregateRoot
         Email = email;
         Name = name;
 
-        AddDomainEvent(new PersonRegistered(Id));
+        AddDomainEvent(new PersonRegistered(Id, Email, Name));
     }
 
     public PersonId Id { get; private set; }

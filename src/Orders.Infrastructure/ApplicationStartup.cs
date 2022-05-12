@@ -15,6 +15,7 @@ using Orders.Infrastructure.Processing;
 using Orders.Infrastructure.Processing.InternalCommands;
 using Orders.Infrastructure.Processing.Outbox;
 using Orders.Infrastructure.Quartz;
+using Orders.Infrastructure.ReadDatabase;
 using Orders.Infrastructure.SeedWork;
 using Orders.Infrastructure.WriteDatabase;
 using Quartz;
@@ -71,6 +72,7 @@ public class ApplicationStartup
 
         container.RegisterModule(new LoggingModule(logger));
         container.RegisterModule(new DataAccessModule(appConfiguration));
+        container.RegisterModule(new QueryModule());
         container.RegisterModule(new MediatorModule());
         container.RegisterModule(new DomainModule());
 
@@ -115,6 +117,7 @@ public class ApplicationStartup
         container.RegisterModule(new QuartzModule());
         container.RegisterModule(new MediatorModule());
         container.RegisterModule(new DataAccessModule(appConfiguration));
+        container.RegisterModule(new QueryModule());
         container.RegisterModule(new EmailModule(emailSettings));
         container.RegisterModule(new ProcessingModule());
 

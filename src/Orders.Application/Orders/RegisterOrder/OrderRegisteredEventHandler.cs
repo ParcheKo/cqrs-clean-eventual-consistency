@@ -21,12 +21,12 @@ public class OrderRegisteredEventHandler : INotificationHandler<OrderRegisteredE
         CancellationToken cancellationToken
     )
     {
-        var personExists = await _personRepository.ExistsWithEmail(e.Email);
+        var personExists = await _personRepository.ExistsWithEmail(e.CreatedBy);
         if (!personExists)
         {
             var person = Person.From(
-                e.Email,
-                e.Email, // todo: name??
+                e.CreatedBy,
+                e.CreatedBy, // todo: name??
                 true
             );
             await _personRepository.Add(person);

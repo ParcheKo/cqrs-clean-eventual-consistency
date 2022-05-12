@@ -7,8 +7,6 @@ namespace Orders.Domain.Orders;
 
 public class Order : Entity, IAggregateRoot
 {
-    private decimal _totalPrice;
-
     private Order()
     {
     }
@@ -33,7 +31,13 @@ public class Order : Entity, IAggregateRoot
         AddDomainEvent(
             new OrderRegisteredEvent(
                 new OrderId(Guid.NewGuid()),
-                createdBy
+                CreatedBy,
+                OrderDate,
+                OrderNo,
+                ProductName,
+                Total,
+                Price,
+                TotalPrice
             )
         );
     }
@@ -46,11 +50,11 @@ public class Order : Entity, IAggregateRoot
     public int Total { get; private set; }
     public decimal Price { get; private set; } // convert to value-object
 
-    public decimal TotalPrice
-    {
-        get => Total * Price;
-        set => _totalPrice = value;
-    }
+    public decimal TotalPrice => Total * Price;
+    // {
+    //     get => Total * Price;
+    //     set => _totalPrice = value;
+    // }
 
     public static Order From(
         DateTime orderDate,
