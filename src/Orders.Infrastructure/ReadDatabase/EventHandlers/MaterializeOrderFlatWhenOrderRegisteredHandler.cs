@@ -24,7 +24,7 @@ public class MaterializeOrderFlatWhenOrderRegisteredHandler : INotificationHandl
     )
     {
         // todo : read model has some design problems now.
-        return;
+        // return;
         var person = await _readDbContext.PersonFlatMaterializedView
             .Find(p => p.Email == notification.CreatedBy)
             .FirstOrDefaultAsync(cancellationToken: cancellationToken);
@@ -36,6 +36,7 @@ public class MaterializeOrderFlatWhenOrderRegisteredHandler : INotificationHandl
         
         var order = new OrderFlatQueryModel
         {
+            Id = Guid.NewGuid(),
             OrderId = notification.OrderId.Value,
             OrderDate = notification.OrderDate,
             CreatedBy = notification.CreatedBy,

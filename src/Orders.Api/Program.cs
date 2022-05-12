@@ -26,6 +26,7 @@ public class Program
                 )
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
+                .WriteTo.Seq("http://localhost:5341")
                 .CreateLogger();
 
             Log.Information("Starting Web Host");

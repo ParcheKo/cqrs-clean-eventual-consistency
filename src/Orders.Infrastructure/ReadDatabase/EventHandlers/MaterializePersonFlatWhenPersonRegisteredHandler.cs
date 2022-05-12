@@ -22,6 +22,17 @@ public class MaterializePersonFlatWhenPersonRegisteredHandler : INotificationHan
         CancellationToken cancellationToken
     )
     {
-      return;
+        var person = new PersonFlatQueryModel()
+        {
+            Id = Guid.NewGuid(),
+            PersonId = notification.PersonId.Value,
+            Email = notification.Email,
+            Name = notification.Name,
+        };
+
+        await _readDbContext.PersonFlatMaterializedView.InsertOneAsync(
+            person,
+            cancellationToken: cancellationToken
+        );
     }
 }

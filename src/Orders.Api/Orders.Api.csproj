@@ -9,32 +9,33 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\"/>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0"/>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
     <!--    <PackageReference Include="EFCore.NamingConventions" Version="6.0.0" />-->
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="6.0.1"/>
-    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.1"/>
-    <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="6.0.1"/>
-    <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="6.0.1"/>
-    <PackageReference Include="AspNetCore.HealthChecks.RabbitMQ" Version="6.0.1"/>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0"/>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1"/>
-    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.3.1"/>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.0" PrivateAssets="All"/>
-    <PackageReference Include="MediatR" Version="10.0.1"/>
-    <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0"/>
-    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1"/>
-    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0"/>
-    <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="6.4.2"/>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="6.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="6.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="6.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.RabbitMQ" Version="6.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.3.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.0" PrivateAssets="All" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
+    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
+    <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="6.4.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Orders.Infrastructure\Orders.Infrastructure.csproj"/>
+    <ProjectReference Include="..\Orders.Infrastructure\Orders.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
