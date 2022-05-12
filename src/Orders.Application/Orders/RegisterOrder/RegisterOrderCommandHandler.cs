@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Orders.Application.Configuration.Commands;
 using Orders.Domain.Orders;
 using Orders.Domain.SeedWork;
+using Orders.Domain.SharedKernel.Email;
 
 namespace Orders.Application.Orders.RegisterOrder;
 
@@ -28,7 +29,7 @@ public class RegisterOrderCommandHandler : ICommandHandler<RegisterOrderCommand,
         var orderNoIsUnique = !await _orderRepository.ExistsWithOrderNo(request.OrderNo);
         var order = Order.From(
             request.OrderDate,
-            request.PersonEmail,
+            Email.Of(request.PersonEmail),
             request.OrderNo,
             request.ProductName,
             request.Total,

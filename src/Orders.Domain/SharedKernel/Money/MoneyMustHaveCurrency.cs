@@ -1,12 +1,12 @@
 ﻿using Orders.Domain.SeedWork;
 
-namespace Orders.Domain.SharedKernel;
+namespace Orders.Domain.SharedKernel.Money;
 
-public class MoneyValueMustHaveCurrencyRule : IBusinessRule
+public class MoneyMustHaveCurrency : IBusinessRule
 {
     private readonly string _currency;
 
-    public MoneyValueMustHaveCurrencyRule(string currency)
+    public MoneyMustHaveCurrency(string currency)
     {
         _currency = currency;
     }

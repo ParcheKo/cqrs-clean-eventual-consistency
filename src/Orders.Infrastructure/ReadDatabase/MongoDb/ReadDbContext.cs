@@ -1,8 +1,8 @@
 ﻿using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
+using Orders.Core;
 using Orders.Infrastructure.ReadDatabase.Models;
-using Orders.Infrastructure.WriteDatabase;
 
 namespace Orders.Infrastructure.ReadDatabase.MongoDb;
 

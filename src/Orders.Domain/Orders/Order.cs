@@ -2,6 +2,7 @@
 using Orders.Domain.Orders.Events;
 using Orders.Domain.Orders.Rules;
 using Orders.Domain.SeedWork;
+using Orders.Domain.SharedKernel.Email;
 
 namespace Orders.Domain.Orders;
 
@@ -13,7 +14,7 @@ public class Order : Entity, IAggregateRoot
 
     private Order(
         DateTime orderDate,
-        string createdBy,
+        Email createdBy,
         string orderNo,
         string productName,
         int total,
@@ -31,7 +32,7 @@ public class Order : Entity, IAggregateRoot
         AddDomainEvent(
             new OrderRegisteredEvent(
                 new OrderId(Guid.NewGuid()),
-                CreatedBy,
+                CreatedBy.Value,
                 OrderDate,
                 OrderNo,
                 ProductName,
@@ -44,7 +45,7 @@ public class Order : Entity, IAggregateRoot
 
     public OrderId Id { get; private set; }
     public DateTime OrderDate { get; private set; }
-    public string CreatedBy { get; private set; } // convert to value-object
+    public Email CreatedBy { get; private set; }
     public string OrderNo { get; private set; }
     public string ProductName { get; private set; }
     public int Total { get; private set; }
@@ -60,7 +61,7 @@ public class Order : Entity, IAggregateRoot
 
     public static Order From(
         DateTime orderDate,
-        string createdBy,
+        Email createdBy,
         string orderNo,
         string productName,
         int total,

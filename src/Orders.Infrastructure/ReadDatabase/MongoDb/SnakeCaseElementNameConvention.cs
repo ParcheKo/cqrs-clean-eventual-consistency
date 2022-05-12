@@ -1,6 +1,6 @@
 ﻿// ReSharper disable once CheckNamespace
 
-using Orders.Infrastructure.Extensions;
+using Orders.Core.Extensions;
 
 // ReSharper disable once CheckNamespace
 namespace MongoDB.Bson.Serialization.Conventions;

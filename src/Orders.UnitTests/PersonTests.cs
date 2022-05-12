@@ -8,7 +8,7 @@ namespace Orders.UnitTests;
 [TestFixture]
 public class PersonTests : TestBase
 {
-    private class PersonCreation : PersonTests
+    private class PersonRegistration : PersonTests
     {
         [Test]
         public void should_succeed_when_email_is_unique()

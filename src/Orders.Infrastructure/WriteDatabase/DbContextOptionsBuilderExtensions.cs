@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Orders.Core;
 
 namespace Orders.Infrastructure.WriteDatabase;
 

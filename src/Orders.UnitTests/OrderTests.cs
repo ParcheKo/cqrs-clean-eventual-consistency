@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Orders.Domain.Orders;
 using Orders.Domain.Orders.Events;
 using Orders.Domain.Orders.Rules;
+using Orders.Domain.SharedKernel.Email;
 using Orders.UnitTests.SeedWork;
 
 namespace Orders.UnitTests;
@@ -11,7 +12,7 @@ namespace Orders.UnitTests;
 [TestFixture]
 public class OrderTests : TestBase
 {
-    private class OrderCreation : OrderTests
+    private class OrderRegistration : OrderTests
     {
         [Test]
         public void should_fail_when_order_date_is_after_today()
@@ -31,7 +32,7 @@ public class OrderTests : TestBase
                 {
                     Order.From(
                         tomorrow,
-                        createdBy,
+                        Email.Of(createdBy),
                         orderNo,
                         productName,
                         total,
@@ -59,7 +60,7 @@ public class OrderTests : TestBase
 
             var order = Order.From(
                 orderDate,
-                createdBy,
+                Email.Of(createdBy),
                 orderNo,
                 productName,
                 total,
@@ -85,7 +86,7 @@ public class OrderTests : TestBase
                 {
                     Order.From(
                         today,
-                        createdBy,
+                        Email.Of(createdBy),
                         orderNo,
                         productName,
                         total,
@@ -125,7 +126,7 @@ public class OrderTests : TestBase
 
             var order = Order.From(
                 today,
-                createdBy,
+                Email.Of(createdBy),
                 orderNo,
                 productName,
                 total,
@@ -153,7 +154,7 @@ public class OrderTests : TestBase
 
             var order = Order.From(
                 today,
-                createdBy,
+                Email.Of(createdBy),
                 orderNo,
                 productName,
                 total,
@@ -178,7 +179,7 @@ public class OrderTests : TestBase
 
             var order = Order.From(
                 today,
-                createdBy,
+                Email.Of(createdBy),
                 orderNo,
                 productName,
                 total,

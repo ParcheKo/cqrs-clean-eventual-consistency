@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Orders.Infrastructure.WriteDatabase;
+namespace Orders.Core;
 
 public class DatabaseNamingConventionNotSpecifiedException : InvalidOperationException
 {

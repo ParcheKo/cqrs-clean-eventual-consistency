@@ -1,4 +1,5 @@
-﻿using Orders.Infrastructure.Emails;
+﻿using Orders.Core;
+using Orders.Infrastructure.Emails;
 
 namespace Orders.Infrastructure;
 
@@ -8,13 +9,6 @@ public class AppConfiguration
     public int? RetryCount { get; set; }
     public DatabaseNamingConvention DatabaseNamingConvention { get; set; }
     public EmailSettings EmailSettings { get; set; }
-}
-
-public enum DatabaseNamingConvention
-{
-    Normal = 1,
-    CamelCase,
-    SnakeCase
 }
 
 public class ConnectionStrings
