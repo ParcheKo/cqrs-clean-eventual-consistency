@@ -122,8 +122,9 @@ public class Startup
         {
             using var serviceScope = app.ApplicationServices.CreateScope();
             var context = serviceScope.ServiceProvider.GetService<OrdersContext>()!;
-            var hasPendingMigrations = context.Database.GetPendingMigrations().Any();
-            context.Database.Migrate();
+            // just in case we wanna apply at runtime in dev env
+            // var hasPendingMigrations = context.Database.GetPendingMigrations().Any();
+            // context.Database.Migrate();
         }
     }
 
