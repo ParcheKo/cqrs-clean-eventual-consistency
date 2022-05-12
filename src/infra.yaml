@@ -29,6 +29,12 @@ services:
     image: redis:alpine
     ports:
       - "6379:6379"
+
+  seq.log:
+    container_name: finlex-task-seq
+    image: datalust/seq:latest
+    ports:
+      - "5341:4341"
       
       # orders.api:
       # container_name: finlex-task-orders-api
