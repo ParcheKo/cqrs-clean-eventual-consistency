@@ -25,8 +25,6 @@ namespace Orders.Api;
 
 public class Startup
 {
-    private const string OrdersConnectionString = "OrdersConnectionString";
-
 
     private readonly ILogger _logger;
 
@@ -77,40 +75,13 @@ public class Startup
         );
 
         services.AddHttpContextAccessor();
-
-        // services.AddScoped<ValidationNotificationHandler>();
-
-        // services.AddControllers();
-        //
-        // services.AddSwaggerGen(
-        //     c =>
-        //     {
-        //         c.SwaggerDoc(
-        //             "v1",
-        //             new OpenApiInfo { Title = "My API", Version = "v1" }
-        //         );
-        //     }
-        // );
-
+        
         var serviceProvider = services.BuildServiceProvider();
 
         IExecutionContextAccessor executionContextAccessor =
             new ExecutionContextAccessor(serviceProvider.GetService<IHttpContextAccessor>());
-
-        // var children = this.Configuration.GetSection("Caching").GetChildren();
-        // var cachingConfiguration = children.ToDictionary(
-        //     child => child.Key,
-        //     child => TimeSpan.Parse(child.Value)
-        // );
+        
         var emailsSettings = appConfiguration.EmailSettings;
-        // var memoryCache = serviceProvider.GetService<IMemoryCache>();
-
-        // todo: setup health-checks
-        // var redisConnString = Configuration.GetConnectionString("RedisCache");
-        // services
-        //     .AddHealthChecks()
-        //     .AddSqlServer(this.Configuration[OrdersConnectionString])
-        //     .AddRedis(redisConnString);
 
         return ApplicationStartup.Initialize(
             services,
@@ -122,16 +93,6 @@ public class Startup
         );
     }
 
-
-    // public virtual void ConfigureContainer(ContainerBuilder builder)
-    // {
-        // builder.RegisterModule(new CommandModule());
-        // builder.RegisterModule(new EventModule());
-        // builder.RegisterModule(new InfrastructureModule());
-        // builder.RegisterModule(new QueryModule());
-    // }
-
-
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(
         IApplicationBuilder app,
@@ -141,17 +102,8 @@ public class Startup
         app.UseSerilogRequestLogging();
         
         app.UseMiddleware<CorrelationMiddleware>();
-
-        // if (env.IsDevelopment())
-        // {
-        //     app.UseDeveloperExceptionPage();
-        // }
-        // else
-        // {
+        
         app.UseProblemDetails();
-        // }
-
-        // app.UseStaticFiles();
 
         app.UseRouting();
 
@@ -161,7 +113,6 @@ public class Startup
             endpoints =>
             {
                 endpoints.MapControllers();
-                // endpoints.MapHealthChecks("/hc");
             }
         );
 
@@ -174,9 +125,6 @@ public class Startup
             var hasPendingMigrations = context.Database.GetPendingMigrations().Any();
             context.Database.Migrate();
         }
-
-        // todo: if another micro was in the picture 
-        // ConfigureEventBus(app);
     }
 
     private static ILogger ConfigureLogger()
@@ -192,16 +140,6 @@ public class Startup
             )
             .CreateLogger();
     }
-
-    // private void ConfigureEventBus(IApplicationBuilder app)
-    // {
-    //     var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-    //
-    //     // todo: if another micro was in the picture 
-    //     // eventBus.Subscribe<PersonRegistered>();
-    //     // eventBus.Subscribe<CardCreatedEvent>();
-    //     // eventBus.Subscribe<TransactionCreatedEvent>();
-    // }
 
     private void ConfigureProblemDetails(ProblemDetailsOptions options)
     {

@@ -26,21 +26,6 @@ public class Program
                 )
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                // Add this line:
-                .WriteTo.File(
-                    System.IO.Path.Combine(
-                        Environment.GetEnvironmentVariable("USERPROFILE"),
-                        "LogFiles",
-                        AppDomain.CurrentDomain.FriendlyName,
-                        "diagnostics.txt"
-                    ),
-                    rollingInterval: RollingInterval.Day,
-                    fileSizeLimitBytes: 10 * 1024 * 1024,
-                    retainedFileCountLimit: 2,
-                    rollOnFileSizeLimit: true,
-                    shared: true,
-                    flushToDiskInterval: TimeSpan.FromSeconds(1)
-                )
                 .CreateLogger();
 
             Log.Information("Starting Web Host");
@@ -64,39 +49,6 @@ public class Program
         return WebHost.CreateDefaultBuilder(args)
             .ConfigureServices(services => services.AddAutofac())
             .UseSerilog()
-            // .ConfigureAppConfiguration(
-            //     (
-            //         hostingContext,
-            //         config
-            //     ) =>
-            //     {
-            //         config.SetBasePath(Directory.GetCurrentDirectory());
-            //         config.AddJsonFile(
-            //             "appsettings.json",
-            //             false,
-            //             true
-            //         );
-            //         config.AddJsonFile(
-            //             $"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json",
-            //             true,
-            //             true
-            //         );
-            //     }
-            // )
-            // .UseKestrel()
-            // .UseContentRoot(Directory.GetCurrentDirectory())
-            // .ConfigureLogging(
-            //     (
-            //         hostingContext,
-            //         logging
-            //     ) =>
-            //     {
-            //         logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
-            //         logging.AddConsole();
-            //         logging.AddDebug();
-            //     }
-            // )
-            // .UseIIS()
             .UseStartup<Startup>();
     }
 }
