@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Orders.Api.Orders;
+namespace Orders.Api.Orders.Dtos;
 
 public class RegisterOrderRequest
 {
